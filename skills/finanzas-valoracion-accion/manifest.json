@@ -1,7 +1,7 @@
 {
   "id": "finanzas-valoracion-accion",
   "name": "Institutional Equity Research",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Evidence-led institutional equity research for listed companies: business and industry analysis, financial statement quality, scenario-based valuation, investment thesis, risks and professional deliverables.",
   "license": "MIT",
   "author": "Jairo Alonso González",
@@ -94,16 +94,17 @@
   "evaluation": {
     "status": "partial",
     "suite_ref": "skills/finanzas-valoracion-accion/tests",
-    "suite_version": "0.2.0",
-    "last_run": "2026-11-01T23:15:23Z",
-    "environment": "Python 3.13.18; package dependencies installed in isolated remote workbench",
+    "suite_version": "0.2.1",
+    "last_run": "2026-11-01T23:42:01Z",
+    "environment": "Python 3.13.18; isolated remote workbench; CI matrix to be rerun on Python 3.11–3.13",
     "metrics": {
-      "unit_tests_passed": 29,
+      "unit_tests_passed": 31,
       "unit_tests_failed": 0,
       "cli_smoke_test": true,
-      "artifacts_verified": 5
+      "artifacts_verified": 5,
+      "html_presentation_regression_tests": 2
     },
-    "report_ref": "CLI smoke test generated HTML, XLSX, DOCX, PPTX and manifest from synthetic example",
+    "report_ref": "31 unit tests passed; synthetic CLI smoke test generated HTML, XLSX, DOCX, PPTX and manifest; HTML semantic layout and visible PPTX branding verified.",
     "limitations": [
       "Package tests and synthetic smoke test do not establish financial-domain accuracy, point-in-time integrity, non-US issuer integration or production suitability.",
       "SEC adapter retrieves raw Company Facts and filters by filing date; it is not a universal normalized financial-statement provider."

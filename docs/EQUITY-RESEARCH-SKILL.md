@@ -39,3 +39,10 @@ The current suite has 29 passing tests in Python 3.13.18, including a CLI run th
 ## Factory release governance
 
 This package is a candidate release. Its manifest declares data dependencies, evaluation status and host compatibility separately. The local test suite and CLI smoke test are evidence of package behavior only; they do not certify financial-domain accuracy or a managed service. See the Factory [release governance](SKILL-QUALITY-AND-RELEASES.md) and [Skills as a Service model](SKILL-AS-A-SERVICE.md).
+
+
+## HTML report presentation — candidate 0.2.1
+
+The HTML exporter now renders a responsive institutional tear sheet rather than serializing each package section as a JSON code block. The layout includes an executive header, rating panel, data-driven KPI cards, readable nested tables and lists, a Bear/Base/Bull scenario matrix when scenario inputs exist, source links, mobile breakpoints, print styles and explicit limitations. Missing metrics are omitted from KPI cards and shown as unavailable in detail sections; the renderer does not estimate missing values.
+
+The PPTX author signature is visible in slide footers and remains in speaker notes. Regression tests cover semantic HTML structure, escaping, KPI percentage formatting, scenario presentation and visible PPTX branding. This is a presentation-quality improvement, not a financial-model validation or production certification.
