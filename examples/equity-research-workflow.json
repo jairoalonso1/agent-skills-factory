@@ -1,0 +1,120 @@
+{
+  "protocol_version": "1.0.0",
+  "workflow_id": "wf-equity-msft-2026-001",
+  "title": "Institutional equity research — Microsoft",
+  "goal": "Prepare a sourced, scenario-based institutional equity research report for Microsoft, including financial analysis, valuation, risks and deliverables.",
+  "status": "ready",
+  "created_at": "2026-11-01T22:10:00Z",
+  "updated_at": "2026-11-01T22:10:00Z",
+  "requester": {
+    "actor_type": "human",
+    "display_name": "Requester"
+  },
+  "context": {
+    "summary": "Initial request to analyze a listed company. No provider credentials or external write permissions are implied.",
+    "references": []
+  },
+  "constraints": {
+    "scope": "Fundamental equity research; technical context only as supporting evidence.",
+    "risk_level": "moderate",
+    "autonomy_level": "execute_reversible",
+    "source_policy": "Prefer issuer filings and primary sources; identify data gaps and timestamps.",
+    "output_formats": [
+      "HTML",
+      "XLSX",
+      "DOCX"
+    ]
+  },
+  "success_criteria": [
+    "Issuer identity and reporting currency are verified.",
+    "Financial analysis and valuation assumptions are traceable.",
+    "At least bear, base and bull scenarios are presented where data permits.",
+    "Risks, limitations and data gaps are disclosed.",
+    "Requested deliverables are generated and checked, or unavailable formats are explicitly identified."
+  ],
+  "plan": {
+    "version": 1,
+    "summary": "Identify issuer and sources, analyze financials, value the equity, review risks, prepare and quality-check deliverables."
+  },
+  "tasks": [
+    {
+      "task_id": "identify-issuer",
+      "title": "Verify issuer identity and reporting basis",
+      "status": "ready",
+      "depends_on": [],
+      "assigned_to": {
+        "type": "agent"
+      },
+      "retry_count": 0
+    },
+    {
+      "task_id": "collect-data",
+      "title": "Collect filings and market data",
+      "status": "pending",
+      "depends_on": [
+        "identify-issuer"
+      ],
+      "assigned_to": {
+        "type": "agent"
+      },
+      "retry_count": 0
+    },
+    {
+      "task_id": "financial-analysis",
+      "title": "Analyze financial statements and returns",
+      "status": "pending",
+      "depends_on": [
+        "collect-data"
+      ],
+      "assigned_to": {
+        "type": "skill",
+        "id": "finanzas-valoracion-accion"
+      },
+      "retry_count": 0
+    },
+    {
+      "task_id": "valuation",
+      "title": "Build valuation scenarios",
+      "status": "pending",
+      "depends_on": [
+        "financial-analysis"
+      ],
+      "assigned_to": {
+        "type": "skill",
+        "id": "finanzas-valoracion-accion"
+      },
+      "retry_count": 0
+    },
+    {
+      "task_id": "report",
+      "title": "Generate and quality-check report",
+      "status": "pending",
+      "depends_on": [
+        "valuation"
+      ],
+      "assigned_to": {
+        "type": "agent"
+      },
+      "retry_count": 0
+    }
+  ],
+  "invocations": [],
+  "approvals": [],
+  "artifacts": [],
+  "evidence": [],
+  "events": [
+    {
+      "event_id": "evt-001",
+      "type": "workflow.created",
+      "occurred_at": "2026-11-01T22:10:00Z",
+      "actor": "human",
+      "summary": "Workflow created from the user's request."
+    }
+  ],
+  "checkpoint": {
+    "checkpointed_at": "2026-11-01T22:10:00Z",
+    "current_task_id": "identify-issuer",
+    "next_action": "Confirm issuer identity and reporting currency using authoritative sources.",
+    "resumable": true
+  }
+}

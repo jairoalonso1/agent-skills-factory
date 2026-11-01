@@ -19,6 +19,12 @@ See [AX-FRAMEWORK.md](AX-FRAMEWORK.md) and [RUNTIME-ARCHITECTURE.md](RUNTIME-ARC
 
 These layers can be deployed together or separately. Their logical responsibilities must remain explicit.
 
+## Workflow and invocation contracts
+
+The AX workflow record is the durable representation of the user's goal, constraints, tasks, approvals, evidence, artifacts, events and checkpoint. The orchestrator owns this state; the chat transcript is not its source of truth.
+
+A Skill invocation is a bounded request/response exchange correlated to a workflow task. The invocation contract does not grant permissions or imply that runtime capabilities exist. See [WORKFLOW-MODEL.md](WORKFLOW-MODEL.md), [SKILL-INVOCATION-CONTRACT.md](SKILL-INVOCATION-CONTRACT.md) and the JSON Schemas under `schemas/`.
+
 ## What a Skill is not
 
 A Skill is not an AI model, orchestrator, user interface, Python interpreter, package manager, data provider, API/MCP server or permission grant. Including a script does not guarantee the host can execute it.
