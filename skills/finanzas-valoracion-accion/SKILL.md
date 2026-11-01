@@ -103,14 +103,14 @@ Expected total return should align price target, current price, dividend forecas
 ### 9. Produce deliverables
 
 When the runtime and dependencies are available, `scripts/reporting.py` can generate:
-- Self-contained HTML research report.
+- Self-contained, responsive Spanish-language institutional HTML tear sheet with executive banner, rating, available KPI cards, readable financial/valuation tables, bear/base/bull scenario matrix, source ledger, limitations and print styling.
 - XLSX workbook with executive summary, financial analysis, valuation, scenarios, risks and sources.
 - DOCX research report.
 - PPTX committee briefing (16:9).
 
 These builders format the supplied structured research package; they do not validate or invent the underlying financial analysis. Optional charts in `scripts/charts.py` include football field, DCF sensitivity heatmap and technical price context. If a format or dependency is unavailable, state that and do not fabricate a file or link.
 
-All generated deliverables include **Created by Jairo Alonso González**. The signature identifies the Skill author/branding; it must not imply authorship of external data or third-party research.
+All generated deliverables include **Created by Jairo Alonso González**. The signature identifies the Skill author/branding; it must not imply authorship of external data or third-party research. The PPTX signature is rendered visibly in the slide footer as well as in speaker notes. HTML fields are rendered semantically as tables/lists/cards rather than raw JSON blocks; unavailable fields remain explicitly unavailable. The HTML renderer formats the supplied data and does not infer missing metrics or validate valuation correctness.
 
 ### 10. Quality control and acceptance
 
