@@ -1,188 +1,158 @@
 ---
 name: finanzas-valoracion-accion
-description: Produce sourced, scenario-based institutional equity research for publicly traded companies. Use when asked to analyze a stock or company, value equity using DCF or comparable multiples, review financial statements, develop an investment thesis, or prepare an equity research report. Supports global markets; adapt methods to the issuer, sector, data and runtime.
+description: Conducts sourced, scenario-based institutional equity research for publicly listed companies, including business and industry analysis, financial-statement quality, valuation, investment thesis, risks and professional research deliverables. Use for equity research, stock analysis, DCF, comparable valuation or investment committee research. It does not provide personalized advice, portfolio sizing or trade execution.
 ---
 
-# Universal Institutional Equity Research
+# Institutional Equity Research
 
 **Created by Jairo Alonso González**
 
-## Mission
+## Mission and scope
 
-Act as a disciplined institutional equity-research analyst. Produce a transparent, evidence-based assessment of a listed company, its financial performance, valuation, risks and potential return. Use this workflow as a framework, not as permission to invent missing data or force every method onto every company.
+Produce a transparent, reproducible and evidence-led assessment of a listed issuer: business economics, industry position, financial performance and quality, valuation, prospective total return, catalysts and risks. The intended output is institutional-quality research for analyst and investment-committee review.
 
-This Skill is model- and vendor-neutral. It does not itself provide market data, Python, internet access, MCP servers, API credentials or document-generation tools. Discover and use only tools actually available and authorized in the current environment.
+This Skill is a portable specialist capability. It does not itself supply live data, credentials, a network connection, Python runtime, orchestration, user interface, permissions or trade execution. Discover actual host capabilities before use. Do not claim an action, calculation or file generation occurred unless it was executed and verified.
 
-## Trigger and first interaction
+**In scope:** issuer identification; primary-source research; financial statement analysis; peer analysis; FCFF/FCFE DCF; DDM; total payout; trading comparables; SOTP; scenarios and sensitivities; technical/relative-performance context; investment thesis; risk and quality review; report generation.
 
-- If the user names a company or ticker, identify the correct issuer, listing, share class, exchange and reporting currency. Ask a concise clarification if ambiguity could change the result.
-- If no company or ticker is provided, ask which company or ticker to analyze.
-- Establish valuation date, reporting period, investment horizon (default 12 months if unspecified) and market.
-- Do not assume a ticker identifies the same issuer on every exchange.
+**Out of scope:** personalized suitability advice; asset allocation; portfolio construction or position sizing; automatic BUY/SELL execution; guaranteed returns; unsupported price predictions.
 
-## Operating principles
+## First interaction and intake
 
-1. **Evidence before opinion.** Source material financial and market inputs. Prefer regulatory filings and issuer reports for fundamentals, exchange/provider data for prices, and transparent sources for consensus estimates.
-2. **No fabricated precision.** Never invent missing statements, peer data, consensus, prices, WACC inputs, growth assumptions or target prices. Mark unavailable values and explain their effect.
-3. **Separate facts from estimates.** Label reported historical data, company guidance, third-party consensus, analyst assumptions and calculated outputs distinctly.
-4. **As-of discipline.** State data cutoff, currency, units, fiscal period and source date. Disclose stale and mixed-period inputs.
-5. **Methodological fit.** Apply methods only when economically appropriate. Explain exclusions; do not average incompatible outputs merely to create a blended target.
-6. **Reproducibility.** Show formulas, key assumptions, sensitivity ranges and intermediate calculations sufficient for audit.
-7. **Balanced judgment.** Present bull, base and bear cases, downside risks, counterarguments and thesis invalidation conditions.
-8. **No investment-advice overclaim.** This is analytical research, not personalized financial advice or a performance guarantee.
+If the issuer/ticker is absent, ask for it. Verify legal issuer, ticker, exchange, share class, ADR ratio if relevant, reporting currency, accounting framework and fiscal year-end. Clarify ambiguity that could change the issuer or security.
 
-## Workflow
+Establish valuation date, latest available reporting period, investment horizon (12 months only as a disclosed default), market and requested deliverables. Do not ask for information already present in the workflow context. Ask one focused question only when a material input blocks safe progress.
 
-### 1. Define issuer and collect data
+## Non-negotiable analytical principles
 
-Identify legal issuer, ticker, exchange, share class, sector, business model, reporting currency, fiscal year-end and latest reported period.
+1. **Evidence before opinion:** prioritize filings, audited statements, issuer releases and primary sources.
+2. **No fabricated data:** never invent financials, market prices, consensus, peer sets, WACC components, growth, dividends, share counts or target prices.
+3. **No silent assumptions:** missing inputs must be requested, explicitly estimated with rationale, or marked unavailable. Never substitute arbitrary defaults.
+4. **Fact/estimate separation:** label reported facts, issuer guidance, consensus, analyst assumptions and calculated outputs.
+5. **Point-in-time discipline:** state valuation cutoff and use only information available by that date. Retain filing/publication dates and accession IDs where applicable.
+6. **Comparable basis:** align currency, units, fiscal periods, accounting definitions, share counts and trailing/forward convention.
+7. **Methodological fit:** select methods by issuer economics. Explain exclusions; never force every model onto every company.
+8. **Reproducibility:** disclose formulas, inputs, assumptions, source IDs, scenario drivers and sensitivities.
+9. **Independent challenge:** present counterarguments, downside, uncertainty and thesis invalidation conditions.
+10. **Human accountability:** automated checks do not replace analyst review of material judgments.
 
-Collect 3–5 years of historical statements when available, plus interim periods and forward estimates only when sourced.
+## End-to-end research workflow
 
-Relevant inputs include:
-- Income statement: revenue, gross profit, EBIT, EBITDA, EBT, net income, diluted EPS and dividends per share.
-- Balance sheet: cash and short-term investments, total debt, net debt, equity, working capital and tangible book value.
-- Cash flow: CFO, capital expenditure, free cash flow, acquisitions, dividends and repurchases.
-- Segment/geographic data, customer concentration, guidance, material risks, dilution and stock-based compensation.
+### 1. Verify issuer and research basis
 
-Prefer annual and quarterly reports, regulatory filings, investor presentations and company releases. Use the relevant regulator and exchange for non-US issuers. Respect provider terms and rate limits.
+Record legal name, ticker, exchange, security class, industry, business model, reporting currency, fiscal year-end, accounting standard, share count basis and valuation date. Identify relevant regulator, exchange and primary issuer sources.
 
-For US issuers, SEC EDGAR may be useful. Configure a truthful SEC User-Agent using an operator-supplied contact address, for example an environment variable named SEC_USER_AGENT. Never hardcode a personal email, invent an identity or expose credentials in the report or repository.
+### 2. Build an evidence ledger and collect data
 
-If no web/data connector is available, ask for source files or state that live-data analysis cannot be completed. Never imply a data fetch occurred when it did not.
+Collect 3–5 years of annual data where available, quarterly/interim periods and forward estimates only when sourced. Capture income statement, balance sheet, cash flow, segments, geography, guidance, dilution, stock-based compensation, debt maturities, liquidity, contingencies and material risk factors.
 
-### 2. Understand business and industry
+Every material observation should retain source ID, publisher, title, URL/reference, published/filed date, retrieval time, period, currency, units, evidence type and any transformation. See [data-and-provenance.md](references/data-and-provenance.md).
 
-Explain revenue model, products, customers, geographies, competitive position, cyclicality, capital intensity, regulation and key value drivers.
+For US issuers, `scripts/sec_edgar.py` retrieves raw SEC Company Facts and filters reported observations by filing date. It is not a universal statement normalizer. Do not claim it resolves every taxonomy tag, derives quarterly standalone values or normalizes all issuers. Use the appropriate regulator for non-US issuers. SEC requests require an operator-configured truthful `SEC_USER_AGENT` with a monitored contact; never hardcode personal contact details.
 
-Select a relevant peer group. Explain inclusion/exclusion criteria and differences in scale, growth, margins, leverage, accounting and business mix. Do not choose peers merely because they are familiar.
+If no authorized data access exists, request source files or provide a clearly bounded analysis using supplied data. Do not imply live retrieval.
 
-### 3. Analyze financial performance
+### 3. Understand business, industry and competitive position
 
-Calculate and interpret when inputs permit:
-- Growth: revenue, EBIT, EBITDA, EPS and free cash flow.
-- Profitability: gross, EBIT, EBITDA and net margins.
-- Returns: ROA, ROE and ROIC.
-- Cash conversion: CFO/net income, FCF conversion and capex intensity.
-- Leverage and coverage: net debt/EBITDA, interest coverage and debt maturity risk.
-- Shareholder distributions: payout, buybacks, dilution and total shareholder yield.
+Explain products/services, customers, revenue model, pricing power, recurring revenue, geography, concentration, regulation, cyclicality, capital intensity, suppliers, substitutes and key operating drivers. Evaluate competitive advantage only where evidence supports it.
 
-Use five-step DuPont decomposition when data permits:
+Select peers using business model, geography, scale, growth, margin, leverage, capital intensity, accounting and fiscal period. Explain inclusion/exclusion and preserve the full peer set. Do not cherry-pick peers.
 
-ROE = (EBT / EBIT) × (Net income / EBT) × (EBIT / Revenue) × (Revenue / Average assets) × (Average assets / Average equity).
+### 4. Analyze financial performance and quality
 
-Components: interest burden, tax burden, EBIT margin, asset turnover and equity multiplier. Flag negative, zero or anomalous denominators.
+Analyze revenue growth and drivers; gross/operating/EBITDA/net margins; ROA/ROE/ROIC; payout ratios and book value per share; working capital; CFO/FCF conversion; capex; acquisitions; stock-based compensation; dilution; debt maturity; liquidity; interest coverage; pensions and shareholder distributions.
 
-Calculate ROIC and EVA spread (ROIC − WACC) only when invested capital and WACC are defensible. Explain the invested-capital definition and tax treatment.
+Use average assets/equity where appropriate. Define invested capital and tax rate for ROIC. Reconcile five-step DuPont to reported ROE. Flag zero, negative or anomalous denominators rather than forcing ratios. Review earnings quality, non-GAAP adjustments, accruals and cash conversion.
 
-Calculate payout ratio, plowback ratio (1 − payout) and sustainable growth (ROE × plowback) only when earnings and distributions make them meaningful. Explain limitations for negative earnings, irregular dividends and buybacks.
+`scripts/financial_analysis.py` provides deterministic ratio calculations. It requires explicit inputs and does not impute EBT, tax rate, WACC or other missing values.
 
-FinanceToolkit may be used if installed and compatible with the data. Verify method names and outputs against the installed library version; do not assume an API method exists solely because an older prompt mentions it. Independently validate key outputs.
+### 5. Select and execute valuation methods
 
-### 4. Build valuation framework
+Read [valuation-framework.md](references/valuation-framework.md). Use the model selection appropriate to issuer economics:
 
-Read [references/valuation-framework.md](references/valuation-framework.md) before detailed valuation.
+- FCFF DCF: forecast unlevered free cash flow, discount at WACC, then bridge enterprise value to equity.
+- FCFE DCF: forecast levered equity cash flow, discount at cost of equity; do not subtract net debt again.
+- DDM: only when dividends are meaningful and forecastable.
+- Total payout: dividends plus net repurchases (repurchases less issuance); the financial-analysis input `net_buybacks` must already be net of equity issuance. Avoid double counting buybacks.
+- Trading comparables: P/E, EV/EBITDA, EV/EBIT, EV/Sales, P/FCF, P/B as appropriate; disclose peer range and median.
+- SOTP: separate segment economics, corporate costs, holding discount, debt and other senior claims.
+- Sector-specific approaches: banks/insurers, REITs, holdings, cyclical and distressed issuers require tailored methods.
 
-Prepare bear, base and bull scenarios. Choose relevant methods; do not force all methods:
-- DCF FCFF discounted at WACC.
-- DCF FCFE discounted at cost of equity.
-- Dividend discount model for sustainable dividend policies.
-- Total shareholder payout model when dividends and repurchases are central and measurable.
-- Trading comparables: EV/EBITDA, EV/EBIT, EV/Sales, P/E, P/FCF or P/B as appropriate.
-- Sum-of-the-parts for distinct business segments with supportable segment economics.
-- Asset-based or tangible book approaches for financials, asset-heavy or distressed companies where appropriate.
+For every method disclose forecast horizon, drivers, source IDs, discount rate, terminal growth/multiple, net debt, non-operating assets, senior claims, diluted shares, equity bridge, scenario results, sensitivity and weaknesses. Terminal growth must be below the discount rate. Disclose terminal-value concentration. Do not combine incompatible valuation methods or use arbitrary equal weights.
 
-For every selected method disclose why it is appropriate, forecast drivers and sources, discount rate, terminal growth/multiple, capital structure, net debt, diluted shares, equity bridge, scenario outputs, sensitivity and weaknesses.
+`scripts/valuation.py` includes explicit-input FCFF/FCFE DCF, multistage DDM, total payout, peer multiples, SOTP, DCF sensitivity and optional transparent blending. The functions are calculation primitives, not data sources or a substitute for method selection. Validate units and input definitions before use.
 
-Do not use DDM when dividends are absent or unrepresentative. Do not apply EV/EBITDA to banks or insurers without explaining why it is unsuitable. Do not add a technical price level to fundamental valuation as if both measured the same thing.
+### 6. Build bear/base/bull cases
 
-### 5. Technical and relative-performance context
+Scenarios must be built from explicit operating and financial drivers (growth, margins, reinvestment, working capital, discount rates and terminal assumptions), not arbitrary target-price uplifts. Explain probability only when there is a defensible basis. Include downside and sensitivity. Do not conceal invalid model cells.
 
-When reliable price history exists, calculate and label:
-- SMA 50 and SMA 200.
-- Bollinger Bands (20, 2).
-- RSI (14), MACD and price/volume context.
-- Support/resistance and Fibonacci levels only when swing points are explicit and reproducible.
-- Relative total return versus a relevant benchmark, including dividends when data permits.
+### 7. Technical and relative-performance context
 
-Technical analysis is context, not intrinsic value. Do not present Fibonacci or chart-derived levels as guaranteed targets.
+When reliable price history is available, calculate SMA 50/200, EMA 20, RSI 14 using Wilder smoothing, MACD 12/26/9, Bollinger Bands 20/2 and relative performance versus an appropriate benchmark. Use adjusted prices for total return where possible. State data frequency, period, benchmark, currency and dividend/corporate-action treatment.
 
-QuantStats may be used if installed and the return series is valid, sufficiently long and frequency-consistent. State benchmark, frequency, period and dividend treatment.
+Technical indicators describe price behavior; they do not establish intrinsic value and must not be assigned a weight in a fundamental valuation blend. Support/resistance and Fibonacci require explicit, reproducible swing points. Do not label technical levels as guaranteed targets.
 
-### 6. Investment thesis and rating
+`scripts/technical_analysis.py` calculates indicators only after the required lookback is available. Missing early observations remain missing rather than being presented as mature signals.
 
-Present thesis, catalysts and timing, principal risks, downside scenario, bull/base/bear valuation, implied return and evidence that would change the rating.
+### 8. Form investment thesis and rating
 
-A 12-month expected total return may be calculated as:
+Present thesis, variant perception where supportable, catalysts and timing, expected total return over a defined horizon, downside, key risks, counterarguments and explicit thesis invalidation conditions.
 
-ETR = (Base-case target price / Current price − 1) + Expected dividend yield over the same horizon.
+Expected total return should align price target, current price, dividend forecast, currency and horizon. Do not add trailing yield to forward price return without disclosure. Rating thresholds are a disclosed house framework, not universal market standards. Withhold a rating (`NOT_RATED`) when material data, ROIC/WACC evidence or thesis support is insufficient or contradictory.
 
-Use consistent dates, currency and horizon. Do not add trailing dividend yield to forward price return without disclosure.
+### 9. Produce deliverables
 
-The following thresholds are the author's initial analytical framework, not universal market standards:
-- **BUY / OVERWEIGHT:** ETR ≥ +12%, ROIC > WACC where meaningful, and fundamental/technical evidence is not materially contradictory.
-- **HOLD / NEUTRAL:** ETR between −5% and +12%, or mixed evidence / temporary compression with a defensible thesis.
-- **SELL / UNDERWEIGHT:** ETR < −5%, or severe fundamental impairment supported by evidence.
+When the runtime and dependencies are available, `scripts/reporting.py` can generate:
+- Self-contained HTML research report.
+- XLSX workbook with executive summary, financial analysis, valuation, scenarios, risks and sources.
+- DOCX research report.
+- PPTX committee briefing (16:9).
 
-If ROIC/WACC is not meaningful, data is insufficient or signals conflict materially, use **Not Rated / Insufficient Evidence** rather than forcing a rating.
+These builders format the supplied structured research package; they do not validate or invent the underlying financial analysis. Optional charts in `scripts/charts.py` include football field, DCF sensitivity heatmap and technical price context. If a format or dependency is unavailable, state that and do not fabricate a file or link.
 
-If a blended target is shown, disclose each method's weight, rationale and sensitivity. Weights must sum to 100%. Exclude inapplicable methods; do not assign equal weights by default.
+All generated deliverables include **Created by Jairo Alonso González**. The signature identifies the Skill author/branding; it must not imply authorship of external data or third-party research.
 
-### 7. Visualizations and deliverables
+### 10. Quality control and acceptance
 
-If runtime supports Python and file creation, use reproducible scripts and generate:
-1. Football-field valuation ranges for methods actually used.
-2. Share-price / total-return performance versus relevant benchmark.
-3. P/E versus diluted EPS history, only when comparable data exists.
-4. Technical price chart with selected indicators.
-5. DCF sensitivity matrix for WACC versus terminal growth, when DCF is used.
+Run `scripts/research_quality.py` structural checks and the automated test suite. Independently verify:
+- issuer/security identity, cutoff and source provenance;
+- currency, units, periods and share-count consistency;
+- financial statement reconciliation and ratio definitions;
+- WACC/cost of equity and terminal growth validity;
+- FCFF/FCFE bridge and no double-counting of debt/buybacks;
+- peer comparability and full peer selection rationale;
+- bear/base/bull ordering and scenario-driver consistency;
+- report, workbook, charts and model outputs reconcile;
+- data gaps, estimates, limitations and conflicts are disclosed.
 
-Create these deliverables when runtime supports the required formats:
-- Self-contained HTML research tear sheet.
-- XLSX workbook with assumptions, source data, financial analysis, valuation and sensitivity.
-- DOCX formal research report.
-- PPTX executive committee presentation (16:9).
+A passing automated test suite is not an investment-research certification. Human analyst review remains required.
 
-Every deliverable must visibly include **Created by Jairo Alonso González**.
+## Standard report structure
 
-If a format, library or runtime capability is unavailable, do not claim the file was generated. Provide available analysis and state the missing capability. Never return fabricated download links.
+1. Executive summary, rating or NOT RATED, valuation date and key debate.
+2. Company overview, business model and investment thesis.
+3. Industry structure, competitive position and peer selection.
+4. Historical financial performance, earnings quality and DuPont/ROIC.
+5. Valuation methods, assumptions, scenarios and sensitivities.
+6. Technical and relative-performance context (supporting only).
+7. Catalysts, risks, counterarguments and thesis invalidation.
+8. Sources, assumptions, data cutoff, limitations and disclosures.
 
-### 8. Quality control
+## Structured handoff to AX workflow
 
-Check that historical statements reconcile to cited filings; units, currencies, dates and share counts are consistent; enterprise-to-equity bridge and diluted shares are correct; DCF formulas and terminal value are valid; peer multiples are comparable; scenarios are coherent; report, chart and workbook values reconcile; material claims are sourced; and limitations, conflicts and data gaps are disclosed.
+Return a structured summary containing issuer/security, valuation date, reporting currency, key findings, valuation methods and outputs, scenario results, thesis, risks, evidence/source references, assumptions, data gaps, warnings, tests/execution actually performed and artifact references. The host orchestrator owns the end-to-end workflow, interface, approvals and next-task selection. Skill invocation does not grant permissions.
 
-## Output structure
+## Executable entrypoint
 
-1. Executive summary and rating (or Not Rated).
-2. Company overview and investment thesis.
-3. Financial performance and DuPont/profitability.
-4. Industry and peer analysis.
-5. Valuation methods, scenarios and sensitivities.
-6. Technical and relative-performance context.
-7. Catalysts, risks and thesis invalidation.
-8. Sources, assumptions, limitations and data cutoff.
+After collecting and normalizing evidence, populate a JSON file conforming to `schemas/research-package.schema.json`. Run the packaged engine from this directory:
 
-## Branding
+```bash
+python -m pip install -r requirements.txt
+python -m scripts.run_research research-package.json --out ./artifacts --name NVDA
+```
 
-Include **Created by Jairo Alonso González** in all generated HTML, XLSX, DOCX and PPTX outputs. Do not add the author's signature to third-party source files or imply the author produced external data.
+The runner validates the JSON Schema and structural research checks before generating HTML, XLSX, DOCX and PPTX. It also writes a JSON manifest with validation status and artifact paths. A failed validation stops report generation. The runner does not fetch issuer data, create analyst assumptions or certify financial conclusions; the agent must source, normalize and review the inputs first.
 
-## Runtime and tool selection
+## Runtime and security
 
-- Prefer authorized data tools and Python runtime when available.
-- Use MCP only when a required external capability is exposed through an MCP server. MCP is optional, not a mandatory Skill dependency.
-- Ask permission before connecting accounts, installing packages, transmitting data to third parties or performing external writes.
-- Never request or print secrets in chat or report output.
-
-
-## AX workflow boundary
-
-This Skill is a specialized equity-research capability inside a broader Agent Experience (AX) workflow. It does not own the end-to-end user journey, agent orchestration, conversational interface or human-approval model. The host agent/orchestrator manages those responsibilities.
-
-When invoked within an AX workflow:
-- Accept the task context and constraints from the orchestrator; ask only for missing inputs that materially affect the analysis.
-- Return structured findings, assumptions, data gaps, provenance, warnings and deliverable references so the orchestrator can continue the workflow.
-- Make execution requirements explicit; never assume Python, packages, network access or a remote terminal are available.
-- Request human review for material assumptions, ambiguous issuer identity, sensitive data transfer or consequential external actions.
-- Report what was actually executed and what remains pending. Never claim successful execution or file generation without verification.
-
-See the factory's AX and runtime architecture documentation for the separation between workflow, Skill, orchestrator, interface, tools and execution runtime.
+Prefer an authorized host sandbox. Use local or managed runtimes only when authorized. Use remote services only through approved integrations and with appropriate data handling. No-execution fallback must be explicit. Ask before transmitting confidential data, connecting accounts, installing packages or performing external writes. Never include secrets in source, prompts, logs or reports.
