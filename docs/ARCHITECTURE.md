@@ -2,41 +2,63 @@
 
 ## Goal
 
-Maintain one canonical, vendor-neutral Skill package and distribute it into different agent environments without assuming identical capabilities.
+Maintain portable, reusable Skills while designing for complete Agent Experience (AX). A Skill is one capability within a broader person–agent workflow; it is not the workflow, orchestrator, interface or runtime.
 
-## Layers
+See [AX-FRAMEWORK.md](AX-FRAMEWORK.md) and [RUNTIME-ARCHITECTURE.md](RUNTIME-ARCHITECTURE.md).
 
-1. **Skill package:** SKILL.md, references, optional scripts and assets. This is the portable methodology.
-2. **Registry:** registry/skills.json and each Skill's manifest.json describe identifiers, versions, paths, licenses and requirements.
-3. **Distribution:** GitHub is the source repository. The open Vercel skills CLI installs compatible Skills into supported agent directories and checks/updates installations.
-4. **Platform adapters:** documentation or packaging metadata for environments with different import, plugin or discovery mechanisms.
-5. **Runtime dependencies:** Python, data providers, APIs, MCP servers and credentials are external dependencies, not implicitly bundled with a Skill.
+## Layers and responsibilities
+
+1. **AX experience:** workflow experience, agent behavior & orchestration, conversational & multimodal interface, and human–agent coordination.
+2. **Agent/orchestrator:** interprets goals, plans work, selects Skills/tools/runtimes, delegates and manages state.
+3. **Skill package:** SKILL.md, references, optional scripts and assets; contains portable domain methodology and a capability contract.
+4. **Registry:** registry/skills.json and each manifest describe identifiers, versions, paths, license and requirements.
+5. **Distribution:** GitHub is source of truth; compatible installers distribute packages to supported agent directories.
+6. **Runtime:** native sandbox, local execution or authorized remote service runs code and processes.
+7. **Tools/data:** APIs, MCP servers, connectors and providers supply external actions and information.
+8. **Host interface:** chat, voice, visualizations, files and controls.
+
+These layers can be deployed together or separately. Their logical responsibilities must remain explicit.
+
+## What a Skill is not
+
+A Skill is not an AI model, orchestrator, user interface, Python interpreter, package manager, data provider, API/MCP server or permission grant. Including a script does not guarantee the host can execute it.
+
+## Execution modes
+
+- Native sandbox when available and suitable.
+- Local runtime when accessible and authorized.
+- Remote runtime through an agent-callable interface, when authorized.
+- No-execution fallback with transparent limits.
+
+A web compiler is not automatically an agent-callable runtime and should not receive confidential inputs.
 
 ## Important separation
 
-A Skill does not need MCP. The Skill describes a workflow; MCP exposes tools to an agent. Use MCP only when a workflow needs a tool the agent does not otherwise have.
-
-A Skill does not automatically grant access to paid data, network, filesystem, Python or document-generation libraries. The consuming environment must provide and authorize those capabilities.
+A Skill does not need MCP. MCP exposes tools to an agent; it is one optional integration path. A Skill does not grant access to paid data, network, filesystem, Python or document-generation libraries. The consuming environment must provide and authorize these capabilities.
 
 ## Distribution lifecycle
 
-~~~text
-Author -> Validate -> Review -> Version -> Publish on GitHub
+```text
+Author -> Validate -> Review -> Version -> Publish
                                       |
                                       v
-                         Discover -> Install -> Invoke
+                           Discover -> Install -> Invoke
                                       |
                                       v
-                               Check -> Update
-~~~
+                         Select runtime/tools -> Verify
+                                      |
+                                      v
+                         Human review -> Complete
+```
 
-Use semantic versioning, keep published tags immutable, update registry metadata with each release, record tested agent/product versions and never silently change a methodology used in a completed analysis.
+Use semantic versioning, keep published tags immutable, record tested agent/product versions and never silently change a methodology used in a completed analysis.
 
 ## Initial choices
 
 - Public GitHub repository under owner's personal account.
 - MIT license for factory code and documentation.
 - Standard Agent Skills package layout.
-- Vercel Skills CLI as first installer, not a new custom installer.
-- No Composio dependency in core architecture; Composio may later be an integration adapter.
+- Vercel Skills CLI as first installer, not a custom installer.
+- No Composio dependency in the portable core; Composio may be an optional remote-runtime adapter.
 - No mandatory MCP server.
+- No universal hosted runtime or custom agent UI in the initial scope.

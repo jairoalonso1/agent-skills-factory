@@ -16,10 +16,12 @@
       "tags": ["finance", "equity-research", "valuation", "investment-analysis"],
       "requires": {
         "mcp": false,
-        "python": "optional-but-recommended-for-reproducible-calculations-and-deliverables",
-        "network": "required-for-live-external-data",
-        "packages": ["financetoolkit", "quantstats", "pandas", "numpy", "matplotlib", "openpyxl", "python-docx", "python-pptx"]
+        "python": "optional-for-loading; required for reproducible execution of Python modules",
+        "network": "required-only-for-live-external-data",
+        "packages": ["pandas", "numpy", "matplotlib", "seaborn", "financetoolkit", "quantstats", "edgartools", "yfinance", "openpyxl", "python-docx", "python-pptx", "finrobot"]
       },
+      "execution_modes": ["native-sandbox", "local-runtime", "authorized-remote-runtime", "no-execution-fallback"],
+      "ax_role": "specialized-domain-capability",
       "capabilities": ["financial-statement-analysis", "scenario-based-valuation", "technical-analysis", "generate-html-xlsx-docx-pptx"]
     }
   ]

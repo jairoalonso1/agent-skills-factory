@@ -172,3 +172,17 @@ Include **Created by Jairo Alonso González** in all generated HTML, XLSX, DOCX 
 - Use MCP only when a required external capability is exposed through an MCP server. MCP is optional, not a mandatory Skill dependency.
 - Ask permission before connecting accounts, installing packages, transmitting data to third parties or performing external writes.
 - Never request or print secrets in chat or report output.
+
+
+## AX workflow boundary
+
+This Skill is a specialized equity-research capability inside a broader Agent Experience (AX) workflow. It does not own the end-to-end user journey, agent orchestration, conversational interface or human-approval model. The host agent/orchestrator manages those responsibilities.
+
+When invoked within an AX workflow:
+- Accept the task context and constraints from the orchestrator; ask only for missing inputs that materially affect the analysis.
+- Return structured findings, assumptions, data gaps, provenance, warnings and deliverable references so the orchestrator can continue the workflow.
+- Make execution requirements explicit; never assume Python, packages, network access or a remote terminal are available.
+- Request human review for material assumptions, ambiguous issuer identity, sensitive data transfer or consequential external actions.
+- Report what was actually executed and what remains pending. Never claim successful execution or file generation without verification.
+
+See the factory's AX and runtime architecture documentation for the separation between workflow, Skill, orchestrator, interface, tools and execution runtime.
