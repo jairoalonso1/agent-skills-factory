@@ -1,0 +1,5 @@
+{
+  "issuer": "Example plc", "currency": "USD", "unit_scale": "millions", "valuation_date": "2026-10-31",
+  "fcff_forecast": [1200, 1350, 1500, 1650, 1800], "wacc": 0.09, "terminal_growth": 0.025,
+  "net_debt": 2500, "non_operating_assets": 200, "other_senior_claims": 100, "diluted_shares_millions": 500
+}

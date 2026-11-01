@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the Skill registry, package structure, AX schemas and examples."""
+"""Validate the Skill registry, package structure, AX schemas and release metadata."""
 
 from __future__ import annotations
 
@@ -13,6 +13,12 @@ from jsonschema import Draft202012Validator, FormatChecker
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "registry" / "skills.json"
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+RELEASE_STATUSES = {
+    "draft", "candidate", "validated", "runtime-tested",
+    "evaluated", "managed-service", "deprecated",
+}
+EVALUATION_STATUSES = {"not-run", "in-progress", "passed", "failed", "partial"}
+RUNTIME_STATUSES = {"documented", "declared", "tested", "not-tested", "failed"}
 
 
 def fail(message: str) -> None:
@@ -32,6 +38,7 @@ def validate_schemas_and_examples() -> None:
         ("schemas/ax-workflow.schema.json", "examples/equity-research-workflow.json"),
         ("schemas/skill-invocation.schema.json", "examples/skill-invocation.json"),
         ("schemas/skill-result.schema.json", "examples/skill-result.json"),
+        ("schemas/skill-release.schema.json", "examples/skill-release.example.json"),
     ]
     for schema_name, example_name in pairs:
         schema_path = ROOT / schema_name
@@ -50,6 +57,33 @@ def validate_schemas_and_examples() -> None:
             )
             fail(f"{example_name} does not satisfy {schema_name}: {details}")
         print(f"OK: {example_name} validates against {schema_name}")
+
+
+def validate_release_metadata(manifest: dict, skill_id: str) -> None:
+    status = manifest.get("status")
+    if status not in RELEASE_STATUSES:
+        fail(f"{skill_id}: unsupported or missing release status: {status!r}")
+
+    evaluation = manifest.get("evaluation")
+    if not isinstance(evaluation, dict) or evaluation.get("status") not in EVALUATION_STATUSES:
+        fail(f"{skill_id}: evaluation.status must be explicit and valid")
+
+    runtime_items = manifest.get("runtime_compatibility")
+    if not isinstance(runtime_items, list) or not runtime_items:
+        fail(f"{skill_id}: runtime_compatibility must be a non-empty list")
+    for item in runtime_items:
+        if item.get("status") not in RUNTIME_STATUSES:
+            fail(f"{skill_id}: invalid runtime compatibility status: {item.get('status')!r}")
+        if item.get("status") == "tested" and not item.get("tested_at"):
+            fail(f"{skill_id}: tested runtime entries must include tested_at")
+
+    data_dependencies = manifest.get("data_dependencies")
+    if not isinstance(data_dependencies, list):
+        fail(f"{skill_id}: data_dependencies must be an explicit list")
+    for dependency in data_dependencies:
+        for field in ("name", "access_mode", "license_status", "provenance_required"):
+            if field not in dependency:
+                fail(f"{skill_id}: data dependency is missing {field}")
 
 
 def main() -> None:
@@ -100,9 +134,13 @@ def main() -> None:
             fail(f"{paths[2].relative_to(ROOT)} id does not match registry")
         if manifest.get("version") != entry.get("version"):
             fail(f"version mismatch for {skill_id}")
+        validate_release_metadata(manifest, skill_id)
+
+        if entry.get("evaluation", {}).get("status") != manifest["evaluation"]["status"]:
+            fail(f"evaluation status mismatch for {skill_id}")
 
     validate_schemas_and_examples()
-    print(f"OK: validated {len(skills)} Skill package(s) and AX contracts.")
+    print(f"OK: validated {len(skills)} Skill package(s), release metadata and AX contracts.")
 
 
 if __name__ == "__main__":

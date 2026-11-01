@@ -1,0 +1,59 @@
+{
+  "id": "finanzas-valoracion-accion",
+  "name": "Universal Institutional Equity Research",
+  "version": "0.1.0",
+  "entrypoint": "SKILL.md",
+  "release_status": "candidate",
+  "capabilities": [
+    "financial-statement-analysis",
+    "scenario-based-valuation",
+    "technical-analysis",
+    "report-generation"
+  ],
+  "dependencies": [
+    {
+      "name": "pandas",
+      "version_constraint": "declared in requirements files",
+      "optional": false
+    },
+    {
+      "name": "numpy",
+      "version_constraint": "declared in requirements files",
+      "optional": false
+    }
+  ],
+  "data_dependencies": [
+    {
+      "name": "Issuer financial statements and market prices",
+      "access_mode": "public",
+      "license_status": "user-responsibility",
+      "freshness": "Must be checked per invocation",
+      "provenance_required": true
+    },
+    {
+      "name": "Optional licensed market data",
+      "access_mode": "licensed",
+      "license_status": "pending",
+      "freshness": "Provider-defined",
+      "provenance_required": true
+    }
+  ],
+  "evaluation": {
+    "status": "not-run",
+    "limitations": [
+      "Package tests do not establish financial-domain accuracy or production readiness."
+    ]
+  },
+  "runtime_compatibility": [
+    {
+      "host": "Generic Agent Skills-compatible host",
+      "surface": "Import/discovery only",
+      "status": "declared"
+    },
+    {
+      "host": "Python runtime",
+      "surface": "Script execution",
+      "status": "not-tested"
+    }
+  ]
+}

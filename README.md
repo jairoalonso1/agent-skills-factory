@@ -16,12 +16,14 @@ Read:
 - [Skill, Capability and Runtime Architecture](docs/RUNTIME-ARCHITECTURE.md)
 - [Execution Capability Matrix](docs/EXECUTION-CAPABILITY-MATRIX.md)
 - [Platform compatibility](docs/PLATFORM-COMPATIBILITY.md)
+- [Skills as a Service](docs/SKILL-AS-A-SERVICE.md)
+- [Quality, evaluation and release governance](docs/SKILL-QUALITY-AND-RELEASES.md)
 
 ## Available Skills
 
 | Skill | Purpose | Version | Status |
 |---|---|---:|---|
-| [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Institutional equity research and valuation | 0.1.0 | Initial port; runtime validation pending |
+| [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Executable institutional equity research: deterministic financial analysis, valuation and standardized reports | 0.2.0 | Candidate for review; runtime validation pending |
 
 Machine-readable catalogue: [registry/skills.json](registry/skills.json).
 
@@ -57,7 +59,7 @@ A workflow can invoke multiple Skills, tools and runtimes. A Skill can be reused
 
 ## Execution and dependencies
 
-Python and third-party libraries are optional runtime dependencies, not prerequisites for understanding or loading a Skill. A dependency declaration does not install a package. The host/runtime must provide and verify it.
+Python and third-party libraries are optional for loading and understanding a Skill, but required when its declared scripts need to execute. A dependency declaration does not install a package. The host/runtime must provide and verify it.
 
 Execution preference: host sandbox, authorized local/managed runtime, authorized remote runtime, then a bounded no-execution fallback. Public online compilers are suitable only for isolated non-sensitive experiments; do not send confidential data or secrets.
 
@@ -72,6 +74,10 @@ AX workflows and Skill calls use vendor-neutral data contracts:
 - Interoperability examples: `examples/`
 
 These schemas define portable data boundaries; they are not a runtime, scheduler or agent framework.
+
+## Quality and release governance
+
+The factory distinguishes documented, declared and tested capabilities. Skill releases should carry immutable version references, explicit data dependencies, reproducible evaluation records and truthful host-compatibility evidence. Commercial service commitments, prices and accountability are separate from the portable Skill package. See [Skill Quality and Release Governance](docs/SKILL-QUALITY-AND-RELEASES.md), [Skills as a Service](docs/SKILL-AS-A-SERVICE.md) and [release metadata schema](schemas/skill-release.schema.json).
 
 ## Principles
 
