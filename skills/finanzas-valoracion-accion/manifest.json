@@ -8,14 +8,21 @@
   "entrypoint": "SKILL.md",
   "format": "agentskills",
   "mcp_required": false,
+  "ax": {
+    "role": "specialized-domain-capability",
+    "workflow_owner": "host-agent-orchestrator",
+    "supports": ["workflow-handoff", "structured-findings", "provenance", "warnings", "human-review"],
+    "does_not_own": ["workflow-orchestration", "host-interface", "runtime-provisioning", "user-permissions"]
+  },
   "runtime_requirements": {
-    "python": "optional; recommended for reproducible calculations and deliverables",
-    "network": "needed for live external data",
-    "external_data_access": "permitted data provider, API, MCP server, browser or user-supplied dataset",
-    "file_generation": "depends on agent runtime"
+    "python": "optional for understanding; required for reproducible execution of included Python modules",
+    "network": "required only for live external data retrieval",
+    "external_data_access": "authorized provider, API, MCP server, browser or user-supplied dataset",
+    "file_generation": "depends on agent runtime and installed format libraries",
+    "execution_modes": ["native-sandbox", "local-runtime", "authorized-remote-runtime", "no-execution-fallback"]
   },
   "dependencies": {
-    "python": ["pandas", "numpy", "matplotlib", "financetoolkit", "quantstats", "openpyxl", "python-docx", "python-pptx"]
+    "python": ["pandas", "numpy", "matplotlib", "seaborn", "financetoolkit", "quantstats", "edgartools", "yfinance", "openpyxl", "python-docx", "python-pptx", "finrobot"]
   },
   "outputs": ["HTML", "XLSX", "DOCX", "PPTX"],
   "branding": "Created by Jairo Alonso González",

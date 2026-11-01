@@ -1,15 +1,21 @@
 # Agent Skills Factory
 
-Open, vendor-neutral repository for reusable AI Agent Skills.
+Open, vendor-neutral repository for reusable AI Agent Skills and their optional execution resources.
 
 Owner: Jairo Alonso González  
-Factory license: MIT. Each Skill may specify its own license in its manifest.
+Factory license: MIT. Each Skill may specify its own license.
 
-## What this is
+## Purpose
 
-GitHub is the source of truth. Each Skill is a folder containing a standard SKILL.md plus optional references, scripts and assets. The same portable core can be installed into compatible agent environments; platform-specific import and discovery methods are documented separately.
+GitHub is the source of truth. Each Skill is a portable package centered on a standard `SKILL.md`, with optional references, scripts and assets. The package describes a specialized capability; it does not assume every host has the same model, interface, orchestration, runtime, network access or tools.
 
-This repository does not assume every AI product has the same discovery mechanism, execution tools, network access or runtime.
+**AX (Agent Experience)** is the broader design discipline for the complete person–agent work experience. The factory supplies reusable capabilities that agents can invoke inside AX workflows.
+
+Read:
+- [AX — Agent Experience](docs/AX-FRAMEWORK.md)
+- [Skill, Capability and Runtime Architecture](docs/RUNTIME-ARCHITECTURE.md)
+- [Execution Capability Matrix](docs/EXECUTION-CAPABILITY-MATRIX.md)
+- [Platform compatibility](docs/PLATFORM-COMPATIBILITY.md)
 
 ## Available Skills
 
@@ -23,79 +29,47 @@ Machine-readable catalogue: [registry/skills.json](registry/skills.json).
 
 Recommended general installer: the open-source Vercel Skills CLI. It detects supported agent directories and installs from GitHub.
 
-List Skills:
-~~~bash
+```bash
 npx skills add jairoalonso1/agent-skills-factory --list
-~~~
-
-Install the equity research Skill:
-~~~bash
 npx skills add jairoalonso1/agent-skills-factory --skill finanzas-valoracion-accion
-~~~
-
-Install for a specific supported agent:
-~~~bash
-npx skills add jairoalonso1/agent-skills-factory --skill finanzas-valoracion-accion --agent claude-code
-~~~
-
-Install globally where supported:
-~~~bash
-npx skills add jairoalonso1/agent-skills-factory --skill finanzas-valoracion-accion -g
-~~~
-
-Check and update:
-~~~bash
 npx skills check
 npx skills update finanzas-valoracion-accion
-~~~
+```
 
-The CLI's supported agent identifiers evolve independently. Consult its [CLI documentation](https://github.com/vercel-labs/skills/blob/main/docs/commands.md).
+Consult the [CLI documentation](https://github.com/vercel-labs/skills/blob/main/docs/commands.md) for current agent identifiers and capabilities.
 
-## Manual installation
+## What is a Skill?
 
-If an environment is not detected, copy the complete Skill directory—not only SKILL.md—to the location documented by that agent. Standard package:
+A Skill is a portable, discoverable package of procedural knowledge, methodology and task-specific resources. It defines when to use a capability, inputs, procedure, constraints, outputs and verification.
 
-~~~text
-skills/finanzas-valoracion-accion/
-├── SKILL.md
-├── manifest.json
-└── references/
-    └── valuation-framework.md
-~~~
+A Skill is not a model, orchestrator, UI, runtime, package manager, data provider, API/MCP server or permission grant. It may contain scripts, but the host must provide a compatible execution environment.
 
-A compatible agent must be able to read Skill files. For products without native discovery, use the platform's supported import/upload mechanism or attach the package and explicitly ask the agent to follow it. This is not equivalent to native automatic discovery.
+## AX relationship
 
-## Does a Skill need MCP?
+- AX designs the end-to-end person–agent workflow and interaction.
+- The agent/orchestrator plans, reasons and selects capabilities.
+- A Skill provides a specialized, reusable capability.
+- A runtime executes code when available.
+- Tools/connectors provide external data and actions.
+- The host interface presents progress, evidence and results.
 
-No. A Skill defines a workflow and domain instructions. MCP servers, APIs, local scripts and other tools are optional dependencies. The equity research Skill can guide analysis without MCP. Live data access or external actions require an authorized data source, connector, API or MCP tool. Reproducible calculations and file generation require a suitable Python/runtime environment and packages.
+A workflow can invoke multiple Skills, tools and runtimes. A Skill can be reused by many workflows and agents.
+
+## Execution and dependencies
+
+Python and third-party libraries are optional runtime dependencies, not prerequisites for understanding or loading a Skill. A dependency declaration does not install a package. The host/runtime must provide and verify it.
+
+Execution preference: host sandbox, authorized local/managed runtime, authorized remote runtime, then a bounded no-execution fallback. Public online compilers are suitable only for isolated non-sensitive experiments; do not send confidential data or secrets.
+
+MCP is optional. Use it only when the workflow needs an external tool exposed through MCP and the host supports it.
 
 ## Principles
 
-- Portable core: standard SKILL.md, relative references and optional scripts.
-- Honest compatibility: do not claim support until tested.
-- Progressive disclosure: keep detailed methodology in references.
-- Reproducibility: record sources, as-of dates, assumptions and versions.
-- Safety: review executable code, pin dependencies where practical, never bundle secrets.
-- Human accountability: research outputs are not personalized investment advice.
-
-## Structure
-
-~~~text
-.
-├── registry/skills.json
-├── skills/<skill-name>/
-│   ├── SKILL.md
-│   ├── manifest.json
-│   ├── references/
-│   ├── scripts/
-│   └── assets/
-├── docs/
-├── scripts/
-└── .github/workflows/
-~~~
+- Vendor-neutral portable core.
+- Progressive disclosure and explicit capability contracts.
+- Honest distinction between documented, declared and runtime-tested compatibility.
+- Reproducible outputs with sources, assumptions, dates and versions.
+- Secure execution; never bundle secrets.
+- Human accountability and explicit approvals for consequential actions.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
-
-## Status
-
-First public MVP. The initial Skill is a careful port of the supplied source file, not a claim that every valuation method, data provider or deliverable has been integration-tested in every agent runtime.
