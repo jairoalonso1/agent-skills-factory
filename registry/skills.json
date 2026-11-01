@@ -5,32 +5,75 @@
   "skills": [
     {
       "id": "finanzas-valoracion-accion",
-      "name": "Universal Institutional Equity Research",
-      "description": "Institutional equity research workflow covering financial statement analysis, applicable valuation methods, scenario analysis, technical context, investment thesis and report generation.",
-      "version": "0.1.0",
+      "name": "Institutional Equity Research",
+      "description": "Evidence-led institutional equity research covering business and industry analysis, financial statement quality, applicable valuation methods, scenarios, investment thesis, risks and report generation.",
+      "version": "0.2.0",
       "path": "skills/finanzas-valoracion-accion",
       "manifest": "skills/finanzas-valoracion-accion/manifest.json",
       "skill_file": "skills/finanzas-valoracion-accion/SKILL.md",
       "status": "candidate",
       "license": "MIT",
-      "tags": ["finance", "equity-research", "valuation", "investment-analysis"],
+      "tags": [
+        "finance",
+        "equity-research",
+        "valuation",
+        "fundamental-analysis",
+        "investment-research"
+      ],
       "requires": {
         "mcp": false,
-        "python": "optional-for-loading; required for reproducible execution of Python modules",
+        "python": "required-for-reproducible-calculation-and-file-generation",
         "network": "required-only-for-live-external-data",
-        "packages": ["pandas", "numpy", "matplotlib", "seaborn", "financetoolkit", "quantstats", "edgartools", "yfinance", "openpyxl", "python-docx", "python-pptx", "finrobot"]
+        "packages": [
+          "jsonschema",
+          "numpy",
+          "openpyxl",
+          "pandas",
+          "python-docx",
+          "python-pptx"
+        ],
+        "optional_packages": [
+          "matplotlib"
+        ]
       },
-      "execution_modes": ["native-sandbox", "local-runtime", "authorized-remote-runtime", "no-execution-fallback"],
+      "execution_modes": [
+        "native-sandbox",
+        "local-runtime",
+        "authorized-remote-runtime",
+        "no-execution-fallback"
+      ],
       "ax_role": "specialized-domain-capability",
-      "capabilities": ["financial-statement-analysis", "scenario-based-valuation", "technical-analysis", "generate-html-xlsx-docx-pptx"],
+      "capabilities": [
+        "business-and-industry-research",
+        "deterministic-calculation-engine",
+        "financial-statement-analysis",
+        "generate-html-xlsx-docx-pptx",
+        "investment-thesis-and-risk-analysis",
+        "scenario-based-valuation",
+        "standardized-report-generation",
+        "technical-analysis-context",
+        "validated-research-package-runner"
+      ],
       "evaluation": {
-        "status": "not-run",
-        "scope": "Package tests and domain validation are tracked separately; no host runtime compatibility is claimed."
+        "status": "partial",
+        "scope": "29 unit tests and synthetic CLI smoke test passed in Python 3.13.18; domain accuracy and cross-host runtime remain unvalidated."
       },
       "data_dependencies": [
-        {"name": "Issuer filings and market data", "access_mode": "public-or-user-supplied", "license_status": "verify-per-source", "provenance_required": true},
-        {"name": "Licensed market data", "access_mode": "licensed", "license_status": "pending", "provenance_required": true}
+        {
+          "name": "Issuer filings and market prices",
+          "access_mode": "public-or-user-supplied",
+          "license_status": "verify-per-source",
+          "freshness": "Verify retrieval timestamp, filing date and reporting period for every invocation",
+          "provenance_required": true
+        },
+        {
+          "name": "Licensed market data (optional)",
+          "access_mode": "licensed",
+          "license_status": "pending",
+          "freshness": "Provider-defined; verify entitlement and timestamp",
+          "provenance_required": true
+        }
       ]
     }
   ]
-}
+}\n
