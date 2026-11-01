@@ -1,0 +1,267 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jairoalonso1/agent-skills-factory/blob/main/schemas/skill-invocation.schema.json",
+  "title": "Universal Skill Invocation Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "invocation_id",
+    "workflow_ref",
+    "skill_ref",
+    "operation",
+    "request",
+    "capabilities",
+    "permissions",
+    "response_contract"
+  ],
+  "properties": {
+    "protocol_version": {
+      "const": "1.0.0"
+    },
+    "invocation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workflow_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow_id",
+        "task_id"
+      ],
+      "properties": {
+        "workflow_id": {
+          "type": "string"
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "correlation_id": {
+          "type": "string"
+        }
+      }
+    },
+    "skill_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "entrypoint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "entrypoint": {
+          "type": "string"
+        }
+      }
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "goal",
+        "inputs"
+      ],
+      "properties": {
+        "goal": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "object"
+        },
+        "context": {
+          "type": "object"
+        },
+        "context_references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "locator"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "url",
+                  "file",
+                  "record",
+                  "artifact",
+                  "tool_result"
+                ]
+              },
+              "locator": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scope": {
+          "type": "string"
+        },
+        "deadline": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_policy": {
+          "type": "string"
+        },
+        "output_formats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_execution_seconds": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_available"
+      ],
+      "properties": {
+        "runtime_available": {
+          "type": "boolean"
+        },
+        "runtime_mode": {
+          "enum": [
+            "native_sandbox",
+            "local",
+            "remote",
+            "none"
+          ]
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "installed_packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "version"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "filesystem": {
+          "type": "boolean"
+        },
+        "artifact_output": {
+          "type": "boolean"
+        },
+        "network": {
+          "type": "boolean"
+        },
+        "allowed_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "data_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "granted_actions",
+        "approval_required"
+      ],
+      "properties": {
+        "granted_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "approval_required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "credential_handles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Opaque handles only; never secret values."
+        }
+      }
+    },
+    "response_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "include_provenance"
+      ],
+      "properties": {
+        "format": {
+          "enum": [
+            "structured_json"
+          ]
+        },
+        "include_provenance": {
+          "type": "boolean"
+        },
+        "include_warnings": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

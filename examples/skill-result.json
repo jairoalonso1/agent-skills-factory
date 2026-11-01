@@ -1,0 +1,71 @@
+{
+  "protocol_version": "1.0.0",
+  "invocation_id": "inv-2026-0001",
+  "workflow_ref": {
+    "workflow_id": "wf-equity-msft-2026-001",
+    "task_id": "financial-analysis"
+  },
+  "skill_ref": {
+    "id": "finanzas-valoracion-accion",
+    "version": "0.1.0"
+  },
+  "status": "partial",
+  "summary": "Calculated selected historical metrics from the supplied filing data. Some ratios remain unavailable because required line items were not present.",
+  "outputs": {
+    "periods_analyzed": 5,
+    "metrics": {
+      "revenue_growth": [
+        0.12,
+        0.09,
+        0.08
+      ],
+      "operating_margin": [
+        0.41,
+        0.42,
+        0.43
+      ],
+      "return_on_equity": [
+        0.32,
+        0.35,
+        0.36
+      ]
+    },
+    "missing_inputs": [
+      "average invested capital for ROIC reconciliation"
+    ],
+    "assumptions": [
+      "Fiscal periods were aligned to issuer-reported fiscal years."
+    ]
+  },
+  "artifacts": [],
+  "evidence": [
+    {
+      "source": "User-supplied annual filing dataset",
+      "claim_or_output": "Revenue and operating income series used for historical growth and margin calculations.",
+      "accessed_at": "2026-11-01T22:12:00Z",
+      "locator": "uploaded-file:annual-filings.csv"
+    }
+  ],
+  "warnings": [
+    "Network access was unavailable; no live market data was retrieved.",
+    "ROIC was not calculated because average invested capital could not be verified."
+  ],
+  "errors": [],
+  "execution": {
+    "started": true,
+    "started_at": "2026-11-01T22:11:00Z",
+    "completed_at": "2026-11-01T22:12:00Z",
+    "runtime_mode": "native_sandbox",
+    "code_executed": true,
+    "packages_used": [
+      "pandas",
+      "numpy"
+    ],
+    "network_accessed": false,
+    "execution_reference": "local-run-0001"
+  },
+  "next_actions": [
+    "Provide average invested capital or the underlying balance-sheet values to complete ROIC."
+  ],
+  "approval_requests": []
+}

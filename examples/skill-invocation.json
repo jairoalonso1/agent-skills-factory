@@ -1,0 +1,84 @@
+{
+  "protocol_version": "1.0.0",
+  "invocation_id": "inv-2026-0001",
+  "workflow_ref": {
+    "workflow_id": "wf-equity-msft-2026-001",
+    "task_id": "financial-analysis",
+    "correlation_id": "wf-equity-msft-2026-001"
+  },
+  "skill_ref": {
+    "id": "finanzas-valoracion-accion",
+    "version": "0.1.0",
+    "entrypoint": "SKILL.md"
+  },
+  "operation": "analyze_financial_statements",
+  "request": {
+    "goal": "Analyze historical financial performance and return structured metrics, assumptions and data-quality warnings.",
+    "inputs": {
+      "ticker": "MSFT",
+      "reporting_currency": "USD",
+      "periods": 5
+    },
+    "context": {
+      "analysis_type": "institutional_equity_research",
+      "accounting_basis": "verify_from_filings"
+    },
+    "context_references": [
+      {
+        "type": "url",
+        "locator": "https://www.sec.gov/edgar/search/",
+        "label": "SEC EDGAR search"
+      }
+    ]
+  },
+  "constraints": {
+    "scope": "Historical financial analysis only; do not issue an investment recommendation from this operation alone.",
+    "source_policy": "Prefer SEC filings and issuer reports; disclose any secondary data source.",
+    "output_formats": [
+      "structured_json"
+    ],
+    "max_execution_seconds": 180
+  },
+  "capabilities": {
+    "runtime_available": true,
+    "runtime_mode": "native_sandbox",
+    "languages": [
+      "python"
+    ],
+    "installed_packages": [
+      {
+        "name": "pandas",
+        "version": "2.x"
+      },
+      {
+        "name": "numpy",
+        "version": "2.x"
+      }
+    ],
+    "filesystem": true,
+    "artifact_output": true,
+    "network": false,
+    "allowed_domains": [],
+    "tools": [],
+    "data_sources": [
+      "user_supplied_filings"
+    ]
+  },
+  "permissions": {
+    "granted_actions": [
+      "read_user_supplied_files",
+      "execute_local_analysis"
+    ],
+    "approval_required": [
+      "external_network_access",
+      "external_account_connection",
+      "external_write"
+    ],
+    "credential_handles": []
+  },
+  "response_contract": {
+    "format": "structured_json",
+    "include_provenance": true,
+    "include_warnings": true
+  }
+}

@@ -63,6 +63,16 @@ Execution preference: host sandbox, authorized local/managed runtime, authorized
 
 MCP is optional. Use it only when the workflow needs an external tool exposed through MCP and the host supports it.
 
+## Workflow and invocation contracts
+
+AX workflows and Skill calls use vendor-neutral data contracts:
+- [AX Workflow Experience model](docs/WORKFLOW-MODEL.md)
+- [Universal Skill Invocation Contract](docs/SKILL-INVOCATION-CONTRACT.md)
+- JSON Schemas: `schemas/`
+- Interoperability examples: `examples/`
+
+These schemas define portable data boundaries; they are not a runtime, scheduler or agent framework.
+
 ## Principles
 
 - Vendor-neutral portable core.

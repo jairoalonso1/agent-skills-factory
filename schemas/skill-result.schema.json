@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jairoalonso1/agent-skills-factory/blob/main/schemas/skill-result.schema.json",
+  "title": "Universal Skill Invocation Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "invocation_id",
+    "workflow_ref",
+    "skill_ref",
+    "status",
+    "summary",
+    "outputs",
+    "artifacts",
+    "evidence",
+    "warnings",
+    "errors",
+    "execution"
+  ],
+  "properties": {
+    "protocol_version": {
+      "const": "1.0.0"
+    },
+    "invocation_id": {
+      "type": "string"
+    },
+    "workflow_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow_id",
+        "task_id"
+      ],
+      "properties": {
+        "workflow_id": {
+          "type": "string"
+        },
+        "task_id": {
+          "type": "string"
+        }
+      }
+    },
+    "skill_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "succeeded",
+        "partial",
+        "needs_input",
+        "blocked",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "outputs": {
+      "type": "object"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "media_type"
+        ],
+        "properties": {
+          "artifact_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          },
+          "checksum": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "claim_or_output"
+        ],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "claim_or_output": {
+            "type": "string"
+          },
+          "accessed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "locator": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "message",
+          "retryable"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "retryable": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "started",
+        "code_executed",
+        "network_accessed"
+      ],
+      "properties": {
+        "started": {
+          "type": "boolean"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "runtime_mode": {
+          "enum": [
+            "native_sandbox",
+            "local",
+            "remote",
+            "none"
+          ]
+        },
+        "code_executed": {
+          "type": "boolean"
+        },
+        "packages_used": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "network_accessed": {
+          "type": "boolean"
+        },
+        "execution_reference": {
+          "type": "string"
+        }
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "approval_requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action",
+          "reason"
+        ],
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
