@@ -16,12 +16,14 @@ Read:
 - [Skill, Capability and Runtime Architecture](docs/RUNTIME-ARCHITECTURE.md)
 - [Execution Capability Matrix](docs/EXECUTION-CAPABILITY-MATRIX.md)
 - [Platform compatibility](docs/PLATFORM-COMPATIBILITY.md)
+- [Skills as a Service](docs/SKILL-AS-A-SERVICE.md)
+- [Quality, evaluation and release governance](docs/SKILL-QUALITY-AND-RELEASES.md)
 
 ## Available Skills
 
 | Skill | Purpose | Version | Status |
 |---|---|---:|---|
-| [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Institutional equity research and valuation | 0.1.0 | Initial port; runtime validation pending |
+| [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Institutional equity research and valuation | 0.1.0 | Initial port; runtime and domain evaluation pending |
 
 Machine-readable catalogue: [registry/skills.json](registry/skills.json).
 
@@ -72,6 +74,12 @@ AX workflows and Skill calls use vendor-neutral data contracts:
 - Interoperability examples: `examples/`
 
 These schemas define portable data boundaries; they are not a runtime, scheduler or agent framework.
+
+## Quality and release governance
+
+The factory distinguishes documented, declared and actually tested capabilities. Releases should carry immutable version references, explicit data dependencies, reproducible evaluation records and truthful host-compatibility evidence. Commercial service commitments, prices and accountability are separate from the portable Skill package.
+
+See [Skill Quality and Release Governance](docs/SKILL-QUALITY-AND-RELEASES.md) and [Skills as a Service](docs/SKILL-AS-A-SERVICE.md). The [release metadata schema](schemas/skill-release.schema.json) is an initial governance contract; it does not certify a Skill.
 
 ## Principles
 

@@ -24,7 +24,19 @@
   "dependencies": {
     "python": ["pandas", "numpy", "matplotlib", "seaborn", "financetoolkit", "quantstats", "edgartools", "yfinance", "openpyxl", "python-docx", "python-pptx", "finrobot"]
   },
+  "data_dependencies": [
+    {"name": "Issuer filings and market data", "access_mode": "public-or-user-supplied", "license_status": "verify-per-source", "freshness": "Verify retrieval timestamp and reporting period for each analysis", "provenance_required": true},
+    {"name": "Licensed market data", "access_mode": "licensed", "license_status": "pending", "freshness": "Provider-defined", "provenance_required": true}
+  ],
+  "evaluation": {
+    "status": "not-run",
+    "limitations": ["Passing package tests alone does not establish financial-domain accuracy, point-in-time integrity or production readiness."]
+  },
+  "runtime_compatibility": [
+    {"host": "Generic Agent Skills-compatible host", "surface": "Package discovery/import", "status": "declared"},
+    {"host": "Python runtime", "surface": "Execution of included scripts", "status": "not-tested"}
+  ],
   "outputs": ["HTML", "XLSX", "DOCX", "PPTX"],
   "branding": "Created by Jairo Alonso González",
-  "status": "initial-port-needs-runtime-validation"
+  "status": "candidate"
 }

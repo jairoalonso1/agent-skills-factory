@@ -11,7 +11,7 @@
       "path": "skills/finanzas-valoracion-accion",
       "manifest": "skills/finanzas-valoracion-accion/manifest.json",
       "skill_file": "skills/finanzas-valoracion-accion/SKILL.md",
-      "status": "initial-port-needs-runtime-validation",
+      "status": "candidate",
       "license": "MIT",
       "tags": ["finance", "equity-research", "valuation", "investment-analysis"],
       "requires": {
@@ -22,7 +22,15 @@
       },
       "execution_modes": ["native-sandbox", "local-runtime", "authorized-remote-runtime", "no-execution-fallback"],
       "ax_role": "specialized-domain-capability",
-      "capabilities": ["financial-statement-analysis", "scenario-based-valuation", "technical-analysis", "generate-html-xlsx-docx-pptx"]
+      "capabilities": ["financial-statement-analysis", "scenario-based-valuation", "technical-analysis", "generate-html-xlsx-docx-pptx"],
+      "evaluation": {
+        "status": "not-run",
+        "scope": "Package tests and domain validation are tracked separately; no host runtime compatibility is claimed."
+      },
+      "data_dependencies": [
+        {"name": "Issuer filings and market data", "access_mode": "public-or-user-supplied", "license_status": "verify-per-source", "provenance_required": true},
+        {"name": "Licensed market data", "access_mode": "licensed", "license_status": "pending", "provenance_required": true}
+      ]
     }
   ]
 }
