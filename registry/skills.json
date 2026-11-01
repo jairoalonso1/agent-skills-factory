@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "repository": "jairoalonso1/agent-skills-factory",
+  "license": "MIT",
+  "skills": [
+    {
+      "id": "finanzas-valoracion-accion",
+      "name": "Universal Institutional Equity Research",
+      "description": "Institutional equity research workflow covering financial statement analysis, applicable valuation methods, scenario analysis, technical context, investment thesis and report generation.",
+      "version": "0.1.0",
+      "path": "skills/finanzas-valoracion-accion",
+      "manifest": "skills/finanzas-valoracion-accion/manifest.json",
+      "skill_file": "skills/finanzas-valoracion-accion/SKILL.md",
+      "status": "initial-port-needs-runtime-validation",
+      "license": "MIT",
+      "tags": ["finance", "equity-research", "valuation", "investment-analysis"],
+      "requires": {
+        "mcp": false,
+        "python": "optional-but-recommended-for-reproducible-calculations-and-deliverables",
+        "network": "required-for-live-external-data",
+        "packages": ["financetoolkit", "quantstats", "pandas", "numpy", "matplotlib", "openpyxl", "python-docx", "python-pptx"]
+      },
+      "capabilities": ["financial-statement-analysis", "scenario-based-valuation", "technical-analysis", "generate-html-xlsx-docx-pptx"]
+    }
+  ]
+}

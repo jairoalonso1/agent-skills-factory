@@ -1,0 +1,23 @@
+{
+  "id": "finanzas-valoracion-accion",
+  "name": "Universal Institutional Equity Research",
+  "version": "0.1.0",
+  "description": "Build a sourced, scenario-based institutional equity research report for a listed company. Use for company analysis, stock valuation, financial statement analysis, comparable-company valuation, DCF or equity research reports.",
+  "license": "MIT",
+  "author": "Jairo Alonso González",
+  "entrypoint": "SKILL.md",
+  "format": "agentskills",
+  "mcp_required": false,
+  "runtime_requirements": {
+    "python": "optional; recommended for reproducible calculations and deliverables",
+    "network": "needed for live external data",
+    "external_data_access": "permitted data provider, API, MCP server, browser or user-supplied dataset",
+    "file_generation": "depends on agent runtime"
+  },
+  "dependencies": {
+    "python": ["pandas", "numpy", "matplotlib", "financetoolkit", "quantstats", "openpyxl", "python-docx", "python-pptx"]
+  },
+  "outputs": ["HTML", "XLSX", "DOCX", "PPTX"],
+  "branding": "Created by Jairo Alonso González",
+  "status": "initial-port-needs-runtime-validation"
+}
