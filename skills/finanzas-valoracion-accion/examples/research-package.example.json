@@ -1,0 +1,82 @@
+{
+  "issuer": "Example plc (synthetic demonstration)",
+  "ticker": "EXM",
+  "exchange": "Example Exchange",
+  "valuation_date": "2026-10-31",
+  "current_price": 42.5,
+  "price_timestamp": "2026-10-31T16:00:00Z",
+  "reporting_currency": "USD",
+  "rating": "NOT_RATED",
+  "investment_thesis": {
+    "summary": "Synthetic example only; replace all illustrative values with verified research.",
+    "catalysts": [],
+    "invalidation_conditions": []
+  },
+  "financials": {
+    "revenue": 1000,
+    "revenue_growth": 0.08,
+    "ebit_margin": 0.18,
+    "net_income": 100,
+    "free_cash_flow": 80,
+    "roic": 0.12
+  },
+  "industry": {
+    "sector": "Illustrative industrials",
+    "peer_selection_basis": "Synthetic peers for demonstration only",
+    "peers": [
+      "Peer A",
+      "Peer B",
+      "Peer C"
+    ]
+  },
+  "valuation": {
+    "method": "Illustrative DCF",
+    "intrinsic_value_per_share": 48.0,
+    "assumptions": {
+      "wacc": 0.09,
+      "terminal_growth": 0.025
+    }
+  },
+  "scenarios": {
+    "bear": {
+      "target_price": 30.0,
+      "drivers": [
+        "Lower growth and margin pressure"
+      ]
+    },
+    "base": {
+      "target_price": 48.0,
+      "drivers": [
+        "Illustrative central assumptions"
+      ]
+    },
+    "bull": {
+      "target_price": 60.0,
+      "drivers": [
+        "Higher growth and margin expansion"
+      ]
+    }
+  },
+  "risks": [
+    "Synthetic example risk; replace with issuer-specific risks."
+  ],
+  "sources": [
+    {
+      "source_id": "EXAMPLE-1",
+      "publisher": "Example data provider",
+      "title": "Synthetic illustrative dataset — not a real issuer source",
+      "url": "https://example.com/synthetic-research",
+      "published_at": "2026-10-31",
+      "retrieved_at": "2026-10-31T16:00:00Z",
+      "evidence_type": "analyst_assumption",
+      "notes": "Placeholder used only to demonstrate the package contract; not factual evidence."
+    }
+  ],
+  "assumptions": [
+    "All figures are synthetic and must not be used for investment decisions."
+  ],
+  "data_gaps": [
+    "Replace all synthetic values and the example source with verified primary-source data."
+  ],
+  "artifacts": []
+}
