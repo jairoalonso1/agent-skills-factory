@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the registry and basic Agent Skill package structure."""
+"""Validate the Skill registry, package structure, AX schemas and examples."""
 
 from __future__ import annotations
 
@@ -7,6 +7,8 @@ import json
 import re
 import sys
 from pathlib import Path
+
+from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "registry" / "skills.json"
@@ -18,15 +20,43 @@ def fail(message: str) -> None:
     raise SystemExit(1)
 
 
+def read_json(path: Path):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"{path.relative_to(ROOT)} is invalid JSON: {exc}")
+
+
+def validate_schemas_and_examples() -> None:
+    pairs = [
+        ("schemas/ax-workflow.schema.json", "examples/equity-research-workflow.json"),
+        ("schemas/skill-invocation.schema.json", "examples/skill-invocation.json"),
+        ("schemas/skill-result.schema.json", "examples/skill-result.json"),
+    ]
+    for schema_name, example_name in pairs:
+        schema_path = ROOT / schema_name
+        example_path = ROOT / example_name
+        if not schema_path.is_file() or not example_path.is_file():
+            fail(f"missing schema/example pair: {schema_name}, {example_name}")
+        schema = read_json(schema_path)
+        example = read_json(example_path)
+        Draft202012Validator.check_schema(schema)
+        validator = Draft202012Validator(schema, format_checker=FormatChecker())
+        errors = sorted(validator.iter_errors(example), key=lambda error: list(error.path))
+        if errors:
+            details = "; ".join(
+                f"{'/'.join(str(part) for part in error.path) or '<root>'}: {error.message}"
+                for error in errors
+            )
+            fail(f"{example_name} does not satisfy {schema_name}: {details}")
+        print(f"OK: {example_name} validates against {schema_name}")
+
+
 def main() -> None:
     if not REGISTRY.is_file():
         fail("registry/skills.json is missing")
 
-    try:
-        registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        fail(f"registry/skills.json is invalid JSON: {exc}")
-
+    registry = read_json(REGISTRY)
     if registry.get("schema_version") != "1.0.0":
         fail("unsupported or missing registry schema_version")
 
@@ -60,18 +90,19 @@ def main() -> None:
         if len(parts) < 3:
             fail(f"{skill_file.relative_to(ROOT)} has unclosed YAML frontmatter")
         frontmatter = parts[1]
-        if not re.search(r"(?m)^name:\s*" + re.escape(skill_id) + r"\s*$", frontmatter):
+        if not re.search(r"(?m)^name:\\s*" + re.escape(skill_id) + r"\\s*$", frontmatter):
             fail(f"{skill_file.relative_to(ROOT)} name does not match registry id")
-        if not re.search(r"(?m)^description:\s*.+$", frontmatter):
+        if not re.search(r"(?m)^description:\\s*.+$", frontmatter):
             fail(f"{skill_file.relative_to(ROOT)} is missing description")
 
-        manifest = json.loads(paths[2].read_text(encoding="utf-8"))
+        manifest = read_json(paths[2])
         if manifest.get("id") != skill_id:
             fail(f"{paths[2].relative_to(ROOT)} id does not match registry")
         if manifest.get("version") != entry.get("version"):
             fail(f"version mismatch for {skill_id}")
 
-    print(f"OK: validated {len(skills)} Skill package(s).")
+    validate_schemas_and_examples()
+    print(f"OK: validated {len(skills)} Skill package(s) and AX contracts.")
 
 
 if __name__ == "__main__":
