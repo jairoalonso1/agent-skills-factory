@@ -90,9 +90,9 @@ def main() -> None:
         if len(parts) < 3:
             fail(f"{skill_file.relative_to(ROOT)} has unclosed YAML frontmatter")
         frontmatter = parts[1]
-        if not re.search(r"(?m)^name:\\s*" + re.escape(skill_id) + r"\\s*$", frontmatter):
+        if not re.search(r"(?m)^name:\s*" + re.escape(skill_id) + r"\s*$", frontmatter):
             fail(f"{skill_file.relative_to(ROOT)} name does not match registry id")
-        if not re.search(r"(?m)^description:\\s*.+$", frontmatter):
+        if not re.search(r"(?m)^description:\s*.+$", frontmatter):
             fail(f"{skill_file.relative_to(ROOT)} is missing description")
 
         manifest = read_json(paths[2])
