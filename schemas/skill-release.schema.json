@@ -4,77 +4,22 @@
   "title": "Skill Release Governance Metadata",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "id",
-    "name",
-    "version",
-    "entrypoint",
-    "release_status",
-    "capabilities",
-    "dependencies",
-    "data_dependencies",
-    "evaluation",
-    "runtime_compatibility"
-  ],
+  "required": ["id", "name", "version", "entrypoint", "release_status", "capabilities", "dependencies", "data_dependencies", "evaluation", "runtime_compatibility"],
   "properties": {
-    "id": {
-      "type": "string",
-      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
-    },
-    "name": {
-      "type": "string",
-      "minLength": 1
-    },
-    "version": {
-      "type": "string",
-      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$"
-    },
-    "entrypoint": {
-      "type": "string",
-      "minLength": 1
-    },
-    "release_status": {
-      "enum": [
-        "draft",
-        "candidate",
-        "validated",
-        "runtime-tested",
-        "evaluated",
-        "managed-service",
-        "deprecated"
-      ]
-    },
-    "release_ref": {
-      "type": "string",
-      "description": "Immutable tag, commit or content digest for this release."
-    },
-    "capabilities": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "uniqueItems": true
-    },
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "name": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "pattern": "^(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)(?:-[0-9A-Za-z.-]+)?$"},
+    "entrypoint": {"type": "string", "minLength": 1},
+    "release_status": {"enum": ["draft", "candidate", "validated", "runtime-tested", "evaluated", "managed-service", "deprecated"]},
+    "release_ref": {"type": "string", "description": "Immutable tag, commit or content digest for this release."},
+    "capabilities": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
     "dependencies": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "name",
-          "version_constraint"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "version_constraint": {
-            "type": "string"
-          },
-          "optional": {
-            "type": "boolean"
-          }
-        }
+        "required": ["name", "version_constraint"],
+        "properties": {"name": {"type": "string"}, "version_constraint": {"type": "string"}, "optional": {"type": "boolean"}}
       }
     },
     "data_dependencies": {
@@ -82,93 +27,30 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "name",
-          "access_mode",
-          "license_status",
-          "freshness"
-        ],
+        "required": ["name", "access_mode", "license_status", "freshness"],
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "access_mode": {
-            "enum": [
-              "user-supplied",
-              "public",
-              "licensed",
-              "proprietary",
-              "unknown"
-            ]
-          },
-          "license_status": {
-            "enum": [
-              "verified",
-              "user-responsibility",
-              "pending",
-              "not-applicable"
-            ]
-          },
-          "freshness": {
-            "type": "string"
-          },
-          "coverage": {
-            "type": "string"
-          },
-          "provenance_required": {
-            "type": "boolean"
-          }
+          "name": {"type": "string"},
+          "access_mode": {"enum": ["user-supplied", "public", "licensed", "proprietary", "unknown"]},
+          "license_status": {"enum": ["verified", "user-responsibility", "pending", "not-applicable"]},
+          "freshness": {"type": "string"},
+          "coverage": {"type": "string"},
+          "provenance_required": {"type": "boolean"}
         }
       }
     },
     "evaluation": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "status"
-      ],
+      "required": ["status"],
       "properties": {
-        "status": {
-          "enum": [
-            "not-run",
-            "in-progress",
-            "passed",
-            "failed",
-            "partial"
-          ]
-        },
-        "suite_ref": {
-          "type": "string"
-        },
-        "suite_version": {
-          "type": "string"
-        },
-        "last_run": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "environment": {
-          "type": "string"
-        },
-        "metrics": {
-          "type": "object",
-          "additionalProperties": {
-            "type": [
-              "number",
-              "string",
-              "boolean"
-            ]
-          }
-        },
-        "report_ref": {
-          "type": "string"
-        },
-        "limitations": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
+        "status": {"enum": ["not-run", "in-progress", "passed", "failed", "partial"]},
+        "suite_ref": {"type": "string"},
+        "suite_version": {"type": "string"},
+        "last_run": {"type": "string", "format": "date-time"},
+        "environment": {"type": "string"},
+        "metrics": {"type": "object", "additionalProperties": {"type": ["number", "string", "boolean"]}},
+        "report_ref": {"type": "string"},
+        "limitations": {"type": "array", "items": {"type": "string"}}
       }
     },
     "runtime_compatibility": {
@@ -176,36 +58,105 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "host",
-          "surface",
-          "status"
-        ],
+        "required": ["host", "surface", "status"],
         "properties": {
-          "host": {
-            "type": "string"
-          },
-          "surface": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          },
-          "status": {
-            "enum": [
-              "documented",
-              "declared",
-              "tested",
-              "not-tested",
-              "failed"
-            ]
-          },
-          "tested_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "evidence_ref": {
-            "type": "string"
+          "host": {"type": "string"},
+          "surface": {"type": "string"},
+          "version": {"type": "string"},
+          "status": {"enum": ["documented", "declared", "tested", "not-tested", "failed"]},
+          "tested_at": {"type": "string", "format": "date-time"},
+          "evidence_ref": {"type": "string"}
+        }
+      }
+    },
+    "service_profile": {
+      "type": "object",
+      "description": "Optional machine-readable description of a Skill as a specialized agent service. It defines the service contract; it does not grant runtime access or permissions.",
+      "additionalProperties": false,
+      "required": ["service_type", "service_outcome", "operations"],
+      "properties": {
+        "service_type": {"const": "specialized-agent-service"},
+        "maturity_level": {"type": "integer", "minimum": 0, "maximum": 4},
+        "service_outcome": {"type": "string", "minLength": 1},
+        "target_users": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "operations": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "workflow_ref": {"type": "string"},
+        "source_policy_ref": {"type": "string"},
+        "methodology_refs": {"type": "array", "items": {"type": "string"}},
+        "interaction": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "intake_ref": {"type": "string"},
+            "ask_for_missing_material_inputs": {"type": "boolean"},
+            "explain_reason_for_sensitive_or_external_data_requests": {"type": "boolean"},
+            "require_approval_for_external_writes_or_sensitive_transfers": {"type": "boolean"},
+            "never_request_plaintext_secrets": {"type": "boolean"}
+          }
+        },
+        "preferred_libraries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "purpose", "required"],
+            "properties": {
+              "name": {"type": "string"},
+              "purpose": {"type": "string"},
+              "required": {"type": "boolean"},
+              "version_policy": {"type": "string"}
+            }
+          }
+        },
+        "local_code_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "allowed": {"type": "array", "items": {"type": "string"}},
+            "separate_library_when": {"type": "array", "items": {"type": "string"}},
+            "large_library_copying_allowed": {"const": false}
+          }
+        },
+        "integration_requirements": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mcp_required": {"type": "boolean"},
+            "supported_patterns": {"type": "array", "items": {"type": "string"}},
+            "access_policy": {"type": "string"}
+          }
+        },
+        "output_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_ref": {"type": "string"},
+            "report_standard_ref": {"type": "string"},
+            "formats": {"type": "array", "items": {"type": "string"}},
+            "consistency_policy": {"type": "string"}
+          }
+        },
+        "quality_gates_ref": {"type": "string"},
+        "model_portability": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "target": {"type": "string"},
+            "guarantee": {"type": "string"},
+            "cross_model_status": {"enum": ["not-tested", "in-progress", "partial", "tested", "failed"]}
+          }
+        },
+        "commercialization": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "available": {"type": "boolean"},
+            "future_options": {
+              "type": "array",
+              "items": {"enum": ["per-invocation", "department-or-user-subscription", "usage-based", "managed-runtime", "licensed-data", "enterprise-contract"]},
+              "uniqueItems": true
+            },
+            "note": {"type": "string"}
           }
         }
       }
@@ -214,50 +165,21 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "provider": {
-          "type": "string"
-        },
-        "support_contact": {
-          "type": "string"
-        },
-        "support_policy_ref": {
-          "type": "string"
-        },
-        "service_objectives_ref": {
-          "type": "string"
-        },
-        "accountability_scope": {
-          "type": "string"
-        }
+        "provider": {"type": "string"},
+        "support_contact": {"type": "string"},
+        "support_policy_ref": {"type": "string"},
+        "service_objectives_ref": {"type": "string"},
+        "accountability_scope": {"type": "string"}
       }
     },
     "commercial": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "availability": {
-          "enum": [
-            "not-offered",
-            "quote-only",
-            "public"
-          ]
-        },
-        "pricing_model": {
-          "enum": [
-            "per-invocation",
-            "usage",
-            "subscription",
-            "managed-runtime",
-            "licensed-data",
-            "enterprise-contract"
-          ]
-        },
-        "price_ref": {
-          "type": "string"
-        },
-        "currency": {
-          "type": "string"
-        }
+        "availability": {"enum": ["not-offered", "quote-only", "public"]},
+        "pricing_model": {"enum": ["per-invocation", "usage", "subscription", "managed-runtime", "licensed-data", "enterprise-contract"]},
+        "price_ref": {"type": "string"},
+        "currency": {"type": "string"}
       }
     }
   }
