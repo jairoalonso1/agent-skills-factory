@@ -36,3 +36,19 @@ def test_valid_source_dates_and_duplicate_ids_are_checked():
     result=validate_research_package(p)
     assert "source[0]:invalid:published_at" in result["issues"]
     assert "source[1]:duplicate:source_id" in result["issues"]
+
+
+
+def test_disclosed_non_estimated_scenarios_are_valid_but_unknown_status_is_not():
+    package = {
+        "issuer": "Insufficient plc", "valuation_date": "2026-10-31", "reporting_currency": "USD",
+        "financials": {"revenue": 100}, "valuation": {"method": "Not estimated", "reason": "Insufficient evidence to support a defensible valuation."},
+        "scenarios": {key: {"status": "not_estimated"} for key in ("bear", "base", "bull")},
+        "risks": ["Insufficient data"],
+        "sources": [{"source_id": "S1", "publisher": "Issuer", "title": "Filing", "url": "https://example.com", "published_at": "2026-10-30", "retrieved_at": "2026-10-31T12:00:00Z", "evidence_type": "reported"}],
+    }
+    assert validate_research_package(package)["passed"] is True
+    package["scenarios"]["base"]["status"] = "guess"
+    result = validate_research_package(package)
+    assert result["passed"] is False
+    assert "invalid:scenario_status:base" in result["issues"]

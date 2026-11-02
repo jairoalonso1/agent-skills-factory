@@ -1,5 +1,16 @@
 # Changelog — finanzas-valoracion-accion
 
+## 0.2.2 — Final four-deliverable pipeline
+
+- Integrated valuation football-field, DCF sensitivity and price/technical charts from explicit canonical `chart_data` into HTML, XLSX, DOCX and PPTX; HTML embeds chart images to remain portable.
+- Reworked XLSX workpaper sections to flatten nested research data into typed, usable cells instead of serializing entire structures as JSON text.
+- Distinguished security quote currency, issuer financial-reporting currency, valuation currency and report currency in the package contract and report metadata.
+- Allowed bear/base/bull cases to carry explicit `not_available`, `not_estimated` or `not_applicable` states without inventing numeric target prices.
+- Added end-to-end synthetic profile tests for Intel, JPMorgan Chase, NVIDIA and an insufficient-data issuer. These tests validate the workflow and deliverables, not factual issuer research or investment conclusions.
+- Expanded the automated suite to 40 passing tests in the development runtime.
+
+# Changelog — finanzas-valoracion-accion
+
 ## 0.2.1 — Candidate
 
 - Replaced the HTML JSON-dump layout with a responsive institutional equity-research tear sheet.

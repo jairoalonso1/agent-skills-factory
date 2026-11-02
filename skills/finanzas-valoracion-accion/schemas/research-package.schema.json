@@ -3,56 +3,312 @@
   "$id": "https://github.com/jairoalonso1/agent-skills-factory/blob/main/skills/finanzas-valoracion-accion/schemas/research-package.schema.json",
   "title": "Institutional Equity Research Package",
   "type": "object",
-  "required": ["issuer", "valuation_date", "reporting_currency", "financials", "valuation", "scenarios", "risks", "sources"],
+  "required": [
+    "issuer",
+    "valuation_date",
+    "reporting_currency",
+    "financials",
+    "valuation",
+    "scenarios",
+    "risks",
+    "sources"
+  ],
   "properties": {
-    "issuer": {"type": "string", "minLength": 1},
-    "ticker": {"type": "string"},
-    "exchange": {"type": "string"},
-    "valuation_date": {"type": "string", "format": "date"},
-    "current_price": {"type": "number", "exclusiveMinimum": 0},
-    "price_timestamp": {"type": "string"},
-    "reporting_currency": {"type": "string", "minLength": 3, "maxLength": 3},
-    "rating": {"enum": ["BUY / OVERWEIGHT", "HOLD / NEUTRAL", "SELL / UNDERWEIGHT", "NOT_RATED"]},
-    "investment_thesis": {"type": "object"},
-    "financials": {"type": "object"},
-    "industry": {"type": "object"},
-    "valuation": {"type": "object"},
+    "issuer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ticker": {
+      "type": "string"
+    },
+    "exchange": {
+      "type": "string"
+    },
+    "valuation_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "current_price": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "price_timestamp": {
+      "type": "string"
+    },
+    "reporting_currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "rating": {
+      "enum": [
+        "BUY / OVERWEIGHT",
+        "HOLD / NEUTRAL",
+        "SELL / UNDERWEIGHT",
+        "NOT_RATED"
+      ]
+    },
+    "investment_thesis": {
+      "type": "object"
+    },
+    "financials": {
+      "type": "object"
+    },
+    "industry": {
+      "type": "object"
+    },
+    "valuation": {
+      "type": "object"
+    },
     "scenarios": {
       "type": "object",
-      "required": ["bear", "base", "bull"],
+      "required": [
+        "bear",
+        "base",
+        "bull"
+      ],
       "properties": {
-        "bear": {"$ref": "#/$defs/scenario"},
-        "base": {"$ref": "#/$defs/scenario"},
-        "bull": {"$ref": "#/$defs/scenario"}
+        "bear": {
+          "$ref": "#/$defs/scenario"
+        },
+        "base": {
+          "$ref": "#/$defs/scenario"
+        },
+        "bull": {
+          "$ref": "#/$defs/scenario"
+        }
       },
       "additionalProperties": true
     },
-    "risks": {"type": "array"},
-    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
-    "assumptions": {"type": "array"},
-    "data_gaps": {"type": "array"},
-    "artifacts": {"type": "array"}
+    "risks": {
+      "type": "array"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "assumptions": {
+      "type": "array"
+    },
+    "data_gaps": {
+      "type": "array"
+    },
+    "artifacts": {
+      "type": "array"
+    },
+    "security_currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "Currency in which the security is quoted; used for per-share prices."
+    },
+    "valuation_currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "Currency in which valuation outputs are expressed."
+    },
+    "financial_reporting_currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "Issuer financial-statement presentation currency."
+    },
+    "chart_data": {
+      "type": "object",
+      "description": "Optional chart inputs, sourced from the same canonical research package. No chart is inferred when data is absent.",
+      "properties": {
+        "valuation_ranges": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "Bear",
+              "Base",
+              "Bull"
+            ],
+            "properties": {
+              "Bear": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "Base": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "Bull": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "dcf_sensitivity": {
+          "type": "object",
+          "required": [
+            "wacc_values",
+            "terminal_growth_values",
+            "grid_per_share"
+          ],
+          "properties": {
+            "wacc_values": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 1
+            },
+            "terminal_growth_values": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 1
+            },
+            "grid_per_share": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": true
+        },
+        "price_history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "Date",
+              "Close"
+            ],
+            "properties": {
+              "Date": {
+                "type": "string"
+              },
+              "Close": {
+                "type": "number"
+              },
+              "SMA_50": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "SMA_200": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "BB_Upper": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "BB_Lower": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": false
+    }
   },
   "$defs": {
     "scenario": {
       "type": "object",
-      "required": ["target_price"],
-      "properties": {"target_price": {"type": "number"}, "drivers": {"type": "array"}, "probability": {"type": "number", "minimum": 0, "maximum": 1}},
-      "additionalProperties": true
+      "properties": {
+        "target_price": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "drivers": {
+          "type": "array"
+        },
+        "probability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "status": {
+          "enum": [
+            "estimated",
+            "reported",
+            "calculated",
+            "not_available",
+            "not_estimated",
+            "not_applicable"
+          ]
+        }
+      },
+      "additionalProperties": true,
+      "anyOf": [
+        {
+          "required": [
+            "target_price"
+          ]
+        },
+        {
+          "required": [
+            "status"
+          ]
+        }
+      ]
     },
     "source": {
       "type": "object",
-      "required": ["source_id", "publisher", "title", "url", "published_at", "retrieved_at", "evidence_type"],
+      "required": [
+        "source_id",
+        "publisher",
+        "title",
+        "url",
+        "published_at",
+        "retrieved_at",
+        "evidence_type"
+      ],
       "properties": {
-        "source_id": {"type": "string", "minLength": 1},
-        "publisher": {"type": "string", "minLength": 1},
-        "title": {"type": "string", "minLength": 1},
-        "url": {"type": "string", "format": "uri"},
-        "published_at": {"type": "string"},
-        "retrieved_at": {"type": "string"},
-        "evidence_type": {"enum": ["reported", "company_guidance", "consensus", "analyst_assumption", "calculated", "market_data"]},
-        "period": {"type": "string"},
-        "notes": {"type": "string"}
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "published_at": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string"
+        },
+        "evidence_type": {
+          "enum": [
+            "reported",
+            "company_guidance",
+            "consensus",
+            "analyst_assumption",
+            "calculated",
+            "market_data"
+          ]
+        },
+        "period": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
       },
       "additionalProperties": true
     }
