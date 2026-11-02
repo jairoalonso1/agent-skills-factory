@@ -17,13 +17,14 @@ Read:
 - [Execution Capability Matrix](docs/EXECUTION-CAPABILITY-MATRIX.md)
 - [Platform compatibility](docs/PLATFORM-COMPATIBILITY.md)
 - [Skills as a Service](docs/SKILL-AS-A-SERVICE.md)
+- [Output Standardization and Enforcement](docs/OUTPUT-STANDARDIZATION.md)
 - [Quality, evaluation and release governance](docs/SKILL-QUALITY-AND-RELEASES.md)
 
 ## Available Skills
 
 | Skill | Purpose | Version | Status |
 |---|---|---:|---|
-| [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Executable institutional equity research: deterministic financial analysis, valuation and standardized reports | 0.2.0 | Candidate for review; runtime validation pending |
+| [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Executable institutional equity research: deterministic financial analysis, valuation and standardized reports | 0.2.2 | Candidate; Python renderer/tests validated, cross-model conformance not yet tested |
 
 Machine-readable catalogue: [registry/skills.json](registry/skills.json).
 
@@ -85,6 +86,7 @@ The factory distinguishes documented, declared and tested capabilities. Skill re
 - Progressive disclosure and explicit capability contracts.
 - Honest distinction between documented, declared and runtime-tested compatibility.
 - Reproducible outputs with sources, assumptions, dates and versions.
+- Canonical output contracts enforced across models and compatible execution environments.
 - Secure execution; never bundle secrets.
 - Human accountability and explicit approvals for consequential actions.
 
