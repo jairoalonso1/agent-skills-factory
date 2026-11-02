@@ -63,8 +63,26 @@ def validate_research_package(package: dict[str, Any]) -> dict[str, Any]:
     for key in ("bear", "base", "bull"):
         if key not in scenarios: issues.append(f"missing:scenario:{key}")
     if all(k in scenarios for k in ("bear", "base", "bull")):
-        vals = [scenarios[k].get("target_price") if isinstance(scenarios[k], dict) else None for k in ("bear", "base", "bull")]
-        if any(not isinstance(v, (int, float)) or not isfinite(v) for v in vals): issues.append("invalid:scenario_target_price")
-        elif not vals[0] <= vals[1] <= vals[2]: issues.append("invalid:scenario_order")
+        vals = []
+        allowed_statuses = {"estimated", "reported", "calculated", "not_available", "not_estimated", "not_applicable"}
+        for key in ("bear", "base", "bull"):
+            item = scenarios[key]
+            if not isinstance(item, dict):
+                issues.append(f"invalid:scenario:{key}"); vals.append(None); continue
+            value = item.get("target_price")
+            status = item.get("status", "estimated" if value is not None else None)
+            if status not in allowed_statuses:
+                issues.append(f"invalid:scenario_status:{key}")
+            if value is None:
+                if status not in {"not_available", "not_estimated", "not_applicable"}:
+                    issues.append(f"missing:scenario_target_price:{key}")
+                vals.append(None)
+            elif not isinstance(value, (int, float)) or not isfinite(value) or value <= 0:
+                issues.append(f"invalid:scenario_target_price:{key}"); vals.append(None)
+            else:
+                vals.append(float(value))
+        numeric_values = [value for value in vals if value is not None]
+        if len(numeric_values) == 3 and not vals[0] <= vals[1] <= vals[2]:
+            issues.append("invalid:scenario_order")
     return {"passed": not issues, "issues": issues,
             "disclaimer": "Automated structural checks do not replace analyst review, source verification or model validation."}

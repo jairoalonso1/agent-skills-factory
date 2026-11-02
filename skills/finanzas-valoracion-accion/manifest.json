@@ -1,7 +1,7 @@
 {
   "id": "finanzas-valoracion-accion",
   "name": "Institutional Equity Research",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Evidence-led institutional equity research for listed companies: business and industry analysis, financial statement quality, scenario-based valuation, investment thesis, risks and professional deliverables.",
   "license": "MIT",
   "author": "Jairo Alonso González",
@@ -11,14 +11,30 @@
   "ax": {
     "role": "specialized-domain-capability",
     "workflow_owner": "host-agent-orchestrator",
-    "supports": ["workflow-handoff", "structured-findings", "provenance", "warnings", "human-review"],
-    "does_not_own": ["workflow-orchestration", "host-interface", "runtime-provisioning", "user-permissions"]
+    "supports": [
+      "workflow-handoff",
+      "structured-findings",
+      "provenance",
+      "warnings",
+      "human-review"
+    ],
+    "does_not_own": [
+      "workflow-orchestration",
+      "host-interface",
+      "runtime-provisioning",
+      "user-permissions"
+    ]
   },
   "service_profile": {
     "service_type": "specialized-agent-service",
     "maturity_level": 1,
     "service_outcome": "Produce an evidence-led institutional equity research assessment and standardized report package for a publicly listed company.",
-    "target_users": ["equity research analysts", "investment professionals", "investment committees", "financial institutions and research teams"],
+    "target_users": [
+      "equity research analysts",
+      "investment professionals",
+      "investment committees",
+      "financial institutions and research teams"
+    ],
     "operations": [
       "issuer-intake-and-verification",
       "source-research-and-data-collection",
@@ -31,7 +47,10 @@
     ],
     "workflow_ref": "SKILL.md#end-to-end-research-workflow",
     "source_policy_ref": "references/data-and-provenance.md",
-    "methodology_refs": ["references/valuation-framework.md", "references/data-and-provenance.md"],
+    "methodology_refs": [
+      "references/valuation-framework.md",
+      "references/data-and-provenance.md"
+    ],
     "interaction": {
       "intake_ref": "SKILL.md#first-interaction-and-intake",
       "ask_for_missing_material_inputs": true,
@@ -40,27 +59,79 @@
       "never_request_plaintext_secrets": true
     },
     "preferred_libraries": [
-      {"name": "NumPy", "purpose": "Numerical calculations", "required": true, "version_policy": "Pin a tested compatible version in package dependency files."},
-      {"name": "pandas", "purpose": "Tabular financial data processing and normalization", "required": true, "version_policy": "Pin a tested compatible version in package dependency files."},
-      {"name": "openpyxl", "purpose": "XLSX report generation", "required": true, "version_policy": "Pin a tested compatible version in package dependency files."},
-      {"name": "python-docx", "purpose": "DOCX report generation", "required": true, "version_policy": "Pin a tested compatible version in package dependency files."},
-      {"name": "python-pptx", "purpose": "PPTX committee briefing generation", "required": true, "version_policy": "Pin a tested compatible version in package dependency files."},
-      {"name": "matplotlib", "purpose": "Optional chart generation", "required": false, "version_policy": "Use the optional dependency declaration and verify chart artifacts."}
+      {
+        "name": "NumPy",
+        "purpose": "Numerical calculations",
+        "required": true,
+        "version_policy": "Pin a tested compatible version in package dependency files."
+      },
+      {
+        "name": "pandas",
+        "purpose": "Tabular financial data processing and normalization",
+        "required": true,
+        "version_policy": "Pin a tested compatible version in package dependency files."
+      },
+      {
+        "name": "openpyxl",
+        "purpose": "XLSX report generation",
+        "required": true,
+        "version_policy": "Pin a tested compatible version in package dependency files."
+      },
+      {
+        "name": "python-docx",
+        "purpose": "DOCX report generation",
+        "required": true,
+        "version_policy": "Pin a tested compatible version in package dependency files."
+      },
+      {
+        "name": "python-pptx",
+        "purpose": "PPTX committee briefing generation",
+        "required": true,
+        "version_policy": "Pin a tested compatible version in package dependency files."
+      },
+      {
+        "name": "matplotlib",
+        "purpose": "Standard chart generation for the four institutional deliverables",
+        "required": true,
+        "version_policy": "Pin a tested compatible version in package dependency files."
+      }
     ],
     "local_code_policy": {
-      "allowed": ["small task-specific calculations", "input and output validation", "source adapters", "normalization glue", "report orchestration"],
-      "separate_library_when": ["functionality is substantial and reusable across services", "it requires an independent release and maintenance lifecycle", "it would duplicate a mature third-party library"],
+      "allowed": [
+        "small task-specific calculations",
+        "input and output validation",
+        "source adapters",
+        "normalization glue",
+        "report orchestration"
+      ],
+      "separate_library_when": [
+        "functionality is substantial and reusable across services",
+        "it requires an independent release and maintenance lifecycle",
+        "it would duplicate a mature third-party library"
+      ],
       "large_library_copying_allowed": false
     },
     "integration_requirements": {
       "mcp_required": false,
-      "supported_patterns": ["public regulator and issuer sources", "user-supplied files", "authorized market-data APIs", "licensed financial-data providers", "corporate databases and connectors", "MCP tools when available and authorized"],
+      "supported_patterns": [
+        "public regulator and issuer sources",
+        "user-supplied files",
+        "authorized market-data APIs",
+        "licensed financial-data providers",
+        "corporate databases and connectors",
+        "MCP tools when available and authorized"
+      ],
       "access_policy": "The host/orchestrator must verify source availability, licensing, user and organizational entitlements, and permissions for each invocation."
     },
     "output_contract": {
       "schema_ref": "schemas/research-package.schema.json",
       "report_standard_ref": "SKILL.md#standard-report-structure",
-      "formats": ["HTML", "XLSX", "DOCX", "PPTX"],
+      "formats": [
+        "HTML",
+        "XLSX",
+        "DOCX",
+        "PPTX"
+      ],
       "consistency_policy": "Required sections, calculation definitions, source provenance, report parameters and acceptance checks remain stable across compatible models. Qualitative judgments follow documented evidence and decision criteria and disclose material uncertainty."
     },
     "quality_gates_ref": "SKILL.md#quality-control-and-acceptance",
@@ -71,7 +142,14 @@
     },
     "commercialization": {
       "available": false,
-      "future_options": ["per-invocation", "department-or-user-subscription", "usage-based", "managed-runtime", "licensed-data", "enterprise-contract"],
+      "future_options": [
+        "per-invocation",
+        "department-or-user-subscription",
+        "usage-based",
+        "managed-runtime",
+        "licensed-data",
+        "enterprise-contract"
+      ],
       "note": "The package defines a service capability; hosted execution, licensed data, enterprise entitlements, support, pricing and service-level commitments require separate operational and commercial arrangements."
     }
   },
@@ -80,11 +158,24 @@
     "network": "required only for live external data retrieval",
     "external_data_access": "authorized provider, API, MCP server, browser or user-supplied dataset",
     "file_generation": "requires the relevant libraries and a writable runtime",
-    "execution_modes": ["native-sandbox", "local-runtime", "authorized-remote-runtime", "no-execution-fallback"]
+    "execution_modes": [
+      "native-sandbox",
+      "local-runtime",
+      "authorized-remote-runtime",
+      "no-execution-fallback"
+    ]
   },
   "dependencies": {
-    "python": ["jsonschema", "numpy", "openpyxl", "pandas", "python-docx", "python-pptx"],
-    "optional": ["matplotlib"]
+    "python": [
+      "jsonschema",
+      "numpy",
+      "openpyxl",
+      "pandas",
+      "python-docx",
+      "python-pptx",
+      "matplotlib"
+    ],
+    "optional": []
   },
   "capabilities": [
     "business-and-industry-research",
@@ -100,9 +191,15 @@
     "standardized-report-generation",
     "sum-of-the-parts",
     "technical-and-relative-performance-context",
-    "validated-research-package-runner"
+    "validated-research-package-runner",
+    "cross-format-chart-generation"
   ],
-  "outputs": ["HTML", "XLSX", "DOCX", "PPTX"],
+  "outputs": [
+    "HTML",
+    "XLSX",
+    "DOCX",
+    "PPTX"
+  ],
   "branding": "Created by Jairo Alonso González",
   "status": "candidate",
   "release_status": "candidate",
@@ -128,16 +225,38 @@
     "suite_version": "0.2.1",
     "last_run": "2026-11-01T23:42:01Z",
     "environment": "Python 3.13.18; isolated remote workbench; CI matrix to be rerun on Python 3.11–3.13",
-    "metrics": {"unit_tests_passed": 31, "unit_tests_failed": 0, "cli_smoke_test": true, "artifacts_verified": 5, "html_presentation_regression_tests": 2},
+    "metrics": {
+      "unit_tests_passed": 31,
+      "unit_tests_failed": 0,
+      "cli_smoke_test": true,
+      "artifacts_verified": 5,
+      "html_presentation_regression_tests": 2
+    },
     "report_ref": "31 unit tests passed; synthetic CLI smoke test generated HTML, XLSX, DOCX, PPTX and manifest; HTML semantic layout and visible PPTX branding verified.",
     "limitations": [
       "Package tests and synthetic smoke test do not establish financial-domain accuracy, point-in-time integrity, non-US issuer integration or production suitability.",
       "SEC adapter retrieves raw Company Facts and filters by filing date; it is not a universal normalized financial-statement provider."
-    ]
+    ],
+    "scope": "40 unit and synthetic end-to-end tests pass locally and in GitHub Actions on Python 3.11, 3.12 and 3.13. Domain accuracy review and cross-model portability remain unvalidated."
   },
   "runtime_compatibility": [
-    {"host": "Generic Agent Skills-compatible host", "surface": "Package discovery and SKILL.md loading", "status": "declared"},
-    {"host": "Python", "surface": "Included deterministic modules, tests and report generation", "version": "3.13.18", "status": "tested", "tested_at": "2026-11-01T23:15:23Z", "evidence_ref": "29 tests passed and CLI smoke test generated four report formats plus verification manifest."},
-    {"host": "ChatGPT / Claude / Gemini / other agent hosts", "surface": "Native script execution", "status": "not-tested"}
+    {
+      "host": "Generic Agent Skills-compatible host",
+      "surface": "Package discovery and SKILL.md loading",
+      "status": "declared"
+    },
+    {
+      "host": "Python",
+      "surface": "Included deterministic modules, tests and report generation",
+      "version": "3.13.18",
+      "status": "tested",
+      "tested_at": "2026-11-01T23:15:23Z",
+      "evidence_ref": "29 tests passed and CLI smoke test generated four report formats plus verification manifest."
+    },
+    {
+      "host": "ChatGPT / Claude / Gemini / other agent hosts",
+      "surface": "Native script execution",
+      "status": "not-tested"
+    }
   ]
 }

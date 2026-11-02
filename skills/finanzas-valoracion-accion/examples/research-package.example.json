@@ -78,5 +78,46 @@
   "data_gaps": [
     "Replace all synthetic values and the example source with verified primary-source data."
   ],
-  "artifacts": []
+  "artifacts": [],
+  "security_currency": "USD",
+  "financial_reporting_currency": "USD",
+  "valuation_currency": "USD",
+  "chart_data": {
+    "valuation_ranges": {
+      "Illustrative DCF": {
+        "Bear": 30.0,
+        "Base": 48.0,
+        "Bull": 60.0
+      }
+    },
+    "dcf_sensitivity": {
+      "wacc_values": [
+        0.08,
+        0.09,
+        0.1
+      ],
+      "terminal_growth_values": [
+        0.02,
+        0.025,
+        0.03
+      ],
+      "grid_per_share": {
+        "0.08": {
+          "0.02": 52.0,
+          "0.025": 55.0,
+          "0.03": 59.0
+        },
+        "0.09": {
+          "0.02": 45.0,
+          "0.025": 48.0,
+          "0.03": 51.0
+        },
+        "0.1": {
+          "0.02": 40.0,
+          "0.025": 42.0,
+          "0.03": 45.0
+        }
+      }
+    }
+  }
 }
