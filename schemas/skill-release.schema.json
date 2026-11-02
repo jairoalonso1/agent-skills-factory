@@ -8,7 +8,7 @@
   "properties": {
     "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
     "name": {"type": "string", "minLength": 1},
-    "version": {"type": "string", "pattern": "^(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)(?:-[0-9A-Za-z.-]+)?$"},
+    "version": {"type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$"},
     "entrypoint": {"type": "string", "minLength": 1},
     "release_status": {"enum": ["draft", "candidate", "validated", "runtime-tested", "evaluated", "managed-service", "deprecated"]},
     "release_ref": {"type": "string", "description": "Immutable tag, commit or content digest for this release."},
