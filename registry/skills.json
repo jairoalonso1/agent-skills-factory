@@ -56,7 +56,7 @@
       ],
       "evaluation": {
         "status": "partial",
-        "scope": "40 unit and synthetic end-to-end tests pass in the local Python 3.13 runtime; official Python 3.11/3.12/3.13 CI matrix pending."
+        "scope": "40 unit and synthetic end-to-end tests pass locally and in GitHub Actions on Python 3.11, 3.12 and 3.13; domain accuracy review and cross-model portability remain unvalidated."
       },
       "data_dependencies": [
         {

@@ -236,7 +236,8 @@
     "limitations": [
       "Package tests and synthetic smoke test do not establish financial-domain accuracy, point-in-time integrity, non-US issuer integration or production suitability.",
       "SEC adapter retrieves raw Company Facts and filters by filing date; it is not a universal normalized financial-statement provider."
-    ]
+    ],
+    "scope": "40 unit and synthetic end-to-end tests pass locally and in GitHub Actions on Python 3.11, 3.12 and 3.13. Domain accuracy review and cross-model portability remain unvalidated."
   },
   "runtime_compatibility": [
     {
