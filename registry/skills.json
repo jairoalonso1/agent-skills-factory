@@ -7,7 +7,7 @@
       "id": "finanzas-valoracion-accion",
       "name": "Institutional Equity Research",
       "description": "Evidence-led institutional equity research covering business and industry analysis, financial statement quality, applicable valuation methods, scenarios, investment thesis, risks and report generation.",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "path": "skills/finanzas-valoracion-accion",
       "manifest": "skills/finanzas-valoracion-accion/manifest.json",
       "skill_file": "skills/finanzas-valoracion-accion/SKILL.md",
@@ -30,11 +30,10 @@
           "openpyxl",
           "pandas",
           "python-docx",
-          "python-pptx"
-        ],
-        "optional_packages": [
+          "python-pptx",
           "matplotlib"
-        ]
+        ],
+        "optional_packages": []
       },
       "execution_modes": [
         "native-sandbox",
@@ -52,11 +51,12 @@
         "scenario-based-valuation",
         "standardized-report-generation",
         "technical-analysis-context",
-        "validated-research-package-runner"
+        "validated-research-package-runner",
+        "cross-format-chart-generation"
       ],
       "evaluation": {
         "status": "partial",
-        "scope": "31 unit tests and synthetic CLI smoke test passed in Python 3.13.18; domain accuracy and cross-host runtime remain unvalidated."
+        "scope": "40 unit and synthetic end-to-end tests pass in the local Python 3.13 runtime; official Python 3.11/3.12/3.13 CI matrix pending."
       },
       "data_dependencies": [
         {
@@ -76,4 +76,4 @@
       ]
     }
   ]
-}
+}\n
