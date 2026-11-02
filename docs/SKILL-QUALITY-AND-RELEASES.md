@@ -24,6 +24,16 @@ A release should use a proportionate evaluation suite:
 
 Evaluation records should identify evaluator, test suite version, Skill version, environment, timestamp, dataset/fixture version, sample size, metrics, thresholds, result, failures and limitations. Never publish sensitive customer data or credentials in evaluation fixtures.
 
+## 3. Output standardization and enforcement
+
+Every Skill must define a canonical output contract appropriate to its deliverable. See OUTPUT-STANDARDIZATION.md.
+
+At minimum, the contract must specify required sections and order, field semantics, missing-data behavior, evidence/provenance, localization, official formats and permitted extensions. A reference template illustrates the contract but is not a substitute for a schema or validation.
+
+Release evaluation must distinguish structural conformance, presentation conformance, analytical quality and cross-model compatibility. A Skill may claim compatibility only for model/host combinations actually tested and recorded. Different models are not required to reach identical judgments; they are required to respect the same mandatory output contract.
+
+A Skill is not output-standard compliant merely because formatting instructions appear in SKILL.md. The schema, examples, validator, renderer and tests must support the claim. When a renderer or validator is unavailable, the invocation must disclose the limitation rather than claim verified compliance.
+
 ## 3. Release immutability
 
 - Use semantic versioning.
@@ -33,7 +43,7 @@ Evaluation records should identify evaluator, test suite version, Skill version,
 - Preserve evaluation records and release artifacts for audit.
 - A completed workflow must retain the exact version used, not silently resolve to latest.
 
-## 4. Minimum release metadata
+## 5. Minimum release metadata
 
 A Skill manifest should distinguish:
 - declared capabilities and dependencies;
@@ -46,7 +56,7 @@ A Skill manifest should distinguish:
 
 Fields that are unknown or not applicable should be omitted or explicitly marked pending; never fabricate test results, prices, service levels or data rights.
 
-## 5. Security and trust
+## 6. Security and trust
 
 Skills can contain executable code and instructions. Treat them as supply-chain inputs, not trusted policy.
 
@@ -59,7 +69,7 @@ Skills can contain executable code and instructions. Treat them as supply-chain 
 - Record provenance for code, data and artifacts.
 - Sign releases where the distribution and verification infrastructure supports it; do not claim signatures where none exist.
 
-## 6. Financial-domain acceptance gates
+## 7. Financial-domain acceptance gates
 
 For an equity research Skill, a release is not production-ready solely because Python tests pass. Additional gates should include:
 - complete and sourced issuer data with reporting period, currency, units and filing dates;
@@ -70,7 +80,7 @@ For an equity research Skill, a release is not production-ready solely because P
 - reconciliation between calculations, charts and narrative reports;
 - analyst review and documented escalation of material discrepancies.
 
-## 7. Status vocabulary
+## 8. Status vocabulary
 
 Recommended statuses: `draft`, `candidate`, `validated`, `runtime-tested`, `evaluated`, `managed-service`, `deprecated`.
 
