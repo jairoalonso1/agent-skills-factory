@@ -52,3 +52,25 @@ def test_disclosed_non_estimated_scenarios_are_valid_but_unknown_status_is_not()
     result = validate_research_package(package)
     assert result["passed"] is False
     assert "invalid:scenario_status:base" in result["issues"]
+
+
+def _ledger_package():
+    return {"issuer":"Example", "valuation_date":"2026-10-31", "reporting_currency":"USD", "financials":{"revenue":100,"roic":0.12}, "valuation":{"method":"DCF"}, "scenarios":{"bear":{"target_price":8},"base":{"target_price":10},"bull":{"target_price":12}}, "risks":["risk"], "sources":[{"source_id":"S1","publisher":"Issuer","title":"Filing","url":"https://example.com/filing","published_at":"2026-10-30","retrieved_at":"2026-10-31T10:00:00Z","evidence_type":"reported"}]}
+
+def test_observation_ledger_validates_source_and_calculation_lineage():
+    p=_ledger_package(); p["data_observations"]=[{"observation_id":"O1","field":"revenue","value":100,"unit":"USD millions","evidence_type":"reported","source_ids":["S1"]},{"observation_id":"O2","field":"growth","value":0.1,"unit":"ratio","evidence_type":"calculated","input_observation_ids":["O1"],"transformation":"(current/prior)-1"}]
+    assert validate_research_package(p)["passed"] is True
+    p["data_observations"][1]["input_observation_ids"]=["MISSING"]
+    assert "observation[1]:unresolved:input_observation_id:MISSING" in validate_research_package(p)["issues"]
+
+def test_observation_ledger_rejects_duplicate_ids_and_unknown_sources():
+    p=_ledger_package(); p["data_observations"]=[{"observation_id":"O1","field":"revenue","value":100,"unit":"USD millions","evidence_type":"reported","source_ids":["NOPE"]},{"observation_id":"O1","field":"cost","value":50,"unit":"USD millions","evidence_type":"reported","source_ids":["S1"]}]
+    issues=validate_research_package(p)["issues"]
+    assert "observation[1]:duplicate:observation_id" in issues
+    assert "observation[0]:unresolved:source_id:NOPE" in issues
+
+def test_roic_methodology_is_a_warning_not_a_forced_formula():
+    p=_ledger_package(); r=validate_research_package(p)
+    assert r["passed"] and "missing:roic_methodology_definition" in r["warnings"]
+    p["roic_definition"]={"formula":"NOPAT / Average Invested Capital","denominator_definition":"Average operating capital excluding excess cash","tax_rate_basis":"normalized"}
+    assert "missing:roic_methodology_definition" not in validate_research_package(p)["warnings"]

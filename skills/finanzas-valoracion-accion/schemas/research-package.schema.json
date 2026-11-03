@@ -216,6 +216,16 @@
         }
       },
       "additionalProperties": false
+    },
+    "data_observations": {
+      "type": "array",
+      "description": "Optional observation-level evidence ledger.",
+      "items": {
+        "$ref": "#/$defs/data_observation"
+      }
+    },
+    "roic_definition": {
+      "$ref": "#/$defs/roic_definition"
     }
   },
   "$defs": {
@@ -308,6 +318,223 @@
         },
         "notes": {
           "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "data_observation": {
+      "type": "object",
+      "required": [
+        "observation_id",
+        "field",
+        "value",
+        "unit",
+        "evidence_type"
+      ],
+      "properties": {
+        "observation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {},
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Z]{3}$"
+        },
+        "period_start": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "period_end": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "period_type": {
+          "enum": [
+            "instant",
+            "duration"
+          ]
+        },
+        "as_of_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "published_or_filed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retrieved_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "input_observation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "evidence_type": {
+          "enum": [
+            "reported",
+            "company_guidance",
+            "consensus",
+            "analyst_assumption",
+            "calculated",
+            "market_data"
+          ]
+        },
+        "reported_or_adjusted": {
+          "type": "string"
+        },
+        "transformation": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "confidence_or_limitation": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "provider_timestamp": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "evidence_type": {
+                "const": "calculated"
+              }
+            },
+            "required": [
+              "evidence_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "input_observation_ids",
+              "transformation"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidence_type": {
+                "enum": [
+                  "reported",
+                  "company_guidance",
+                  "consensus",
+                  "market_data"
+                ]
+              }
+            },
+            "required": [
+              "evidence_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "source_ids"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidence_type": {
+                "const": "analyst_assumption"
+              }
+            },
+            "required": [
+              "evidence_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "rationale"
+            ]
+          }
+        }
+      ]
+    },
+    "roic_definition": {
+      "type": "object",
+      "required": [
+        "formula",
+        "denominator_definition",
+        "tax_rate_basis"
+      ],
+      "properties": {
+        "formula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "numerator_definition": {
+          "type": "string"
+        },
+        "denominator_definition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cash_treatment": {
+          "type": "string"
+        },
+        "debt_perimeter": {
+          "type": "string"
+        },
+        "period_basis": {
+          "type": "string"
+        },
+        "tax_rate_basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_or_provider": {
+          "type": "string"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": true

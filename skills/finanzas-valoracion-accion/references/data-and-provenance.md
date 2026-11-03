@@ -24,3 +24,12 @@ The included SEC helper retrieves raw Company Facts and can filter observations 
 ## Data-provider policy
 
 Use only authorized APIs/connectors or user-supplied datasets. Respect licenses, rate limits and terms. Do not scrape authenticated or restricted sources without permission. Never put API keys, passwords, private email addresses or access tokens in source files, prompts, artifacts or logs.
+
+
+## Structured observation ledger (0.3.0)
+
+The package may include `data_observations`, an observation-level ledger linking material inputs to source records or calculation inputs. Each record identifies `observation_id`, `field`, `value`, `unit`, and `evidence_type`. Reported, guidance, consensus and market observations link to `source_ids`; calculated observations identify `input_observation_ids` and a reproducible `transformation`; analyst assumptions include a `rationale`. The quality checker validates unique IDs and resolves source/input references. The ledger remains optional for backward compatibility, but its absence is reported as a warning.
+
+## ROIC methodology disclosure
+
+The engine calculates ROIC as NOPAT divided by supplied `invested_capital`. This is a calculation convention, not a universal accounting definition. Analysts should disclose denominator perimeter, cash treatment, debt/lease treatment where relevant, period basis and tax-rate basis in `roic_definition`. No single invested-capital formula is forced because conventions differ by provider, company and industry. ROIC without a methodology definition triggers a warning. For banks and other financial institutions, ROIC may be less decision-useful; use sector-appropriate return and capital measures.

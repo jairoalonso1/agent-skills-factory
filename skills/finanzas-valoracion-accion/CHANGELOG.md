@@ -21,3 +21,12 @@
 - Added regression tests for semantic HTML structure, HTML escaping, scenario presentation, responsive/print styles, and visible PPTX branding.
 
 This remains a candidate release. These presentation tests do not certify financial data, valuation methodology, or investment conclusions.
+
+
+## 0.3.0 — Reproducibility and release hardening
+
+- Fixed chart module syntax and retained reproducible chart generation.
+- Made Matplotlib optional; core report generation does not require charting libraries.
+- Added optional structured observation ledger with source and calculation-lineage validation.
+- Added ROIC methodology disclosure and warning without imposing a universal invested-capital formula.
+- Removed stale evaluation claims; manifest metrics are populated only from the actual 0.3.0 verification run.

@@ -57,6 +57,29 @@ def validate_research_package(package: dict[str, Any]) -> dict[str, Any]:
         source_id = source.get("source_id")
         if source_id and source_id in seen_ids: issues.append(f"source[{idx}]:duplicate:source_id")
         if source_id: seen_ids.add(source_id)
+    observations = package.get("data_observations")
+    if observations is not None:
+        if not isinstance(observations, list): issues.append("invalid:data_observations"); observations = []
+        observation_ids = set()
+        for idx, obs in enumerate(observations):
+            if not isinstance(obs, dict): issues.append(f"observation[{idx}]:invalid:record"); continue
+            for field in ("observation_id", "field", "unit", "evidence_type"):
+                if not obs.get(field): issues.append(f"observation[{idx}]:missing:{field}")
+            oid=obs.get("observation_id")
+            if oid and oid in observation_ids: issues.append(f"observation[{idx}]:duplicate:observation_id")
+            if oid: observation_ids.add(oid)
+            et=obs.get("evidence_type")
+            if et not in ALLOWED_EVIDENCE_TYPES: issues.append(f"observation[{idx}]:invalid:evidence_type")
+            if et in {"reported","company_guidance","consensus","market_data"} and not obs.get("source_ids"): issues.append(f"observation[{idx}]:missing:source_ids")
+            if et=="calculated" and (not obs.get("input_observation_ids") or not obs.get("transformation")): issues.append(f"observation[{idx}]:missing:calculation_lineage")
+            if et=="analyst_assumption" and not obs.get("rationale"): issues.append(f"observation[{idx}]:missing:rationale")
+        source_ids={x.get("source_id") for x in sources if isinstance(x,dict) and x.get("source_id")}
+        for idx,obs in enumerate(observations):
+            if not isinstance(obs,dict): continue
+            for sid in obs.get("source_ids",[]):
+                if sid not in source_ids: issues.append(f"observation[{idx}]:unresolved:source_id:{sid}")
+            for parent in obs.get("input_observation_ids",[]):
+                if parent==obs.get("observation_id") or parent not in observation_ids: issues.append(f"observation[{idx}]:unresolved:input_observation_id:{parent}")
     scenarios = package.get("scenarios", {})
     if not isinstance(scenarios, dict):
         issues.append("invalid:scenarios"); scenarios = {}
@@ -84,5 +107,9 @@ def validate_research_package(package: dict[str, Any]) -> dict[str, Any]:
         numeric_values = [value for value in vals if value is not None]
         if len(numeric_values) == 3 and not vals[0] <= vals[1] <= vals[2]:
             issues.append("invalid:scenario_order")
-    return {"passed": not issues, "issues": issues,
+    warnings=[]
+    if "data_observations" not in package: warnings.append("missing:data_observations_ledger")
+    fin=package.get("financials",{})
+    if isinstance(fin,dict) and fin.get("roic") is not None and not package.get("roic_definition"): warnings.append("missing:roic_methodology_definition")
+    return {"passed": not issues, "issues": issues, "warnings": warnings,
             "disclaimer": "Automated structural checks do not replace analyst review, source verification or model validation."}
