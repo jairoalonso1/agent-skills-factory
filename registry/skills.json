@@ -7,7 +7,7 @@
       "id": "finanzas-valoracion-accion",
       "name": "Institutional Equity Research",
       "description": "Evidence-led institutional equity research covering business and industry analysis, financial statement quality, applicable valuation methods, scenarios, investment thesis, risks and report generation.",
-      "version": "0.2.2",
+      "version": "0.3.0",
       "path": "skills/finanzas-valoracion-accion",
       "manifest": "skills/finanzas-valoracion-accion/manifest.json",
       "skill_file": "skills/finanzas-valoracion-accion/SKILL.md",
@@ -55,7 +55,7 @@
         "cross-format-chart-generation"
       ],
       "evaluation": {
-        "status": "partial",
+        "status": "passed",
         "scope": "40 unit and synthetic end-to-end tests pass locally and in GitHub Actions on Python 3.11, 3.12 and 3.13; domain accuracy review and cross-model portability remain unvalidated."
       },
       "data_dependencies": [
