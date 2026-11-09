@@ -1,6 +1,6 @@
 ---
 name: fic-funds-intelligence
-description: Produces standardized institutional analysis and HTML reports for Colombian collective investment funds (FICs) using a portable service contract. Supports single-fund factsheets, peer-group comparative reports, fund discovery and industry analysis. May use authorized SFC data, optional MCP tools and optional external categorization snapshots; Frontera Funds is a reference design, not a runtime dependency.
+description: Delivers Frontera Funds-branded institutional analysis and HTML reports for Colombian collective investment funds (FICs) as a portable SKaaS service. Supports factsheets, peer comparisons, fund discovery and industry analysis using authorized SFC data, optional MCP tools and optional categorization snapshots.
 ---
 
 # FIC Funds Intelligence
@@ -14,7 +14,7 @@ Deliver a consistent, evidence-led institutional report about a Colombian FIC, a
 1. **Fund factsheet** — a single fund's identity, performance, risk, history and relevant diagnostics.
 2. **Comparative report** — a consistent side-by-side comparison of two or more funds, with common-period metrics and ranking context.
 
-The skill is independent of Frontera Funds, any particular model, MCP server, browser, frontend, runtime or data vendor. Frontera's two report designs are reference patterns for the report profiles, not dependencies, required assets or authoritative data sources. The model may use any authorized data source that satisfies the source policy and output contract.
+This Skill is a native SKaaS product in the Frontera Funds ecosystem and must deliver the same brand identity, presentation quality and institutional report standard as the Frontera Funds SaaS. It is implementation-independent from the private Frontera SaaS: it does not import its application code, services, APIs, infrastructure, credentials or proprietary runtime. It may use approved Frontera brand assets (including the official logo) and product-level report specifications supplied through an authorized brand package. The model may use any authorized data source that satisfies the source policy and output contract.
 
 The Skill provides methodology, orchestration guidance, report specifications, lightweight validation and a portable output contract. It does not bundle or duplicate the classifier, MCP implementation, a large analytics library or a SaaS frontend.
 
@@ -56,7 +56,7 @@ Ask one focused question only when a material ambiguity blocks a reliable report
 3. **Other authorized sources**: user files, licensed data vendors or corporate datasets. Identify the source and applicable rights.
 4. **Model interpretation**: may explain or contextualize retrieved data, but must not be represented as source facts.
 
-Do not treat Frontera's UI as a required or authoritative data source. Frontera is used as a design reference for its factsheet and comparative HTML reports.
+Frontera Funds is the product brand, not a required data source. The private SaaS implementation is not an execution dependency; use only approved brand assets and product-level presentation standards supplied to the runtime.
 
 ### Optional SFC MCP integration
 
@@ -132,20 +132,15 @@ Both profiles must be readable on desktop and mobile, printable, in Spanish (Col
 
 The HTML is the primary artifact. Also return a concise structured summary and optional machine-readable JSON. Generate XLSX or other formats only when requested or materially useful and the runtime supports them.
 
-### 6. Deliverable provenance: Frontera reference vs original source
+### 6. Frontera Funds brand and report identity
 
-Frontera Funds has two relevant browser-generated HTML report types:
-- Factsheet: the `factsheet` report type, with selected KPIs, cumulative return, drawdown, period/annualized returns, risk-return universe, monthly return heatmaps and worst drawdowns as configured.
-- Comparative table report: the `comparative` report type, with selected comparative metrics and table columns.
+This service is part of **Frontera Funds SKaaS**. Its generated factsheets and comparative reports are official Frontera Funds SKaaS deliverables, not third-party imitations or reports merely inspired by the SaaS.
 
-These are reference designs. The original Frontera HTML is exported from a browser preview; the reviewed source code does not expose a backend HTML-rendering API. Therefore:
+Apply the brand standards in `references/brand-identity.md` and the report structures in `references/report-profiles.md`. Where the authorized Frontera brand package is available, use the official Frontera Funds logo and approved visual assets. Never redraw, approximate, replace or invent the logo. If the official logo asset is not available in the current runtime, use the approved text wordmark treatment specified in the brand reference and disclose the missing asset in the execution warnings; do not fabricate a graphic.
 
-- If a user/host supplies an actual Frontera-exported HTML file, preserve it as an **original source artifact**, validate it and link it separately.
-- If an authorized Frontera session or browser tool can export the actual report, use that exact mechanism; record which options, funds and date range were selected.
-- If neither is available, create a skill-produced HTML that follows the relevant report profile using authorized data. Label it **Skill-generated report — Frontera-inspired profile**, not as a Frontera original or Frontera export.
-- Never claim to have downloaded an original Frontera report without verifying the file.
+Match the institutional quality bar of Frontera Funds SaaS reports: information hierarchy, typography, spacing, charts, tables, responsive behavior, print behavior, metric labeling, and visual consistency. The SKaaS report renderer is independently implemented and must not depend on private SaaS source code or runtime services.
 
-This separation protects the main product promise and avoids false claims about integration.
+Every report generated by this service must identify itself as a **Frontera Funds SKaaS** deliverable. Use artifact provenance `frontera_skaas_generated` for generated reports and `user_supplied` for files provided by the user. Do not claim that a SKaaS-generated report is an export from the SaaS application.
 
 ### 7. Quality control and acceptance
 
@@ -191,7 +186,7 @@ The service must follow the Factory's Universal Skill Invocation Contract 1.0.0.
 
 ## Runtime and security
 
-The Skill's portable core must be usable as instructions alone. A compatible host may supply tools, MCP, browser automation, a Python runtime, HTML files or a managed artifact store. Discover those capabilities at invocation time.
+The Skill's portable core must be usable as instructions alone. A compatible host may supply approved Frontera brand assets, tools, MCP, browser automation, a Python runtime, HTML files or a managed artifact store. Discover those capabilities at invocation time.
 
 Do not embed tokens, credentials or secrets. Do not assume private repository access. Do not execute untrusted code or HTML from source artifacts. Do not transmit confidential fund, customer or account data to unapproved services. Ask for approval when host policy requires external connection, data transfer, package installation or external writes.
 

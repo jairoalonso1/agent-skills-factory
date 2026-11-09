@@ -260,13 +260,19 @@
           },
           "provenance": {
             "enum": [
-              "frontera_original",
-              "skill_generated",
+              "frontera_skaas_generated",
               "user_supplied"
             ]
           },
           "description": {
             "type": "string"
+          },
+          "brand_identity": {
+            "type": "string",
+            "enum": [
+              "frontera_funds_skaas",
+              "not_applicable"
+            ]
           }
         },
         "additionalProperties": false

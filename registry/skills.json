@@ -77,8 +77,8 @@
     },
     {
       "id": "fic-funds-intelligence",
-      "name": "FIC Funds Intelligence",
-      "description": "Portable institutional analysis and HTML reporting service for Colombian FICs: standardized factsheets and peer comparisons with optional SFC data, MCP analytics and categorization snapshots.",
+      "name": "Frontera Funds SKaaS — FIC Funds Intelligence",
+      "description": "Frontera Funds-branded SKaaS for institutional analysis and HTML reporting of Colombian FICs, with optional SFC data, MCP analytics and categorization snapshots.",
       "version": "0.1.0",
       "path": "skills/fic-funds-intelligence",
       "manifest": "skills/fic-funds-intelligence/manifest.json",
@@ -94,15 +94,16 @@
         "factsheet",
         "peer-comparison",
         "html-reporting",
-        "sfc"
+        "sfc",
+        "frontera-funds",
+        "skaas",
+        "branded-reporting"
       ],
       "requires": {
         "mcp": false,
         "python": "optional-for-html-artifact-validation",
         "network": "required-only-for-live-external-data",
-        "packages": [
-          "beautifulsoup4"
-        ],
+        "packages": [],
         "optional_packages": []
       },
       "execution_modes": [
@@ -124,8 +125,8 @@
         "standardized-report-contract"
       ],
       "evaluation": {
-        "status": "not-run",
-        "scope": "Initial package added; unit tests, full registry checks and cross-model runtime validation pending."
+        "status": "partial",
+        "scope": "4 HTML validator unit tests passed locally and Draft 2020-12 output schema validated; full factory CI, live data integration and cross-model runtime validation remain pending."
       },
       "data_dependencies": [
         {
@@ -140,13 +141,6 @@
           "access_mode": "optional-project-artifact",
           "license_status": "verify-repository-and-output-access",
           "freshness": "Use snapshot's own cutoff and version; verify latest snapshot before use",
-          "provenance_required": true
-        },
-        {
-          "name": "Frontera report designs and optional original HTML",
-          "access_mode": "reference-design-or-authorized-user-supplied-export",
-          "license_status": "verify-entitlement-for-original-export",
-          "freshness": "Record original export date, funds, period and report options",
           "provenance_required": true
         }
       ]

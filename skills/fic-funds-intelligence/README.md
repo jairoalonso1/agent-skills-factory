@@ -1,6 +1,6 @@
-# FIC Funds Intelligence
+# Frontera Funds SKaaS — FIC Funds Intelligence
 
-Portable specialist service for analysis and institutional HTML reporting of Colombian FICs.
+FIC Funds Intelligence is a specialist SKaaS product in the Frontera Funds ecosystem. It delivers institutional analysis and branded HTML reporting for Colombian FICs.
 
 ## Primary deliverables
 
@@ -8,17 +8,18 @@ Portable specialist service for analysis and institutional HTML reporting of Col
 - Fund peer-comparison HTML (`comparative` profile).
 - Structured result with fund IDs, cutoff, metrics, category snapshot, evidence, warnings and artifact provenance.
 
-Frontera Funds supplies two reference report designs. It is not a dependency. The skill can run with other authorized sources and tools, and can still produce the same defined report profiles.
+Frontera Funds is the product brand and quality standard. Generated reports are official Frontera Funds SKaaS deliverables and must use the approved logo and brand assets when supplied by the authorized brand package. The service is implementation-independent from the private Frontera SaaS: it does not import its code, APIs, infrastructure, credentials or runtime. Its report renderer is independently implemented.
 
 ## Package
 
 - `SKILL.md`: service specification, workflow and quality gates.
 - `manifest.json`: machine-readable service metadata, integrations and portability.
 - `references/report-profiles.md`: required contents and layout standards for both HTML profiles.
+- `references/brand-identity.md`: Frontera Funds SKaaS identity, logo-use and visual-quality requirements.
 - `references/source-and-methodology.md`: SFC, MCP, category snapshot and interpretation policy.
 - `schemas/fic-report.schema.json`: domain report payload.
 - `scripts/validate_html_report.py`: lightweight HTML artifact validation (Python standard library only).
 - `examples/`: factsheet and comparative result fixtures.
 - `tests/`: deterministic validation tests.
 
-The package does not copy the Frontera app, the FIC classifier or the MCP implementation.
+The package does not copy or depend on the private Frontera SaaS implementation, the FIC classifier or the MCP implementation. Brand assets are supplied separately through an authorized package and are not inferred from private source code.

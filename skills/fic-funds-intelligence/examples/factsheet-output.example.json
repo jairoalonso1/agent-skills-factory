@@ -45,8 +45,9 @@
       "media_type": "text/html",
       "uri": null,
       "sha256": null,
-      "provenance": "skill_generated",
-      "description": "Ejemplo no emitido para un fondo real."
+      "provenance": "frontera_skaas_generated",
+      "description": "Ejemplo no emitido para un fondo real.",
+      "brand_identity": "frontera_funds_skaas"
     }
   ],
   "evidence": [

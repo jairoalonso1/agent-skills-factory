@@ -54,8 +54,12 @@ Use for at least two funds. Required sections:
 - For peer comparisons, use the same cutoff and comparable participation class. If the MCP selects the largest-AUM class by default, disclose that selection.
 - No metric should appear without value, unit, period, source/definition and status when applicable.
 
-## Design inspiration and provenance
+## Frontera Funds brand and quality standard
 
-Frontera Funds' reviewed report components show two distinct templates: a customized factsheet with KPI sections, cumulative-return/drawdown/period-return charts, monthly-return heatmap and worst-drawdown table; and a comparative table report with selectable columns. Use these as inspiration for information hierarchy and analytical richness, but implement the layout in the host's available renderer or model-generated HTML. Do not copy the Frontera application or assume its login, premium entitlement, local storage or React app are available.
+All reports generated from these profiles are official **Frontera Funds SKaaS** deliverables. Apply the approved identity and logo rules in `brand-identity.md`.
 
-When actual original Frontera HTML is supplied or exported through an authorized session, label and retain it as `frontera_original`. A newly produced report is `skill_generated`, even when it follows the same profile.
+The report experience must meet the same institutional quality bar as Frontera Funds SaaS: coherent typography, restrained use of color, consistent spacing, clear KPI hierarchy, readable data tables, meaningful chart annotations, responsive layouts and print-ready output. The SKaaS implementation may use a different renderer and codebase; visual and analytical consistency is the requirement, not shared application components.
+
+Use the official Frontera Funds logo only from an authorized brand asset package supplied to the execution environment. Do not redraw, reconstruct or guess a logo from application source. If the asset is unavailable, use the approved text wordmark fallback and emit a warning.
+
+Generated HTML must carry the Frontera Funds SKaaS identity and use provenance `frontera_skaas_generated`. User-provided files retain `user_supplied` provenance. Never label a newly generated report as a SaaS export.
