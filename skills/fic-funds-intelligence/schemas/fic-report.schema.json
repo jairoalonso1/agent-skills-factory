@@ -1,0 +1,378 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jairoalonso1/agent-skills-factory/blob/main/skills/fic-funds-intelligence/schemas/fic-report.schema.json",
+  "title": "FIC Funds Intelligence domain output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "service_id",
+    "service_version",
+    "operation",
+    "status",
+    "report_profile",
+    "title",
+    "funds",
+    "summary",
+    "metrics",
+    "artifacts",
+    "evidence",
+    "warnings",
+    "errors"
+  ],
+  "properties": {
+    "service_id": {
+      "const": "fic-funds-intelligence"
+    },
+    "service_version": {
+      "type": "string"
+    },
+    "operation": {
+      "enum": [
+        "fund_factsheet",
+        "peer_comparison",
+        "fund_discovery",
+        "category_universe",
+        "industry_snapshot",
+        "custom_analysis"
+      ]
+    },
+    "status": {
+      "enum": [
+        "succeeded",
+        "partial",
+        "needs_input",
+        "blocked",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "report_profile": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "factsheet",
+        "comparative",
+        null
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "cutoff_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "period_start": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "period_end": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "funds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "codigo_negocio"
+        ],
+        "properties": {
+          "codigo_negocio": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "nombre_entidad": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "codigo_entidad": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "subtipo_patrimonio": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tipo_participacion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "categoria_comercial": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dimension_categoria": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "estado_clasificacion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "motivo_clasificacion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "summary": {
+      "type": "string"
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "value",
+          "unit",
+          "period",
+          "definition",
+          "source"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {},
+          "unit": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "definition": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "reported",
+              "calculated",
+              "estimated",
+              "unavailable"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "category_snapshot": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cutoff_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "methodology_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "coverage_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "media_type",
+          "provenance"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "uri": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "provenance": {
+            "enum": [
+              "frontera_original",
+              "skill_generated",
+              "user_supplied"
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "claim_or_output"
+        ],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "locator": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accessed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "claim_or_output": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "retryable"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "retryable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "execution": {
+      "type": "object",
+      "properties": {
+        "started": {
+          "type": "boolean"
+        },
+        "code_executed": {
+          "type": "boolean"
+        },
+        "network_accessed": {
+          "type": "boolean"
+        },
+        "runtime_mode": {
+          "enum": [
+            "native_sandbox",
+            "local",
+            "remote",
+            "none"
+          ]
+        },
+        "tools_used": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

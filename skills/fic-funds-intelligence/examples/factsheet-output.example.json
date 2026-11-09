@@ -1,0 +1,75 @@
+{
+  "service_id": "fic-funds-intelligence",
+  "service_version": "0.1.0",
+  "operation": "fund_factsheet",
+  "status": "partial",
+  "report_profile": "factsheet",
+  "title": "Ficha institucional de ejemplo",
+  "cutoff_date": "2026-11-03",
+  "period_start": "2025-11-04",
+  "period_end": "2026-11-03",
+  "funds": [
+    {
+      "codigo_negocio": "00000",
+      "nombre": "Fondo de ejemplo",
+      "nombre_entidad": "Administradora de ejemplo",
+      "subtipo_patrimonio": "FIC Tipo General",
+      "tipo_participacion": "Clase principal",
+      "categoria_comercial": "Conservadora",
+      "dimension_categoria": "Volatilidad",
+      "estado_clasificacion": "clasificado"
+    }
+  ],
+  "summary": "Ejemplo de estructura. Sustituir por datos verificados antes de emitir un informe.",
+  "metrics": [
+    {
+      "name": "Rentabilidad anual reportada",
+      "value": null,
+      "unit": "% E.A.",
+      "period": "365 días",
+      "definition": "Campo informado por la SFC; no calculado por la Skill.",
+      "source": "SFC qhpu-8ixx",
+      "status": "unavailable"
+    }
+  ],
+  "category_snapshot": {
+    "source": "categorizacion-fic-colombia",
+    "version": null,
+    "cutoff_date": "2026-11-03",
+    "methodology_version": "1.1.0",
+    "coverage_pct": 100
+  },
+  "artifacts": [
+    {
+      "name": "factsheet.html",
+      "media_type": "text/html",
+      "uri": null,
+      "sha256": null,
+      "provenance": "skill_generated",
+      "description": "Ejemplo no emitido para un fondo real."
+    }
+  ],
+  "evidence": [
+    {
+      "source": "Fixture de ejemplo",
+      "locator": null,
+      "accessed_at": null,
+      "claim_or_output": "Demuestra la estructura de salida; no contiene resultados reales."
+    }
+  ],
+  "assumptions": [],
+  "warnings": [
+    "Fixture de esquema. Los valores nulos no deben ser sustituidos por estimaciones no autorizadas."
+  ],
+  "errors": [],
+  "execution": {
+    "started": false,
+    "code_executed": false,
+    "network_accessed": false,
+    "runtime_mode": "none",
+    "tools_used": []
+  },
+  "next_actions": [
+    "Reemplazar por datos de origen validados."
+  ]
+}

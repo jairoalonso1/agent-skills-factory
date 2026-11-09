@@ -1,0 +1,246 @@
+{
+  "id": "fic-funds-intelligence",
+  "name": "FIC Funds Intelligence",
+  "version": "0.1.0",
+  "description": "Portable institutional analysis and HTML reporting service for Colombian FICs: standardized factsheets and peer comparisons, with optional regulator data, MCP analytics and categorization snapshots.",
+  "license": "MIT",
+  "author": "Jairo Alonso González",
+  "entrypoint": "SKILL.md",
+  "format": "agentskills",
+  "mcp_required": false,
+  "ax": {
+    "role": "specialized-domain-capability",
+    "workflow_owner": "host-agent-orchestrator",
+    "supports": [
+      "workflow-handoff",
+      "structured-findings",
+      "provenance",
+      "warnings",
+      "human-review",
+      "standardized-html-artifacts"
+    ],
+    "does_not_own": [
+      "workflow-orchestration",
+      "host-interface",
+      "runtime-provisioning",
+      "user-permissions",
+      "source-system-of-record",
+      "fund-classifier-implementation"
+    ]
+  },
+  "service_profile": {
+    "service_type": "specialized-agent-service",
+    "maturity_level": 0,
+    "service_outcome": "Produce an evidence-led, standardized Spanish-language HTML factsheet or peer-comparison report for Colombian collective investment funds, supported by structured findings and source provenance.",
+    "target_users": [
+      "investment analysts",
+      "portfolio managers",
+      "fiduciary and fund managers",
+      "financial institutions",
+      "investment committees"
+    ],
+    "operations": [
+      "fund_factsheet",
+      "peer_comparison",
+      "fund_discovery",
+      "category_universe",
+      "industry_snapshot",
+      "custom_analysis"
+    ],
+    "workflow_ref": "SKILL.md#workflow-and-methodology",
+    "methodology_refs": [
+      "references/report-profiles.md",
+      "references/source-and-methodology.md"
+    ],
+    "interaction": {
+      "intake_ref": "SKILL.md#first-interaction-and-intake",
+      "ask_for_missing_material_inputs": true,
+      "explain_reason_for_sensitive_or_external_data_requests": true,
+      "require_approval_for_external_writes_or_sensitive_transfers": true,
+      "never_request_plaintext_secrets": true
+    },
+    "local_code_policy": {
+      "allowed": [
+        "html-artifact-validation",
+        "input-and-output-validation",
+        "small-source-adapters",
+        "normalization-glue"
+      ],
+      "separate_library_when": [
+        "substantial reusable data-processing or analytics functionality is needed",
+        "functionality requires independent release and maintenance"
+      ],
+      "large_library_copying_allowed": false
+    },
+    "integration_requirements": {
+      "mcp_required": false,
+      "supported_patterns": [
+        "public SFC open data",
+        "user-supplied files",
+        "authorized MCP servers",
+        "licensed financial-data providers",
+        "corporate data connectors",
+        "browser-exported HTML artifacts"
+      ],
+      "access_policy": "The host must verify source access, licensing, entitlements and permissions for each invocation. Frontera Funds is a non-required reference design only."
+    },
+    "output_contract": {
+      "schema_ref": "schemas/fic-report.schema.json",
+      "report_standard_ref": "references/report-profiles.md",
+      "formats": [
+        "HTML",
+        "JSON"
+      ],
+      "primary_format": "HTML",
+      "consistency_policy": "Required report profile sections, metric definitions, cutoff, provenance, category treatment, disclosures and validation remain stable across compatible models. Narrative analysis may differ but must follow evidence and uncertainty rules."
+    },
+    "quality_gates_ref": "SKILL.md#quality-control-and-acceptance",
+    "model_portability": {
+      "target": "Compatible Agent Skills hosts and models",
+      "guarantee": "Standardized service contract, report structures and validation expectations; not identical model reasoning or prose.",
+      "cross_model_status": "not-tested"
+    },
+    "commercialization": {
+      "available": false,
+      "future_options": [
+        "per-invocation",
+        "department-or-user-subscription",
+        "usage-based",
+        "managed-runtime",
+        "licensed-data",
+        "enterprise-contract"
+      ],
+      "note": "Portable package does not include hosted execution, licensed data, service support, pricing or SLA."
+    }
+  },
+  "runtime_requirements": {
+    "python": "optional for report validation and local artifact checks; not required to read methodology",
+    "network": "required only for live external source retrieval",
+    "file_generation": "requires writable host artifact capability or a user-supplied HTML artifact",
+    "external_data_access": "authorized public data, MCP, API, browser, user-supplied file or licensed provider",
+    "execution_modes": [
+      "native-sandbox",
+      "local-runtime",
+      "authorized-remote-runtime",
+      "no-execution-fallback"
+    ]
+  },
+  "dependencies": {
+    "python": [
+      "beautifulsoup4"
+    ],
+    "optional": []
+  },
+  "capabilities": [
+    "fund-discovery",
+    "institutional-fund-factsheet",
+    "peer-group-comparison",
+    "html-report-generation",
+    "sfc-data-integration-optional",
+    "mcp-analytics-integration-optional",
+    "volatility-category-context-optional",
+    "source-provenance-and-quality-checks",
+    "standardized-report-contract"
+  ],
+  "outputs": [
+    "HTML",
+    "JSON"
+  ],
+  "report_profiles": [
+    "factsheet",
+    "comparative"
+  ],
+  "reference_products": {
+    "frontera_funds": {
+      "role": "reference-design-only",
+      "runtime_dependency": false,
+      "profiles": [
+        "factsheet",
+        "comparative"
+      ],
+      "original_export_requires": "An authorized Frontera browser session/export or user-supplied original HTML; no backend HTML export API was identified in the reviewed source."
+    },
+    "categorization_project": {
+      "role": "optional-external-classification-provider",
+      "repository": "jairoalonso1/categorizacion-fic-colombia",
+      "runtime_dependency": false,
+      "snapshot_paths": [
+        "outputs/latest/fondos_clasificados.csv",
+        "outputs/latest/resumen_clasificacion.json",
+        "outputs/latest/clasificacion_fic.xlsx"
+      ]
+    },
+    "sfc_mcp": {
+      "role": "optional-live-data-and-analytics-provider",
+      "endpoint": "https://mcp-sfc-fics-colombia.vercel.app/api/mcp",
+      "runtime_dependency": false,
+      "repository": "jairoalonso1/mcp-sfc-fics-colombia",
+      "tools": [
+        "obtener_estado_dataset",
+        "listar_entidades_administradoras",
+        "buscar_fondos_fic",
+        "radiografia_fondo",
+        "ranking_rentabilidades_fics",
+        "cuota_mercado_aum_entidades",
+        "flujos_netos_captacion",
+        "radar_corridas_y_alertas_liquidez",
+        "serie_historica_nav_y_tasas",
+        "metricas_riesgo_cuantitativo",
+        "comparar_peer_group_fics",
+        "ejecutar_soql_avanzado"
+      ]
+    }
+  },
+  "branding": "Created by Jairo Alonso González",
+  "status": "candidate",
+  "release_status": "candidate",
+  "data_dependencies": [
+    {
+      "name": "SFC FIC open-data dataset qhpu-8ixx",
+      "access_mode": "public-or-authorized-MCP",
+      "license_status": "verify-current-terms-per-source",
+      "freshness": "Capture latest cutoff and retrieval time on every live-data invocation",
+      "provenance_required": true
+    },
+    {
+      "name": "FIC categorization snapshot",
+      "access_mode": "optional-project-artifact",
+      "license_status": "verify-repository-and-output-access",
+      "freshness": "Use snapshot's own cutoff and version; never assume latest is current without verification",
+      "provenance_required": true
+    },
+    {
+      "name": "Frontera HTML report artifact",
+      "access_mode": "optional-user-supplied-or-authorized-browser-export",
+      "license_status": "verify-user-and-product-entitlement",
+      "freshness": "Record original export date, selected funds, period and options",
+      "provenance_required": true
+    }
+  ],
+  "evaluation": {
+    "status": "not-run",
+    "limitations": [
+      "Package tests are not yet executed in a named cross-model host.",
+      "No production connector or browser export has been tested from this Skill.",
+      "Domain analysis quality and investment suitability are not certified."
+    ],
+    "scope": "Initial service specification and lightweight artifact validator; execution and cross-model portability validation pending."
+  },
+  "runtime_compatibility": [
+    {
+      "host": "Generic Agent Skills-compatible host",
+      "surface": "Package discovery and SKILL.md loading",
+      "status": "declared"
+    },
+    {
+      "host": "Python",
+      "surface": "HTML artifact validator and tests",
+      "status": "not-tested"
+    },
+    {
+      "host": "ChatGPT / Claude / Gemini / Grok",
+      "surface": "Native Skill discovery and optional tool integration",
+      "status": "not-tested"
+    }
+  ]
+}
