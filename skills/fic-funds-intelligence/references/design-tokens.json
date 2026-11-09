@@ -1,0 +1,49 @@
+{
+  "source": "User-supplied Frontera Funds SaaS factsheet HTML reference",
+  "source_provenance": "user_supplied_reference",
+  "theme": "light-institutional",
+  "colors": {
+    "page": "#FFFFFF",
+    "surface": "#F9FAFB",
+    "text_primary": "#1F2937",
+    "text_secondary": "#4B5563",
+    "border": "#E5E7EB",
+    "brand_accent": "#0BDA46",
+    "positive": "#16A34A",
+    "negative": "#DC2626",
+    "neutral": "#6B7280"
+  },
+  "typography": {
+    "font_family": "Roboto, Arial, sans-serif",
+    "base_px": 14,
+    "line_height": 1.5,
+    "title_weight": 700
+  },
+  "layout": {
+    "page_width_px": 1120,
+    "print_page": "A4",
+    "page_padding_px": 36,
+    "card_radius_px": 12,
+    "card_gap_px": 14,
+    "section_gap_px": 28
+  },
+  "responsive": {
+    "breakpoint_px": 760,
+    "mobile": "single-column cards; horizontally scrollable wide tables; compact page margins"
+  },
+  "print": {
+    "background": "#FFFFFF",
+    "page_size": "A4",
+    "hide_nonessential_controls": true,
+    "avoid_card_splitting": true
+  },
+  "prohibited": [
+    "dark-first dashboard",
+    "neon glow",
+    "gradient backgrounds",
+    "oversized green panels",
+    "emoji charts",
+    "invented or redrawn logo",
+    "unlabeled metrics"
+  ]
+}

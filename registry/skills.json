@@ -7,7 +7,7 @@
       "id": "finanzas-valoracion-accion",
       "name": "Institutional Equity Research",
       "description": "Evidence-led institutional equity research covering business and industry analysis, financial statement quality, applicable valuation methods, scenarios, investment thesis, risks and report generation.",
-      "version": "0.2.2",
+      "version": "0.3.0",
       "path": "skills/finanzas-valoracion-accion",
       "manifest": "skills/finanzas-valoracion-accion/manifest.json",
       "skill_file": "skills/finanzas-valoracion-accion/SKILL.md",
@@ -55,7 +55,7 @@
         "cross-format-chart-generation"
       ],
       "evaluation": {
-        "status": "partial",
+        "status": "passed",
         "scope": "40 unit and synthetic end-to-end tests pass locally and in GitHub Actions on Python 3.11, 3.12 and 3.13; domain accuracy review and cross-model portability remain unvalidated."
       },
       "data_dependencies": [
@@ -71,6 +71,75 @@
           "access_mode": "licensed",
           "license_status": "pending",
           "freshness": "Provider-defined; verify entitlement and timestamp",
+          "provenance_required": true
+        }
+      ]
+    },
+    {
+      "id": "fic-funds-intelligence",
+      "name": "Frontera Funds SKaaS — FIC Funds Intelligence",
+      "description": "Portable Frontera Funds-branded institutional analysis and HTML reporting Skill for Colombian FICs, using host-provided authorized data capabilities and optional dated categorization snapshots.",
+      "version": "0.2.0",
+      "path": "skills/fic-funds-intelligence",
+      "manifest": "skills/fic-funds-intelligence/manifest.json",
+      "skill_file": "skills/fic-funds-intelligence/SKILL.md",
+      "status": "candidate",
+      "license": "MIT",
+      "tags": [
+        "finance",
+        "colombia",
+        "fic",
+        "collective-investment-funds",
+        "fund-analysis",
+        "factsheet",
+        "peer-comparison",
+        "html-reporting",
+        "sfc",
+        "frontera-funds",
+        "skaas",
+        "branded-reporting"
+      ],
+      "requires": {
+        "python": "optional-for-html-artifact-validation",
+        "network": "required-only-for-live-external-data",
+        "packages": [],
+        "optional_packages": [],
+        "host_data_access": "optional; supplied and authorized by the host environment"
+      },
+      "execution_modes": [
+        "native-sandbox",
+        "local-runtime",
+        "authorized-remote-runtime",
+        "no-execution-fallback"
+      ],
+      "ax_role": "specialized-domain-capability",
+      "capabilities": [
+        "fund-discovery",
+        "institutional-fund-factsheet",
+        "peer-group-comparison",
+        "html-report-generation",
+        "host-provided-authorized-data-capabilities",
+        "volatility-category-context-optional",
+        "source-provenance-and-quality-checks",
+        "standardized-report-contract"
+      ],
+      "evaluation": {
+        "status": "pending-revalidation",
+        "scope": "Revised package tests, factory validation, live data integration and cross-model runtime validation are pending."
+      },
+      "data_dependencies": [
+        {
+          "name": "SFC FIC open-data dataset qhpu-8ixx",
+          "access_mode": "public-regulatory-data-or-host-authorized-provider",
+          "license_status": "verify-current-terms-per-source",
+          "freshness": "Capture latest cutoff and retrieval time on every live-data invocation",
+          "provenance_required": true
+        },
+        {
+          "name": "FIC categorization snapshot",
+          "access_mode": "optional-host-provided-or-user-supplied-snapshot",
+          "license_status": "verify-access-and-terms-for-the-supplied-artifact",
+          "freshness": "Use snapshot own cutoff and version; verify freshness before use",
           "provenance_required": true
         }
       ]

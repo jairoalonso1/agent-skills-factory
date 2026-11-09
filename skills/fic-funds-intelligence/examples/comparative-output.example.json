@@ -1,0 +1,32 @@
+{
+  "service_id": "fic-funds-intelligence",
+  "service_version": "0.2.0",
+  "operation": "peer_comparison",
+  "status": "needs_input",
+  "report_profile": "comparative",
+  "title": "Comparación institucional de ejemplo",
+  "cutoff_date": null,
+  "period_start": null,
+  "period_end": null,
+  "funds": [],
+  "summary": "Proporcione o resuelva al menos dos códigos de negocio SFC antes de comparar.",
+  "metrics": [],
+  "category_snapshot": null,
+  "artifacts": [],
+  "evidence": [],
+  "assumptions": [],
+  "warnings": [
+    "No se han consultado fondos ni generado un archivo."
+  ],
+  "errors": [],
+  "execution": {
+    "started": false,
+    "code_executed": false,
+    "network_accessed": false,
+    "runtime_mode": "none",
+    "tools_used": []
+  },
+  "next_actions": [
+    "Resolver al menos dos fondos y comprobar un corte común."
+  ]
+}
