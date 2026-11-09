@@ -42,6 +42,10 @@ Use the approved palette below. Maintain accessible contrast and use the green a
 
 A light report theme may be used when the report medium requires it, but preserve the same accent and semantic color roles. Avoid low-contrast gray-on-gray combinations.
 
+## Asset ownership and license
+
+The Skill instructions, validator and schemas are distributed under the package's declared open-source license. The Frontera Funds name, logo/mark and associated brand identity remain brand assets and trademarks of their owner; they are not relicensed under MIT by inclusion in this repository. Use of the mark is limited to authorized Frontera Funds product distribution. Do not use the asset to imply endorsement of unrelated products or services.
+
 ## Implementation and confidentiality boundary
 
 Brand consistency does not require shared implementation. The SKaaS renderer must not import, copy or depend on private Frontera SaaS source code, internal APIs, infrastructure, credentials, deployment configuration or proprietary runtime services.

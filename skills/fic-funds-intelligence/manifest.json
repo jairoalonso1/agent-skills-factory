@@ -202,7 +202,9 @@
     "implementation_boundary": "Brand and report-quality consistency do not imply code, API, infrastructure, credential or runtime dependency on the private Frontera Funds SaaS.",
     "logo_asset_path": "skills/fic-funds-intelligence/assets/frontera-funds-mark.svg",
     "logo_asset_type": "official brand mark extracted from the approved Frontera Funds favicon asset",
-    "logo_lockup": "Pair the official mark with the Frontera Funds text wordmark; do not invent a combined graphic."
+    "logo_lockup": "Pair the official mark with the Frontera Funds text wordmark; do not invent a combined graphic.",
+    "asset_license": "Frontera Funds brand asset; excluded from the package's MIT code license. Use only for authorized Frontera Funds product distribution.",
+    "trademark_notice": "Frontera Funds name, logo and brand identity remain the property of their owner."
   },
   "status": "candidate",
   "release_status": "candidate",
