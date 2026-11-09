@@ -22,4 +22,4 @@ Frontera Funds is the product brand and quality standard. Generated reports are 
 - `examples/`: factsheet and comparative result fixtures.
 - `tests/`: deterministic validation tests.
 
-The package does not copy or depend on the private Frontera SaaS implementation, the FIC classifier or the MCP implementation. Brand assets are supplied separately through an authorized package and are not inferred from private source code.
+The package does not copy or depend on the private Frontera SaaS implementation, the FIC classifier or the MCP implementation. The approved Frontera Funds brand mark is included at `assets/frontera-funds-mark.svg`; any future replacement must come from an authorized brand package, never from inferred private implementation details.
