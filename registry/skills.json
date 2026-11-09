@@ -74,6 +74,82 @@
           "provenance_required": true
         }
       ]
+    },
+    {
+      "id": "fic-funds-intelligence",
+      "name": "FIC Funds Intelligence",
+      "description": "Portable institutional analysis and HTML reporting service for Colombian FICs: standardized factsheets and peer comparisons with optional SFC data, MCP analytics and categorization snapshots.",
+      "version": "0.1.0",
+      "path": "skills/fic-funds-intelligence",
+      "manifest": "skills/fic-funds-intelligence/manifest.json",
+      "skill_file": "skills/fic-funds-intelligence/SKILL.md",
+      "status": "candidate",
+      "license": "MIT",
+      "tags": [
+        "finance",
+        "colombia",
+        "fic",
+        "collective-investment-funds",
+        "fund-analysis",
+        "factsheet",
+        "peer-comparison",
+        "html-reporting",
+        "sfc"
+      ],
+      "requires": {
+        "mcp": false,
+        "python": "optional-for-html-artifact-validation",
+        "network": "required-only-for-live-external-data",
+        "packages": [
+          "beautifulsoup4"
+        ],
+        "optional_packages": []
+      },
+      "execution_modes": [
+        "native-sandbox",
+        "local-runtime",
+        "authorized-remote-runtime",
+        "no-execution-fallback"
+      ],
+      "ax_role": "specialized-domain-capability",
+      "capabilities": [
+        "fund-discovery",
+        "institutional-fund-factsheet",
+        "peer-group-comparison",
+        "html-report-generation",
+        "sfc-data-integration-optional",
+        "mcp-analytics-integration-optional",
+        "volatility-category-context-optional",
+        "source-provenance-and-quality-checks",
+        "standardized-report-contract"
+      ],
+      "evaluation": {
+        "status": "not-run",
+        "scope": "Initial package added; unit tests, full registry checks and cross-model runtime validation pending."
+      },
+      "data_dependencies": [
+        {
+          "name": "SFC FIC open-data dataset qhpu-8ixx",
+          "access_mode": "public-or-authorized-MCP",
+          "license_status": "verify-current-terms-per-source",
+          "freshness": "Capture latest cutoff and retrieval time on every live-data invocation",
+          "provenance_required": true
+        },
+        {
+          "name": "FIC categorization snapshot",
+          "access_mode": "optional-project-artifact",
+          "license_status": "verify-repository-and-output-access",
+          "freshness": "Use snapshot's own cutoff and version; verify latest snapshot before use",
+          "provenance_required": true
+        },
+        {
+          "name": "Frontera report designs and optional original HTML",
+          "access_mode": "reference-design-or-authorized-user-supplied-export",
+          "license_status": "verify-entitlement-for-original-export",
+          "freshness": "Record original export date, funds, period and report options",
+          "provenance_required": true
+        }
+      ]
     }
   ]
 }
