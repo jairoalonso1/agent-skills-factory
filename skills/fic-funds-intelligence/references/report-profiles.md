@@ -60,6 +60,6 @@ All reports generated from these profiles are official **Frontera Funds SKaaS** 
 
 The report experience must meet the same institutional quality bar as Frontera Funds SaaS: coherent typography, restrained use of color, consistent spacing, clear KPI hierarchy, readable data tables, meaningful chart annotations, responsive layouts and print-ready output. The SKaaS implementation may use a different renderer and codebase; visual and analytical consistency is the requirement, not shared application components.
 
-Use the bundled official mark at `assets/frontera-funds-mark.svg` paired with the Frontera Funds text wordmark. A newer approved brand package may supersede it. Do not redraw, reconstruct or guess a logo from application source. If the bundled mark cannot be loaded, use the approved text wordmark fallback and emit a warning.
+Use the bundled reference mark at `assets/frontera-funds-mark.svg`, extracted from the user-supplied factsheet HTML, paired with the Frontera Funds text wordmark. Its provenance is `user_supplied_reference`; it is not independently trademark-verified. Do not redraw, reconstruct or guess a logo. If it cannot be loaded, use the text wordmark fallback and emit a warning. The canonical HTML structure and appearance are mandatory as specified in `html-rendering-contract.md` and `design-tokens.json`.
 
 Generated HTML must carry the Frontera Funds SKaaS identity and use provenance `frontera_skaas_generated`. User-provided files retain `user_supplied` provenance. Never label a newly generated report as a SaaS export.

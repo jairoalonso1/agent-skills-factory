@@ -52,7 +52,8 @@
     "workflow_ref": "SKILL.md#workflow-and-methodology",
     "methodology_refs": [
       "references/report-profiles.md",
-      "references/source-and-methodology.md"
+      "references/html-rendering-contract.md",
+      "references/design-tokens.json"
     ],
     "interaction": {
       "intake_ref": "SKILL.md#first-interaction-and-intake",
@@ -197,14 +198,17 @@
     "product_family": "Frontera Funds",
     "product_line": "Frontera Funds SKaaS",
     "product_type": "specialized-agent-service",
-    "identity_standard": "Frontera Funds official brand identity and approved report design system",
-    "logo_policy": "Use the bundled official brand mark at skills/fic-funds-intelligence/assets/frontera-funds-mark.svg paired with the Frontera Funds text wordmark. A newer approved asset may supersede it. Never recreate or infer the logo from application source.",
+    "identity_standard": "Frontera Funds factsheet reference identity and canonical light institutional report design system",
+    "logo_policy": "Use the bundled reference mark extracted from the user-supplied factsheet HTML at skills/fic-funds-intelligence/assets/frontera-funds-mark.svg paired with the Frontera Funds text wordmark. This is a user-supplied reference asset, not independently trademark-verified.",
     "implementation_boundary": "Brand and report-quality consistency do not imply code, API, infrastructure, credential or runtime dependency on the private Frontera Funds SaaS.",
     "logo_asset_path": "assets/frontera-funds-mark.svg",
-    "logo_asset_type": "official Frontera Funds vector brand mark",
+    "logo_asset_type": "user-supplied Frontera Funds factsheet reference SVG mark",
     "logo_lockup": "Pair the official mark with the Frontera Funds text wordmark; do not invent a combined graphic.",
     "asset_license": "Frontera Funds brand asset; excluded from the package's MIT code license. Use only for authorized Frontera Funds product distribution.",
-    "trademark_notice": "Frontera Funds name, logo and brand identity remain the property of their owner."
+    "trademark_notice": "Frontera Funds name, logo and brand identity remain the property of their owner.",
+    "asset_provenance": "user_supplied_reference",
+    "renderer_contract": "references/html-rendering-contract.md",
+    "design_tokens": "references/design-tokens.json"
   },
   "status": "candidate",
   "release_status": "candidate",
