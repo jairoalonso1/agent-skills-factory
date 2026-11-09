@@ -1,6 +1,6 @@
 # HTML Report Profiles
 
-These profiles define the two standard outputs for FIC Funds Intelligence. They are inspired by the factsheet and comparative-table report patterns reviewed in Frontera Funds. They are portable specifications, not copied React components or a Frontera runtime dependency.
+These profiles define the two standard outputs for Frontera Funds SKaaS — FIC Funds Intelligence. They are official product report standards, carrying the Frontera Funds information hierarchy and institutional quality bar while remaining independently implemented from the private SaaS codebase.
 
 ## Shared publication standard
 

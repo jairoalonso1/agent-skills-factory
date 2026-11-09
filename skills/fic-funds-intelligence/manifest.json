@@ -199,7 +199,10 @@
     "product_type": "specialized-agent-service",
     "identity_standard": "Frontera Funds official brand identity and approved report design system",
     "logo_policy": "Use the official logo from an authorized brand asset package supplied to the runtime; never recreate or infer it. If unavailable, use the approved text wordmark fallback and emit a warning.",
-    "implementation_boundary": "Brand and report-quality consistency do not imply code, API, infrastructure, credential or runtime dependency on the private Frontera Funds SaaS."
+    "implementation_boundary": "Brand and report-quality consistency do not imply code, API, infrastructure, credential or runtime dependency on the private Frontera Funds SaaS.",
+    "logo_asset_path": "skills/fic-funds-intelligence/assets/frontera-funds-mark.svg",
+    "logo_asset_type": "official brand mark extracted from the approved Frontera Funds favicon asset",
+    "logo_lockup": "Pair the official mark with the Frontera Funds text wordmark; do not invent a combined graphic."
   },
   "status": "candidate",
   "release_status": "candidate",

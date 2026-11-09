@@ -174,7 +174,7 @@ Return the following structure as a JSON object or equivalent host-native struct
 - `summary`: key findings, comparisons and interpretation
 - `metrics`: values, units, period, definition and source for each metric
 - `category_snapshot`: source, version, cutoff, category dimension and status where available
-- `artifacts`: name, media type, URI/path, SHA-256 when available, and provenance label (`frontera_original` or `skill_generated`)
+- `artifacts`: name, media type, URI/path, SHA-256 when available, and provenance label (`frontera_skaas_generated` or `user_supplied`)
 - `evidence`: source, locator, access time and claim/output supported
 - `assumptions`
 - `warnings`

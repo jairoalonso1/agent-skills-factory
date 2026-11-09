@@ -6,16 +6,16 @@ FIC Funds Intelligence is an official SKaaS product in the Frontera Funds ecosys
 
 ## Official logo
 
-Use the official Frontera Funds logo supplied through an authorized brand asset package or host-managed asset binding. The Skill package must not scrape, reconstruct, redraw, approximate or guess the logo from private application source.
+Use the official Frontera Funds brand mark stored at `assets/frontera-funds-mark.svg`, paired with the text wordmark `Frontera Funds`. This approved vector mark is the same shield/financial-column symbol embedded in the SaaS favicon. The host may replace or supplement it only with a newer approved brand asset. The Skill package must not scrape, reconstruct, redraw, approximate or guess the logo from private application source.
 
 Preferred delivery order:
-1. Official vector logo (SVG) from the approved brand package.
-2. Official transparent PNG at adequate resolution.
-3. Approved text wordmark fallback, exactly "Frontera Funds".
+1. Official SVG mark at `assets/frontera-funds-mark.svg` paired with the Frontera Funds text wordmark.
+2. Newer official vector or transparent PNG asset supplied by the brand owner.
+3. Text wordmark fallback, exactly "Frontera Funds", only if the SVG cannot be loaded.
 
 The runtime should place the logo in the report header and, where appropriate, the footer. Preserve original proportions, clear space, approved color variants and contrast. Do not recolor or distort the logo.
 
-If no authorized logo asset is available, render the text wordmark and add a warning to the structured result: `official_brand_logo_unavailable`. Never fabricate a substitute graphic.
+If the SVG asset cannot be loaded and no replacement is available, render the text wordmark and add a warning to the structured result: `official_brand_logo_unavailable`. Never fabricate a substitute graphic.
 
 ## Visual system and quality parity
 
@@ -28,7 +28,19 @@ Reports must meet the institutional presentation quality expected from Frontera 
 - responsive desktop/mobile layout and print CSS;
 - consistent header/footer, page metadata and source disclosures.
 
-Use only approved brand tokens and visual assets supplied to the runtime. If tokens are not available, choose a restrained, accessible neutral presentation rather than inventing brand colors.
+Use the approved palette below. Maintain accessible contrast and use the green accent selectively; do not turn every KPI or chart into a neon sign.
+
+| Token | Value | Use |
+|---|---|---|
+| Frontera green | `#0BDA46` | Primary accent, positive highlights, brand mark |
+| App background | `#131614` | Dark-mode report background |
+| Surface | `#2D3430` | Cards and elevated sections |
+| Divider | `#424C47` | Borders and separators |
+| Secondary text | `#A5B1AB` | Supporting labels and metadata |
+| Alert red | `#FA5538` | Negative or warning states |
+| Primary text | `#FFFFFF` | High-contrast text on dark surfaces |
+
+A light report theme may be used when the report medium requires it, but preserve the same accent and semantic color roles. Avoid low-contrast gray-on-gray combinations.
 
 ## Implementation and confidentiality boundary
 
