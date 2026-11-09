@@ -7,191 +7,125 @@ description: Delivers Frontera Funds-branded institutional analysis and HTML rep
 
 **Created by Jairo Alonso González**
 
+## Mandatory HTML rendering contract
+
+HTML generation is deterministic, not an invitation to improvise a dashboard. Before generating any report, read:
+- `references/brand-identity.md`
+- `references/design-tokens.json`
+- `references/html-rendering-contract.md`
+- `references/report-profiles.md`
+
+Select and populate the canonical template:
+- One fund: `templates/factsheet.html`
+- Two or more funds: `templates/comparative.html`
+
+Do not start from a generic dashboard, create a new visual system, or switch to a dark theme. The mandatory default is the light institutional style of the user-supplied Frontera Funds SaaS factsheet: white page, soft gray panels, dark slate text, subtle neutral borders, restrained green accent, Roboto/system sans-serif, centered report header, KPI cards, analytical sections, legible tables and institutional footer.
+
+Use the bundled reference mark at `assets/frontera-funds-mark.svg` exactly as supplied, paired with the “Frontera Funds” wordmark. This SVG was extracted from a user-supplied factsheet reference; do not claim independent trademark verification. Do not redraw, approximate, recolor or replace it with an invented mark. If it cannot be packaged, use text-only wordmark and emit `reference_mark_unavailable`.
+
+Produce a portable single HTML file: embed CSS, inline SVG charts and the reference mark where practical. Do not require Tailwind CDN, remote chart libraries, network fonts or a proprietary runtime. Preserve every required section in the selected report profile. If data is unavailable, retain the section and state why; never silently delete it. Resolve every template placeholder, escape untrusted text, and never insert source HTML as markup.
+
+Before delivery, run structural and brand tests where Python is available. Render/inspect in a browser when available; if not, state that visual rendering was not performed. A passing structural test is not pixel-level visual validation.
+
 ## Service promise
 
 Deliver a consistent, evidence-led institutional report about a Colombian FIC, a peer group or a defined segment of the FIC industry. The primary artifact is a readable, portable HTML report using one of two report profiles:
+1. **Fund factsheet** — one fund's identity, performance, risk, history and diagnostics.
+2. **Comparative report** — consistent side-by-side comparison of two or more funds, with common-period metrics and ranking context.
 
-1. **Fund factsheet** — a single fund's identity, performance, risk, history and relevant diagnostics.
-2. **Comparative report** — a consistent side-by-side comparison of two or more funds, with common-period metrics and ranking context.
+This Skill is implementation-independent from the private Frontera Funds SaaS. It does not import its application code, services, APIs, infrastructure, credentials or proprietary runtime. The report renderer is independent; product identity and report quality are consistent.
 
-This Skill is a native SKaaS product in the Frontera Funds ecosystem and must deliver the same brand identity, presentation quality and institutional report standard as the Frontera Funds SaaS. It is implementation-independent from the private Frontera SaaS: it does not import its application code, services, APIs, infrastructure, credentials or proprietary runtime. It may use approved Frontera brand assets (including the official logo) and product-level report specifications supplied through an authorized brand package. The model may use any authorized data source that satisfies the source policy and output contract.
-
-The Skill provides methodology, orchestration guidance, report specifications, lightweight validation and a portable output contract. It does not bundle or duplicate the classifier, MCP implementation, a large analytics library or a SaaS frontend.
+The Skill provides methodology, orchestration guidance, report specifications, lightweight validation and a portable output contract. It does not bundle or duplicate the classifier, MCP implementation or a large analytics library.
 
 ## Scope
 
-**Supported service operations**
-
-- `fund_factsheet`: institutional report for one fund/business code, with a selected participation class or all classes where meaningful.
+**Supported operations**
+- `fund_factsheet`: institutional report for one fund/business code.
 - `peer_comparison`: comparison of 2–8 funds, aligned to one cutoff and comparable horizons.
-- `fund_discovery`: discover funds by name, manager, SFC business code, subtype or commercial category.
-- `category_universe`: inspect the current classification taxonomy and category membership from an authorized, versioned classification snapshot.
+- `fund_discovery`: discover funds by name, manager, SFC business code, subtype or category.
+- `category_universe`: inspect taxonomy and category membership from an authorized snapshot.
 - `industry_snapshot`: manager AUM, market shares, flows, rankings and liquidity indicators.
-- `custom_analysis`: model-led analysis using any authorized dataset/tools, while retaining the same provenance and report contract.
+- `custom_analysis`: model-led analysis using authorized data, with the same provenance and report contract.
 
 **Out of scope**
-
 - Personalized investment recommendations or suitability determinations.
 - Trade execution, subscription/redemption processing or custody.
 - Regulatory certification, credit rating or comprehensive risk rating.
-- Reclassifying funds by recreating the official project classifier inside this Skill.
-- Representing a volatility cluster as a complete risk assessment.
+- Recreating the official classifier inside this Skill.
+- Treating a volatility cluster as a complete risk assessment.
 
 ## First interaction and intake
 
-Infer the operation from the user's request. Do not ask the user to select an operation when intent is clear.
-
-For a single fund, identify it by SFC `codigo_negocio` where possible. If only a name is supplied, search first and resolve ambiguous matches by manager, subtype or other identifier. For a comparative report, resolve each candidate to a unique business code and use between 2 and 8 funds if the SFC peer-group operation is selected.
-
-Use the latest available SFC cutoff by default and disclose the exact cutoff. Accept a user-specified historical cutoff when the source supports it. The default report profile is `factsheet` for one fund and `comparative` for two or more funds.
-
-Ask one focused question only when a material ambiguity blocks a reliable report (for example, two funds with similar names or an unclear historical cutoff). Do not ask for details already present in context.
+Infer the operation from the user's request; do not ask them to select it when intent is clear. Resolve funds to SFC `codigo_negocio` where possible. For comparisons, resolve each candidate to a unique business code. Use the latest available cutoff by default and disclose it. Ask one focused question only when a material ambiguity blocks a reliable report.
 
 ## Sources and integration policy
 
 ### Source priority
+1. SFC open-data dataset `qhpu-8ixx` via datos.gov.co or authorized MCP; preserve cutoff, source URL and retrieval timestamp.
+2. Versioned classification output from the external FIC categorization project; treat as a dated snapshot.
+3. Other authorized sources: user files, licensed vendors or corporate datasets.
+4. Model interpretation may contextualize retrieved data but must not be represented as source facts.
 
-1. **Primary regulator dataset**: SFC open-data dataset `qhpu-8ixx` via datos.gov.co or an authorized MCP/connector. Preserve the source cutoff, source URL and retrieval timestamp.
-2. **Versioned classification output**: the latest authorized output of the external FIC classification project. Treat it as a dated snapshot, never as a live query unless the source explicitly confirms that.
-3. **Other authorized sources**: user files, licensed data vendors or corporate datasets. Identify the source and applicable rights.
-4. **Model interpretation**: may explain or contextualize retrieved data, but must not be represented as source facts.
-
-Frontera Funds is the product brand, not a required data source. The private SaaS implementation is not an execution dependency; use only approved brand assets and product-level presentation standards supplied to the runtime.
+Frontera Funds is the product brand, not a required data source. The private SaaS is not an execution dependency.
 
 ### Optional SFC MCP integration
-
-When an authorized MCP connection is available, the MCP server `mcp-sfc-fics-colombia` may supply current data through these tools:
-
-| Tool | Use |
-|---|---|
-| `obtener_estado_dataset` | Verify dataset freshness, latest cutoff and data coverage before current analyses. |
-| `listar_entidades_administradoras` | Manager universe, fund counts, investors and AUM. |
-| `buscar_fondos_fic` | Resolve funds by name, manager, business code or subtype. |
-| `radiografia_fondo` | Full fund snapshot, participation classes, AUM, unit value, investors, daily flows and EA returns. Requires `codigo_negocio`. |
-| `ranking_rentabilidades_fics` | Top/bottom by daily, monthly, semiannual or annual EA return. |
-| `cuota_mercado_aum_entidades` | Market share and AUM by manager, subtype or entity type. |
-| `flujos_netos_captacion` | Contributions, redemptions, cancellations and net flows over a date range. Requires `fecha_inicio`. |
-| `radar_corridas_y_alertas_liquidez` | Potential liquidity stress based on redemptions versus prior-close assets. |
-| `serie_historica_nav_y_tasas` | Historical unit NAV, assets, investors, flows and reported returns. Requires `codigo_negocio` and `fecha_inicio`. |
-| `metricas_riesgo_cuantitativo` | Quantitative metrics on unit NAV. Requires `codigo_negocio` and `fecha_inicio`. |
-| `comparar_peer_group_fics` | Cross-fund snapshot for 2–8 business codes. |
-| `ejecutar_soql_avanzado` | Bounded custom query over official columns. Use only when dedicated tools do not provide the required data. |
-
-MCP availability is optional. The host must verify that the tool is actually connected and authorized before invoking it. Never invent tool results or claim an MCP request was performed if it was not.
-
-Use `obtener_estado_dataset` before current industry or fund reports when the MCP is available. Use `buscar_fondos_fic` to resolve names, then `radiografia_fondo` or `comparar_peer_group_fics` for profile data. Use history and risk tools only when the requested report period and required observations exist. Use rankings and flows as supplementary context, not as substitutes for fund-level analysis.
+When an authorized MCP connection is available, use its tools only after verifying the connection and permissions. Relevant operations may include dataset freshness, fund search, fund snapshot, peer comparison, historical NAV/returns, quantitative risk metrics, rankings, market share, flows and liquidity alerts. Never invent tool results or claim a request was performed if it was not.
 
 ### Optional categorization integration
-
-The repository `jairoalonso1/categorizacion-fic-colombia` is an external, replaceable analytical provider. Its current project output contract is:
-
+The repository `jairoalonso1/categorizacion-fic-colombia` is an external provider. Its documented outputs are:
 - `outputs/latest/fondos_clasificados.csv`
 - `outputs/latest/resumen_clasificacion.json`
 - `outputs/latest/clasificacion_fic.xlsx`
 
-When a snapshot is available, read its own metadata, cutoff, source and version before using it. Join on `codigo_negocio`; preserve category dimension, category name, classification status and reason. Do not join on fund name alone. If no current snapshot is accessible, state that categorization was unavailable and continue without it.
-
-The currently documented classification methodology uses a 365-calendar-day window and daily log returns on unit value; sample standard deviation annualized by √365; K-means with K=12, seed 42 and 50 initializations on log annualized volatility for eligible SFC subtypes 1 and 2 with strictly more than 180 valid returns; and nature-based classes for subtypes 3 (Inmobiliarios), 6 (Bursátiles) and 7 (Fondos de Capital Privado). Remaining records receive the residual status `Sin Clasificar`, which is not a risk category. Always follow the methodology version accompanying the actual snapshot; do not assume this description remains current if the project has changed.
-
-Volatility categories are descriptive grouping labels, not a comprehensive risk rating, recommendation or guarantee. Disclose that volatility alone does not capture credit, liquidity, concentration, duration, leverage or operational risk.
+Read the snapshot metadata, cutoff, source and version. Join on `codigo_negocio`, not fund name. If unavailable, disclose that and continue without it. Follow the methodology version accompanying the actual snapshot. Volatility categories are descriptive groupings, not a comprehensive risk rating.
 
 ## Workflow and methodology
 
 ### 1. Resolve scope and entity
+Resolve operation, funds, managers, business codes, participation classes, cutoff and requested output. Distinguish fund (`codigo_negocio`) from participation class (`tipo_participacion`). State whether metrics are class-specific, fund aggregates or representative-class measures.
 
-Resolve the operation, funds, manager, business codes, participation type(s), cutoff and requested output. Retain the distinction between fund (`codigo_negocio`) and participation class (`tipo_participacion`). When multiple classes exist, make clear whether metrics are class-specific, fund-level aggregates or representative-class measures.
-
-### 2. Verify source freshness and scope
-
-Record source dataset, latest available date, selected cutoff, date range, data retrieval time and query/tool identifiers when available. For historical cutoff requests, verify that data is actually available for that date. Do not silently substitute the latest date for a requested historical date.
+### 2. Verify freshness and scope
+Record source dataset, latest available date, selected cutoff, date range, retrieval time and tool identifiers when available. Do not silently substitute a different date for a requested historical cutoff.
 
 ### 3. Collect evidence
+For a factsheet, collect identity, manager, subtype, category (if available), AUM, investors, unit value, EA returns, historical series, risk metrics, monthly returns and drawdown information when available. For comparisons, align cutoff, horizons, units, participation classes and definitions. Disclose missing/stale values.
 
-For a factsheet, collect fund identity, manager, SFC subtype, category (if available), AUM, investors, unit value, EA returns, historical series, relevant risk metrics, monthly returns and drawdown information when available.
+### 4. Analyze with bounded judgment
+Separate source facts, deterministic calculations and qualitative interpretation. Explain material performance differences with evidence. Higher return is not automatically better after risk, horizon, category, liquidity and comparability. Do not recalculate metrics unless series, definitions, sampling and assumptions are available. Distinguish SFC-reported EA returns from NAV-derived returns and model calculations.
 
-For comparisons, use a common cutoff and aligned metrics/horizons. Check that participation classes are comparable, currency and units match, periods overlap, and any missing or stale values are disclosed. Do not mix daily observed returns with annual EA returns without explaining the basis.
+### 5. Generate the report
+Follow `references/report-profiles.md` for required analytical content and `references/html-rendering-contract.md` for HTML structure and presentation. HTML is primary; also return a concise structured summary and optional JSON. Generate other formats only when requested and supported.
 
-For industry analysis, obtain AUM/market share, flows, return rankings and liquidity flags only when relevant to the user's question.
+### 6. Quality control
+- Confirm resolved fund identifiers and applicable participation classes.
+- Confirm cutoff and period are explicit and supported.
+- Align compared periods and metric definitions.
+- Preserve source units and distinguish reported EA return from NAV-derived return.
+- Flag missing, stale, inconsistent or extreme observations.
+- Check required report sections, title, language, brand mark, responsive CSS, print CSS, tables, charts, sources and disclaimers.
+- Resolve all placeholders; confirm HTML opens and is non-empty.
+- Reconcile visible report values with structured output.
+- Disclose what was retrieved, calculated or inferred.
 
-### 4. Analyze with bounded model judgment
-
-Separate source facts, deterministic calculations and qualitative interpretation. Explain material performance differences using evidence. Present upside and downside observations where relevant; do not make every analysis a ranking of winners. A fund's higher return is not automatically better after considering risk, horizon, category, liquidity and comparability.
-
-If the available data supports it, consider absolute and annualized returns; realized volatility, maximum drawdown and recovery; Sharpe/Sortino and other provider metrics, with assumptions and risk-free rate; assets under management, investors and average ticket; daily, monthly, 180-day and 365-day EA returns reported by the regulator; monthly return distribution and worst drawdown windows; flows and liquidity warnings; and category and peer position.
-
-Do not recalculate provider metrics unless source series, definitions, sampling and assumptions are available. If recalculated, distinguish them from SFC-reported return fields and MCP-computed measures.
-
-### 5. Select the HTML report profile
-
-Use one of the report profiles in `references/report-profiles.md`.
-
-- `factsheet`: one fund, institutional factsheet.
-- `comparative`: at least two funds, side-by-side comparison.
-
-Both profiles must be readable on desktop and mobile, printable, in Spanish (Colombia), and portable as a single HTML file wherever practical. Embed styles and chart assets when feasible; avoid requiring a proprietary frontend or client-side runtime. External resources must be declared. Include report title, date generated, cutoff, period, fund identifiers, data provenance, methodology and limitations.
-
-The HTML is the primary artifact. Also return a concise structured summary and optional machine-readable JSON. Generate XLSX or other formats only when requested or materially useful and the runtime supports them.
-
-### 6. Frontera Funds brand and report identity
-
-This service is part of **Frontera Funds SKaaS**. Its generated factsheets and comparative reports are official Frontera Funds SKaaS deliverables, not third-party imitations or reports merely inspired by the SaaS.
-
-Apply the brand standards in `references/brand-identity.md` and the report structures in `references/report-profiles.md`. Use the bundled official Frontera Funds mark at `assets/frontera-funds-mark.svg`, paired with the Frontera Funds text wordmark. A newer approved brand package supplied by the brand owner may supersede the bundled asset. Never redraw, approximate, replace or invent the logo. If the official logo asset is not available in the current runtime, use the approved text wordmark treatment specified in the brand reference and disclose the missing asset in the execution warnings; do not fabricate a graphic.
-
-Match the institutional quality bar of Frontera Funds SaaS reports: information hierarchy, typography, spacing, charts, tables, responsive behavior, print behavior, metric labeling, and visual consistency. The SKaaS report renderer is independently implemented and must not depend on private SaaS source code or runtime services.
-
-Every report generated by this service must identify itself as a **Frontera Funds SKaaS** deliverable. Use artifact provenance `frontera_skaas_generated` for generated reports and `user_supplied` for files provided by the user. Do not claim that a SKaaS-generated report is an export from the SaaS application.
-
-### 7. Quality control and acceptance
-
-Before completing:
-- Ensure every fund has a resolved business code and, where applicable, participation class.
-- Confirm the cutoff and date range are explicit and supported by the data.
-- Confirm all compared funds use aligned periods and definitions.
-- Preserve source field names/units and distinguish reported EA return from return calculated from NAV.
-- Ensure category labels carry their dimension and snapshot date.
-- Flag missing, stale, inconsistent or extreme observations without silently deleting them.
-- Check HTML structure, title, language, links, charts, tables and local asset references.
-- Verify the HTML opens as a file and that the artifact is non-empty.
-- Confirm that structured outputs reconcile with the visible report.
-- Disclose what the model inferred and what was calculated or retrieved.
-
-A passing HTML validator is not evidence of investment suitability or complete risk assessment.
+A passing HTML validator is not evidence of suitability or complete risk assessment.
 
 ## Output contract
 
-Return the following structure as a JSON object or equivalent host-native structured result:
-
+Return a JSON object or equivalent host-native structure with:
 - `service_id`: `fic-funds-intelligence`
-- `service_version`
-- `operation`
-- `status`: succeeded, partial, needs_input, blocked, failed or cancelled
-- `report_profile`: factsheet, comparative or null
-- `title`
-- `cutoff_date`
-- `period_start`, `period_end`
+- `service_version`, `operation`, `status`
+- `report_profile`, `title`, `cutoff_date`, `period_start`, `period_end`
 - `funds`: identifiers, names, manager, subtype, participation class and category when available
-- `summary`: key findings, comparisons and interpretation
-- `metrics`: values, units, period, definition and source for each metric
-- `category_snapshot`: source, version, cutoff, category dimension and status where available
-- `artifacts`: name, media type, URI/path, SHA-256 when available, and provenance label (`frontera_skaas_generated` or `user_supplied`)
-- `evidence`: source, locator, access time and claim/output supported
-- `assumptions`
-- `warnings`
-- `errors`
-- `execution`: whether code/network/tools were actually used, runtime and tool references
-- `next_actions`
+- `summary`, `metrics`, `category_snapshot`
+- `artifacts`: name, media type, URI/path, SHA-256 when available, provenance
+- `evidence`, `assumptions`, `warnings`, `errors`, `execution`, `next_actions`
 
-The service must follow the Factory's Universal Skill Invocation Contract 1.0.0. Keep its request/response envelope unchanged; domain-specific fields above belong inside `outputs`.
+Generated reports use provenance `frontera_skaas_generated`; user-provided artifacts use `user_supplied`. Follow the Factory's Universal Skill Invocation Contract 1.0.0; domain fields belong inside `outputs`.
 
 ## Runtime and security
 
-The Skill's portable core must be usable as instructions alone. A compatible host may supply approved Frontera brand assets, tools, MCP, browser automation, a Python runtime, HTML files or a managed artifact store. Discover those capabilities at invocation time.
-
-Do not embed tokens, credentials or secrets. Do not assume private repository access. Do not execute untrusted code or HTML from source artifacts. Do not transmit confidential fund, customer or account data to unapproved services. Ask for approval when host policy requires external connection, data transfer, package installation or external writes.
+The portable core works as instructions alone. Discover approved tools, MCP, Python, browser and artifact capabilities at invocation time. Do not embed secrets, assume private repository access, execute untrusted code/HTML, or transmit confidential data to unapproved services. Ask for approval when required for external connections, data transfer, package installation or external writes.
 
 ## Execution and completion
 
-A Skill may reason over user-supplied data even when no runtime is available, but it must return `partial` or `blocked` when a required report artifact cannot be generated or validated. Do not fabricate a download link.
-
-The workflow orchestrator owns the multi-step AX experience, user-visible progress, approval capture and final workflow closure. This Skill owns the bounded FIC intelligence service and its report quality gates.
+If no runtime is available, reason over supplied data but return `partial` or `blocked` when a required artifact cannot be generated or validated. Never fabricate a download link. The workflow orchestrator owns multi-step AX progress and approvals; this Skill owns the bounded FIC intelligence service and report quality gates.
