@@ -200,8 +200,8 @@
     "identity_standard": "Frontera Funds official brand identity and approved report design system",
     "logo_policy": "Use the bundled official brand mark at skills/fic-funds-intelligence/assets/frontera-funds-mark.svg paired with the Frontera Funds text wordmark. A newer approved asset may supersede it. Never recreate or infer the logo from application source.",
     "implementation_boundary": "Brand and report-quality consistency do not imply code, API, infrastructure, credential or runtime dependency on the private Frontera Funds SaaS.",
-    "logo_asset_path": "skills/fic-funds-intelligence/assets/frontera-funds-mark.svg",
-    "logo_asset_type": "official brand mark extracted from the approved Frontera Funds favicon asset",
+    "logo_asset_path": "assets/frontera-funds-mark.svg",
+    "logo_asset_type": "official Frontera Funds vector brand mark",
     "logo_lockup": "Pair the official mark with the Frontera Funds text wordmark; do not invent a combined graphic.",
     "asset_license": "Frontera Funds brand asset; excluded from the package's MIT code license. Use only for authorized Frontera Funds product distribution.",
     "trademark_notice": "Frontera Funds name, logo and brand identity remain the property of their owner."

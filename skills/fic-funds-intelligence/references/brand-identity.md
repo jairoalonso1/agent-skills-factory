@@ -6,7 +6,7 @@ FIC Funds Intelligence is an official SKaaS product in the Frontera Funds ecosys
 
 ## Official logo
 
-Use the official Frontera Funds brand mark stored at `assets/frontera-funds-mark.svg`, paired with the text wordmark `Frontera Funds`. This approved vector mark is the same shield/financial-column symbol embedded in the SaaS favicon. The host may replace or supplement it only with a newer approved brand asset. The Skill package must not scrape, reconstruct, redraw, approximate or guess the logo from private application source.
+Use the official Frontera Funds brand mark stored at `assets/frontera-funds-mark.svg`, paired with the text wordmark `Frontera Funds`. This is the approved Frontera Funds shield/financial-column brand mark. The host may replace or supplement it only with a newer approved brand asset. The Skill package must not scrape, reconstruct, redraw, approximate or guess the logo from private application source.
 
 Preferred delivery order:
 1. Official SVG mark at `assets/frontera-funds-mark.svg` paired with the Frontera Funds text wordmark.
