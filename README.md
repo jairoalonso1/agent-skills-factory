@@ -27,7 +27,8 @@ Read:
 
 | Skill | Purpose | Version | Status |
 |---|---|---:|---|
-| [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Executable institutional equity research: deterministic financial analysis, valuation and standardized reports | 0.2.1 | Candidate for review; runtime validation pending |
+| [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Executable institutional equity research: deterministic financial analysis, valuation and standardized reports | 0.3.0 | Candidate for review; runtime validation pending |
+| [fic-funds-intelligence](skills/fic-funds-intelligence/SKILL.md) | Frontera Funds SKaaS: institutional FIC factsheets and peer-comparison reports for Colombian collective investment funds | 0.2.0 | Candidate for review; 12 local tests passed; cross-model validation pending |
 
 Machine-readable catalogue: [registry/skills.json](registry/skills.json).
 
@@ -37,8 +38,10 @@ Recommended general installer: the open-source Vercel Skills CLI. It detects sup
 
     npx skills add jairoalonso1/agent-skills-factory --list
     npx skills add jairoalonso1/agent-skills-factory --skill finanzas-valoracion-accion
+    npx skills add jairoalonso1/agent-skills-factory --skill fic-funds-intelligence
     npx skills check
     npx skills update finanzas-valoracion-accion
+    npx skills update fic-funds-intelligence
 
 Consult the [CLI documentation](https://github.com/vercel-labs/skills/blob/main/docs/commands.md) for current agent identifiers and capabilities.
 
