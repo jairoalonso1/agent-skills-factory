@@ -1,0 +1,45 @@
+theme:
+  id: frontera-funds
+  version: 1.0.0
+  role: default
+  identity:
+    brand_name: Frontera Funds
+    product_line: Frontera Funds SKaaS
+    logo_asset: ../assets/frontera-funds-mark.svg
+    logo_provenance: user_supplied_reference
+    logo_license: authorized_frontera_funds_use_only
+    wordmark: Frontera Funds
+  colors:
+    page: '#FFFFFF'
+    outer_canvas: '#F3F4F6'
+    surface: '#F9FAFB'
+    text_primary: '#1F2937'
+    text_secondary: '#4B5563'
+    border: '#E5E7EB'
+    accent: '#0BDA46'
+    positive: '#16A34A'
+    negative: '#DC2626'
+    neutral: '#6B7280'
+  typography:
+    family: 'Roboto, Arial, sans-serif'
+    base_px: 14
+    line_height: 1.5
+    title_weight: 700
+  layout:
+    page_width_px: 1120
+    page_padding_px: 36
+    card_radius_px: 12
+    card_gap_px: 14
+    section_gap_px: 28
+    factsheet_print: A4-portrait
+    comparative_print: A4-landscape
+  accessibility:
+    require_contrast_validation: true
+    color_not_only_signal: true
+  customization:
+    allow_authorized_logo_override: true
+    allow_brand_name_override: true
+    allow_color_override: true
+    allow_typography_override: true
+    preserve_accessibility_constraints: true
+    preserve_report_methodology: true

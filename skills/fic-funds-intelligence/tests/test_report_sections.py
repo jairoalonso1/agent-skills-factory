@@ -23,9 +23,13 @@ class ReportTemplateTests(unittest.TestCase):
             html = (ROOT / "templates" / f"{profile}.html").read_text()
             self.assertIn(f'data-report-profile=\"{profile}\"', html)
             self.assertIn('data-provenance=\"frontera_skaas_generated\"', html)
-            self.assertIn("{{BRAND_MARK_DATA_URI}}", html)
+            self.assertIn("{{BRAND_MARK_ELEMENT}}", html)
+            self.assertIn("{{REPORT_TITLE}}", html)
             self.assertIn("{{CUTOFF_DATE}}", html)
             self.assertIn("{{SOURCE_ATTRIBUTION}}", html)
+            self.assertIn("{{THEME_CSS_VARIABLES}}", html)
+            self.assertIn("{{STANDARD_VERSION}}", html)
+            self.assertIn("{{THEME_ID}}", html)
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,134 @@
+metric_standard:
+  id: frontera-fic-metrics
+  version: 1.0.0
+  conventions:
+    currency: COP
+    percentage_storage: decimal_fraction
+    date_timezone: source_local_date
+    annualization_days_for_daily_fic_series: 365
+    return_series_default: logarithmic_for_risk_metrics
+    missing_values: null_with_reason
+  metrics:
+    - id: sfc_ea_daily
+      label: Rentabilidad EA diaria reportada
+      family: reported_return
+      source_semantics: regulator_reported_effective_annual_rate
+      period: latest_reported_day
+      unit: percent_ea
+      calculation: none
+      restrictions: [never_label_as_simple_daily_return, preserve_source_value_and_cutoff]
+    - id: sfc_ea_30d
+      label: Rentabilidad EA 30 días reportada
+      family: reported_return
+      source_semantics: regulator_reported_effective_annual_rate_over_30_day_window
+      period: 30_calendar_days
+      unit: percent_ea
+      calculation: none
+      restrictions: [never_label_as_simple_30_day_return]
+    - id: sfc_ea_180d
+      label: Rentabilidad EA 180 días reportada
+      family: reported_return
+      source_semantics: regulator_reported_effective_annual_rate_over_180_day_window
+      period: 180_calendar_days
+      unit: percent_ea
+      calculation: none
+      restrictions: [never_label_as_simple_180_day_return]
+    - id: sfc_ea_365d
+      label: Rentabilidad EA 365 días reportada
+      family: reported_return
+      source_semantics: regulator_reported_effective_annual_rate_over_365_day_window
+      period: 365_calendar_days
+      unit: percent_ea
+      calculation: none
+    - id: nav_simple_return
+      label: Retorno simple derivado de NAV
+      family: calculated_return
+      formula: NAV_t / NAV_(t-1) - 1
+      unit: percent
+      prerequisites: [two_consecutive_valid_nav_observations, consistent_participation_class]
+    - id: nav_log_return
+      label: Retorno logarítmico derivado de NAV
+      family: calculated_return
+      formula: ln(NAV_t / NAV_(t-1))
+      unit: decimal
+      prerequisites: [two_consecutive_valid_positive_nav_observations, consistent_participation_class]
+    - id: cumulative_return
+      label: Retorno acumulado
+      family: calculated_return
+      formula: NAV_end / NAV_start - 1
+      unit: percent
+      prerequisites: [valid_start_and_end_nav, stated_period]
+    - id: cagr
+      label: CAGR
+      family: calculated_return
+      formula: (NAV_end / NAV_start) ^ (365 / elapsed_calendar_days) - 1
+      unit: percent_ea
+      prerequisites: [valid_start_and_end_nav, positive_elapsed_calendar_days]
+      restrictions: [state_day_count_convention]
+    - id: annualized_volatility
+      label: Volatilidad anualizada
+      family: calculated_risk
+      formula: sample_standard_deviation_of_daily_log_returns_times_sqrt_365
+      parameters: {ddof: 1, annualization_factor: sqrt_365}
+      unit: percent_ea
+      prerequisites: [valid_daily_nav_derived_log_returns, observation_count_disclosed]
+    - id: maximum_drawdown
+      label: Máximo drawdown
+      family: calculated_risk
+      formula: min(NAV_t / running_max_NAV_t - 1)
+      unit: percent
+      prerequisites: [ordered_nav_series]
+    - id: rolling_volatility_30
+      label: Volatilidad anualizada móvil (30 observaciones)
+      family: calculated_risk
+      formula: sample_standard_deviation_of_30_consecutive_valid_daily_log_returns_times_sqrt_365
+      parameters: {window: 30, ddof: 1, annualization_factor: sqrt_365}
+      unit: percent_ea
+      prerequisites: [at_least_30_consecutive_valid_daily_log_returns]
+      restrictions: [30_observations_not_30_calendar_days, align_dates_before_comparison]
+    - id: positive_days_percentage
+      label: Porcentaje de días positivos
+      family: calculated_statistic
+      formula: positive_valid_daily_returns / valid_daily_returns
+      unit: percent
+      prerequisites: [valid_daily_return_series]
+    - id: average_investor_ticket
+      label: Ticket promedio por inversionista
+      family: reported_derived_context
+      formula: AUM / investor_count
+      unit: COP_per_investor
+      prerequisites: [AUM_and_investor_count_same_cutoff_and_granularity, investor_count_greater_than_zero]
+    - id: aum_change
+      label: Variación del AUM
+      family: reported_derived_context
+      formula: AUM_end / AUM_start - 1
+      unit: percent
+      restrictions: [not_equivalent_to_investment_return, flows_and_valuation_changes_may_contribute]
+    - id: sharpe_ratio
+      label: Sharpe Ratio
+      family: risk_adjusted
+      formula: mean_period_excess_return / standard_deviation_period_returns_annualized_consistently
+      prerequisites: [explicit_risk_free_rate, risk_free_rate_basis_and_conversion, return_frequency, ddof_convention]
+      default_status_without_prerequisites: not_calculated
+    - id: sortino_ratio
+      label: Sortino Ratio
+      family: risk_adjusted
+      formula: mean_period_excess_return / downside_deviation_annualized_consistently
+      prerequisites: [explicit_target_or_minimum_acceptable_return, downside_deviation_definition, return_frequency, annualization_convention]
+      default_status_without_prerequisites: not_calculated
+    - id: value_at_risk
+      label: VaR
+      family: tail_risk
+      prerequisites: [methodology, confidence_level, horizon, sufficient_observations]
+      default_status_without_prerequisites: not_calculated
+    - id: expected_shortfall
+      label: CVaR / Expected Shortfall
+      family: tail_risk
+      prerequisites: [methodology, confidence_level, horizon, sufficient_observations]
+      default_status_without_prerequisites: not_calculated
+  display_rules:
+    - show_metric_label_unit_period_and_source_or_definition
+    - distinguish_reported_ea_rates_from_nav_derived_returns
+    - do_not_mix_fund_level_aum_with_class_level_nav_without_granularity_note
+    - do_not_compute_risk_adjusted_or_tail_metrics_without_prerequisites
+    - missing_metric_is_null_and_has_status_and_reason

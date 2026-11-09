@@ -1,0 +1,24 @@
+profile:
+  id: comparative
+  version: 1.0.0
+  title: Comparativo de fondos
+  cardinality: {minimum_funds: 2, maximum_funds: 8}
+  page: A4-landscape
+  required_sections:
+    - {id: scope, title: Alcance de la comparación, data: [funds, business_codes, managers, subtypes, participation_classes, common_cutoff, common_period]}
+    - {id: executive_comparison, title: Resumen ejecutivo, data: [key_similarities, material_differences, comparability_caveats], constraints: [no_automatic_winner_claim]}
+    - {id: matrix, title: Matriz comparativa, data: [aum, investors, average_investor_ticket, sfc_ea_daily, sfc_ea_30d, sfc_ea_180d, sfc_ea_365d, volatility, maximum_drawdown, supported_risk_ratios]}
+    - {id: scale, title: Escala y características de los fondos, data: [aum, investors, participation_class, category_if_available]}
+    - {id: performance, title: Comparación de desempeño, chart: [aligned_nav_or_return_series]}
+    - {id: risk, title: Comparación de riesgo, data: [comparable_risk_metrics, observation_counts, assumptions]}
+    - {id: drawdown, title: Comparación de drawdown, chart: [aligned_drawdown_series]}
+    - {id: rolling_volatility, title: Volatilidad anualizada móvil (30 observaciones), chart: [aligned_rolling_volatility_30]}
+    - {id: flows, title: Flujos y liquidez, data: [flows_if_available], optional: true}
+    - {id: conclusions, title: Conclusiones y puntos de vigilancia, data: [counterpoints, data_gaps, measurement_limitations]}
+    - {id: methodology, title: Fuentes y metodología, data: [source_ledger, metric_definitions, assumptions, limitations, disclaimer]}
+  comparison_rules:
+    - align_on_common_observation_dates
+    - disclose_fund_vs_class_level_granularity
+    - no_silent_interpolation
+    - do_not_rank_when_metrics_or_periods_are_not_comparable
+  unavailable_policy: retain_section_and_state_reason

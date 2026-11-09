@@ -1,0 +1,26 @@
+capability_requirements:
+  id: fic-funds-intelligence-runtime
+  version: 1.0.0
+  principles:
+    - declare_capabilities_not_vendor_names
+    - host_selects_model_and_tools
+    - separate_reasoning_from_computation_and_artifact_rendering
+    - record_capability_gaps_and_fallbacks
+  capability_groups:
+    data_access:
+      required_for_live_report: [fund_lookup, fund_snapshot, source_freshness, historical_nav_or_returns]
+      conditional: [risk_metrics_or_raw_series, aum_and_investors, flows_and_liquidity, dated_category_snapshot]
+    analytical_execution:
+      required_when_recalculation_needed: [deterministic_numeric_computation, date_alignment, missing_data_diagnostics]
+      recommended: [structured_data_handling, schema_validation]
+    artifact_generation:
+      required_for_html_delivery: [file_write, template_population, html_escaping, placeholder_validation]
+      recommended: [svg_generation, html_structural_validation, browser_rendering, print_preview]
+    orchestration:
+      required_for_multi_step_live_execution: [tool_discovery, tool_invocation, result_inspection, approval_handling]
+  fallback_policy:
+    no_live_data: use_user_supplied_or_authorized_static_data_and_mark_partial
+    no_python_or_calculator: do_not_hand_calculate_large_series; request_host_computation_or_mark_blocked
+    no_file_write: return_structured_specification_or_mark_blocked_for_html
+    no_browser: run_structural_validation_and_mark_visual_inspection_not_performed
+    no_required_data_capability: do_not_infer_or_fabricate; disclose_and_mark_partial_or_blocked

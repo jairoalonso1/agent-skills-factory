@@ -1,0 +1,52 @@
+data_contract:
+  id: frontera-fic-data-contract
+  version: 1.0.0
+  identity:
+    fund_key: codigo_negocio
+    participation_class_key: tipo_participacion
+    manager_key: codigo_entidad
+    required_distinction: fund_level_and_participation_level_values_must_not_be_conflated
+  canonical_entities:
+    fund: [business_code, fund_name, manager, regulator_subtype, business_nature]
+    participation: [participation_class_code, participation_class_name, unit_value_series]
+  canonical_observation:
+    date: observation_date
+    nav: unit_value
+    aum: fund_or_class_assets_cop
+    investors: investor_count
+    reported_returns:
+      - {horizon: daily, semantic: effective_annual_rate}
+      - {horizon: 30_calendar_days, semantic: effective_annual_rate}
+      - {horizon: 180_calendar_days, semantic: effective_annual_rate}
+      - {horizon: 365_calendar_days, semantic: effective_annual_rate}
+    flows: [subscriptions_cop, redemptions_cop, cancellations_cop]
+  source_mapping_reference:
+    source: SFC_FIC_open_data
+    dataset_id: qhpu-8ixx
+    public_source: https://www.datos.gov.co/
+    source_fields:
+      fund_key: codigo_negocio
+      participation_class_key: tipo_participacion
+      manager_key: codigo_entidad
+      observation_date: fecha_corte
+      nav: valor_unidad_operaciones
+      aum: valor_fondo_cierre_dia_t
+      investors: numero_inversionistas
+      reported_returns: [rentabilidad_diaria, rentabilidad_mensual, rentabilidad_semestral, rentabilidad_anual]
+      flows: [aportes_recibidos, retiros_redenciones, anulaciones]
+  retrieval_metadata:
+    required_when_available: [source_name, source_owner, retrieval_timestamp, latest_source_cutoff, selected_cutoff, period_start, period_end, record_count, observation_count, source_version]
+    internal_only: [provider_tool_names, endpoint_urls, query_strings, credentials, request_headers]
+  comparison_rules:
+    - resolve_each_fund_to_unique_fund_key
+    - preserve_participation_class_for_class_level_metrics
+    - use_common_cutoff_and_common_observation_dates_for_series_comparison
+    - disclose_selected_representative_class_if_fund_level_aggregation_is_unavailable
+    - never_silently_interpolate_missing_observations
+    - distinguish_source_reported_values_from_derived_metrics
+  classification:
+    required: false
+    input: independently_versioned_snapshot
+    join_key: codigo_negocio
+    required_metadata: [snapshot_version, cutoff_date, methodology_version, category_dimension]
+    missing_behavior: retain_report_without_category_and_disclose_unavailability

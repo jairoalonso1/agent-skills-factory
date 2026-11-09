@@ -1,35 +1,50 @@
 # Frontera Funds SKaaS — FIC Funds Intelligence
 
-FIC Funds Intelligence is a portable specialist Skill in the Frontera Funds product family. It standardizes institutional analysis and branded HTML reporting for Colombian collective investment funds (FICs).
+Portable specialist Skill for evidence-led institutional reporting on Colombian collective investment funds (FICs). The initial report standard contains exactly two standardized deliverables: **Fund Factsheet** and **Comparative Report**.
 
-## Primary deliverables
+## Standardized deliverables
 
-- Fund factsheet HTML (`factsheet` profile).
-- Peer-comparison HTML (`comparative` profile).
-- Structured result with fund identifiers, cutoff, metrics, category snapshot, evidence, warnings and artifact provenance.
+- `factsheet` — one fund, one business code, one reporting cutoff; A4 portrait.
+- `comparative` — two to eight funds with aligned cutoff and comparable periods; A4 landscape.
+- HTML is the primary artifact; a structured JSON result accompanies the report contract.
+
+Fund discovery and other data-intelligence operations may support report intake, but they are not additional standardized report profiles.
+
+## Report standard and configuration
+
+- `standards/report-standard.yaml` — scope, principles, product boundaries and conformance dimensions.
+- `standards/metric-definitions.yaml` — metric semantics, formulas, prerequisites and display rules.
+- `standards/data-contract.yaml` — entity identity, data granularity, provenance and comparison rules.
+- `standards/quality-gates.yaml` — blocking and disclosure quality checks.
+- `profiles/` — versioned factsheet and comparative section specifications.
+- `themes/frontera-funds.yaml` — default light institutional Frontera theme.
+- `themes/neutral-institutional.yaml` — unbranded fallback theme.
+- `configuration/defaults.yaml` and `configuration/client-overrides.schema.json` — defaults and validated client customization.
+- `compatibility/` — capability requirements and model/runtime execution profiles.
+
+Branding is configurable, but overrides cannot change metric formulas, required report sections, source provenance, entity keys, comparability rules or quality gates. Only authorized logos and brand assets may be used.
 
 ## Independent product components
 
-Frontera Funds may be offered through three separately packageable components:
+1. **Skill:** portable methodology, report profiles, templates, brand configuration and quality checks.
+2. **Data access:** separately authorized data services exposed by the host.
+3. **Managed service:** an integrated offer combining Skill, data access and managed execution under separate commercial terms.
 
-1. **Skill:** portable methodology, analytical workflow, report contract, templates, brand rules and quality checks.
-2. **Data access:** separately authorized access to regulatory and other permitted data through capabilities exposed by the host environment.
-3. **Managed service:** an integrated service combining the Skill, data access and managed execution/support under separate commercial terms.
+The Skill does not bundle, install or require a particular MCP, connector, API vendor, endpoint, private SaaS codebase or infrastructure. The host agent/runtime maps available tools to the abstract data capabilities.
 
-The Skill does not bundle, install or require a particular MCP, connector, API vendor, endpoint, private SaaS codebase or infrastructure. The host agent/runtime supplies authorized data and artifact capabilities.
+## Model compatibility
 
-## Package
+Execution is selected by capabilities rather than model names. Orchestration, analytical reasoning, deterministic computation, document generation and visual QA may be performed by one model, several specialized models or a model plus deterministic runtime. Cross-model equivalence is not claimed until empirically tested.
 
-- `SKILL.md`: service specification, workflow and quality gates.
-- `manifest.json`: machine-readable service metadata, portability and commercial component model.
-- `references/report-profiles.md`: required analytical contents and chart standards.
-- `references/brand-identity.md`: brand identity and reference-mark provenance.
-- `references/design-tokens.json`: light institutional palette, typography and layout tokens.
-- `references/html-rendering-contract.md`: mandatory HTML template, portability and preflight contract.
-- `templates/`: canonical factsheet and comparative report templates.
-- `references/source-and-methodology.md`: regulatory source, data-access contract, category snapshot and interpretation policy.
-- `schemas/fic-report.schema.json`: structured report payload.
-- `scripts/validate_html_report.py`: lightweight HTML artifact validation (Python standard library only).
-- `examples/` and `tests/`: illustrative payloads and deterministic checks.
+## Package map
 
-The bundled Frontera Funds reference mark was extracted from a user-supplied factsheet HTML reference (`user_supplied_reference`); it is not independently trademark-verified. The mark and brand identity are excluded from the package's MIT code license and may be used only for authorized Frontera Funds distribution.
+- `SKILL.md`: service specification and workflow.
+- `standards/`: report, metric, data and quality contracts.
+- `profiles/`: factsheet and comparative report specifications.
+- `themes/` and `configuration/`: default brand and authorized overrides.
+- `compatibility/`: host capability requirements and execution profiles.
+- `templates/`: canonical HTML scaffolds.
+- `references/`: source, methodology, identity and rendering guidance.
+- `schemas/`, `examples/`, `scripts/`, `tests/`: output validation and package tests.
+
+The bundled Frontera reference mark is a user-supplied asset, not independently trademark-verified. It is excluded from the package's MIT code license and may be used only for authorized Frontera Funds distribution.

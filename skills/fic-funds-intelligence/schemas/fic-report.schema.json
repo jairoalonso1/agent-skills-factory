@@ -269,10 +269,7 @@
           },
           "brand_identity": {
             "type": "string",
-            "enum": [
-              "frontera_funds_skaas",
-              "not_applicable"
-            ]
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -379,6 +376,226 @@
       "items": {
         "type": "string"
       }
+    },
+    "standard": {
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "profile_version",
+        "theme_id",
+        "theme_version"
+      ],
+      "properties": {
+        "id": {
+          "const": "frontera-fic-reporting"
+        },
+        "version": {
+          "type": "string"
+        },
+        "profile_version": {
+          "type": "string"
+        },
+        "theme_id": {
+          "type": "string"
+        },
+        "theme_version": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "branding": {
+      "type": "object",
+      "required": [
+        "brand_name",
+        "logo_status"
+      ],
+      "properties": {
+        "brand_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "logo_status": {
+          "enum": [
+            "embedded",
+            "text_only",
+            "not_applicable"
+          ]
+        },
+        "overrides_applied": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "conformance": {
+      "type": "object",
+      "required": [
+        "structure",
+        "entity_identity",
+        "cutoff_and_period",
+        "data_provenance",
+        "metric_definitions",
+        "comparability",
+        "placeholder_resolution",
+        "html_integrity",
+        "reconciliation",
+        "visual_inspection"
+      ],
+      "properties": {
+        "structure": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "entity_identity": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "cutoff_and_period": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "data_provenance": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "metric_definitions": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "comparability": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "placeholder_resolution": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "html_integrity": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "reconciliation": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "visual_inspection": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "cross_model_execution": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        },
+        "domain_review": {
+          "enum": [
+            "passed",
+            "failed",
+            "partial",
+            "not_applicable",
+            "not_performed"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "execution_profiles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "orchestration",
+          "analytical",
+          "computational",
+          "document",
+          "visual_qa"
+        ]
+      },
+      "uniqueItems": true
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "report_profile": {
+            "enum": [
+              "factsheet",
+              "comparative"
+            ]
+          }
+        },
+        "required": [
+          "report_profile"
+        ]
+      },
+      "then": {
+        "required": [
+          "standard",
+          "branding",
+          "conformance",
+          "execution_profiles"
+        ]
+      }
+    }
+  ]
 }

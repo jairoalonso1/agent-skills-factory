@@ -1,0 +1,34 @@
+execution_profiles:
+  id: fic-funds-intelligence-execution
+  version: 1.0.0
+  selection_policy: choose_by_observed_host_capabilities_not_model_brand_or_model_name
+  profiles:
+    - id: orchestration
+      purpose: resolve_user_intent_and_coordinate_authorized_data_tools
+      capabilities: [tool_discovery, tool_invocation, structured_result_inspection, multi_step_state, approval_handling]
+      preferred_for: [fund_resolution, freshness_check, source_retrieval, multi_fund_collection]
+      fallback: manual_user_supplied_data_with_provenance
+    - id: analytical
+      purpose: perform_evidence_led_fic_analysis_and_interpretation
+      capabilities: [financial_reasoning, structured_data_handling, deterministic_calculation_access, uncertainty_and_counterargument_handling]
+      preferred_for: [metric_review, risk_interpretation, comparability_review, conclusions]
+      fallback: deterministic_metrics_only_and_narrow_narrative
+    - id: computational
+      purpose: calculate_and_validate_numeric_series_reproducibly
+      capabilities: [python_or_equivalent_runtime, tabular_data_processing, date_alignment, schema_validation]
+      preferred_for: [nav_returns, volatility, drawdown, rolling_metrics, reconciliation]
+      fallback: use_verified_source_metrics_without_recalculation_or_mark_unavailable
+    - id: document
+      purpose: generate_portable_institutional_html_and_structured_output
+      capabilities: [file_generation, template_population, html_escaping, svg_or_chart_output, structural_validation]
+      preferred_for: [factsheet_rendering, comparative_rendering, artifact_packaging]
+      fallback: return structured report payload_and_mark_html_blocked
+    - id: visual_qa
+      purpose: inspect_actual_rendered_output
+      capabilities: [browser_or_html_renderer, screenshot_or_print_preview, visual_inspection]
+      preferred_for: [layout_review, responsive_review, print_review, contrast_review]
+      fallback: structural_validation_only_and_mark_visual_inspection_not_performed
+  composition:
+    allowed: [single_host_multiple_capabilities, multiple_specialized_models, model_plus_deterministic_runtime]
+    required_record: [execution_profile_ids, host_capabilities_used, fallbacks, validation_status]
+  compatibility_statement: A compatible host must satisfy the capabilities required by the selected operation and report profile. Model identity alone does not establish compatibility. Cross-model equivalence requires empirical evaluation.

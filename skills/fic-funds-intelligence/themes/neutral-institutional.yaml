@@ -1,0 +1,36 @@
+theme:
+  id: neutral-institutional
+  version: 1.0.0
+  role: optional_unbranded_fallback
+  identity:
+    brand_name: Institutional Report
+    product_line: FIC Funds Intelligence
+    logo_asset: null
+    wordmark: Institutional Report
+  colors:
+    page: '#FFFFFF'
+    outer_canvas: '#F3F4F6'
+    surface: '#F8FAFC'
+    text_primary: '#1F2937'
+    text_secondary: '#475569'
+    border: '#CBD5E1'
+    accent: '#334155'
+    positive: '#15803D'
+    negative: '#B91C1C'
+    neutral: '#64748B'
+  typography:
+    family: 'Arial, sans-serif'
+    base_px: 14
+    line_height: 1.5
+    title_weight: 700
+  layout:
+    page_width_px: 1120
+    page_padding_px: 36
+    card_radius_px: 8
+    card_gap_px: 14
+    section_gap_px: 28
+    factsheet_print: A4-portrait
+    comparative_print: A4-landscape
+  accessibility:
+    require_contrast_validation: true
+    color_not_only_signal: true

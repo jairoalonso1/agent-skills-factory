@@ -1,11 +1,27 @@
 ---
 name: fic-funds-intelligence
-description: Delivers Frontera Funds-branded institutional analysis and HTML reports for Colombian collective investment funds (FICs) as a portable SKaaS service. Supports factsheets, peer comparisons, fund discovery and industry analysis using authorized data capabilities and optional categorization snapshots.
+description: Delivers standardized institutional HTML factsheets and comparative reports for Colombian collective investment funds (FICs), with configurable branding, evidence-led methodology and host-independent execution profiles.
 ---
 
 # FIC Funds Intelligence
 
 **Created by Jairo Alonso González**
+
+## Initial reporting standard
+
+The initial standardized deliverable scope is intentionally limited to two profiles: `factsheet` and `comparative`. Other intelligence operations may support intake or data discovery, but they are not additional standardized report profiles. Do not expand the report catalogue without a separately versioned standard and profile.
+
+Read the normative configuration and standards before execution:
+- `standards/report-standard.yaml`
+- `standards/metric-definitions.yaml`
+- `standards/data-contract.yaml`
+- `standards/quality-gates.yaml`
+- `profiles/factsheet.yaml` or `profiles/comparative.yaml`
+- `configuration/defaults.yaml` and `configuration/client-overrides.schema.json`
+- `compatibility/capability-requirements.yaml` and `compatibility/execution-profiles.yaml`
+- `themes/frontera-funds.yaml` (default) or an authorized alternative theme
+
+The standard, report profile and theme each have independent versions. Skill package version does not replace those versions.
 
 ## Mandatory HTML rendering contract
 
@@ -19,9 +35,9 @@ Select and populate the canonical template:
 - One fund: `templates/factsheet.html`
 - Two or more funds: `templates/comparative.html`
 
-Do not start from a generic dashboard, create a new visual system, or switch to a dark theme. The mandatory default is the light institutional style of the user-supplied Frontera Funds SaaS factsheet: white page, soft gray panels, dark slate text, subtle neutral borders, restrained green accent, Roboto/system sans-serif, centered report header, KPI cards, analytical sections, legible tables and institutional footer.
+Do not start from a generic dashboard or improvise a visual system. The default theme is `frontera-funds`, matching the light institutional style of the supplied Frontera reference. Branding is configurable through an authorized theme or client override; changing the brand must not change analytical methodology, required sections, provenance rules or quality gates. Use `neutral-institutional` when an unbranded fallback is requested or the Frontera brand is not authorized.
 
-Use the bundled reference mark at `assets/frontera-funds-mark.svg` exactly as supplied, paired with the “Frontera Funds” wordmark. This SVG was extracted from a user-supplied factsheet reference; do not claim independent trademark verification. Do not redraw, approximate, recolor or replace it with an invented mark. If it cannot be packaged, use text-only wordmark and emit `reference_mark_unavailable`.
+Use the logo and wordmark configured by the effective theme. The bundled Frontera mark at `assets/frontera-funds-mark.svg` is a user-supplied reference asset, not independently trademark-verified; use it only for authorized Frontera Funds distribution. Never invent or redraw a logo. A client override must use an authorized asset. If no authorized logo is available, use the configured text wordmark and record `brand_mark_unavailable`; never block an otherwise valid report solely because a logo is absent.
 
 Produce a portable single HTML file: embed CSS, inline SVG charts and the reference mark where practical. Do not require Tailwind CDN, remote chart libraries, network fonts or a proprietary runtime. Preserve every required section in the selected report profile. If data is unavailable, retain the section and state why; never silently delete it. Resolve every template placeholder, escape untrusted text, and never insert source HTML as markup.
 
@@ -35,17 +51,19 @@ Deliver a consistent, evidence-led institutional report about a Colombian FIC, a
 
 This Skill is implementation-independent from the private Frontera Funds SaaS. It does not import its application code, services, APIs, infrastructure, credentials or proprietary runtime. The report renderer is independent; product identity and report quality are consistent.
 
-The Skill provides methodology, orchestration guidance, report specifications, lightweight validation and a portable output contract. It does not bundle or duplicate the classifier, MCP implementation or a large analytics library.
+The Skill provides methodology, orchestration guidance, two report specifications, configurable presentation, lightweight validation and a portable output contract. It does not bundle or duplicate the classifier, MCP implementation or a large analytics library.
 
 ## Scope
 
-**Supported operations**
+**Supported intelligence operations**
 - `fund_factsheet`: institutional report for one fund/business code.
 - `peer_comparison`: comparison of 2–8 funds, aligned to one cutoff and comparable horizons.
 - `fund_discovery`: discover funds by name, manager, SFC business code, subtype or category.
 - `category_universe`: inspect taxonomy and category membership from an authorized snapshot.
 - `industry_snapshot`: manager AUM, market shares, flows, rankings and liquidity indicators.
 - `custom_analysis`: model-led analysis using authorized data, with the same provenance and report contract.
+
+The only standardized report profiles are `factsheet` and `comparative`; fund discovery and other operations are supporting capabilities, not additional report products.
 
 **Out of scope**
 - Personalized investment recommendations or suitability determinations.
@@ -101,15 +119,17 @@ For a factsheet, collect identity, manager, subtype, category (if available), AU
 Separate source facts, deterministic calculations and qualitative interpretation. Explain material performance differences with evidence. Higher return is not automatically better after risk, horizon, category, liquidity and comparability. Do not recalculate metrics unless series, definitions, sampling and assumptions are available. Distinguish SFC-reported EA returns from NAV-derived returns and model calculations.
 
 ### 5. Generate the report
-Follow `references/report-profiles.md` for required analytical content and `references/html-rendering-contract.md` for HTML structure and presentation. HTML is primary; also return a concise structured summary and optional JSON. Generate other formats only when requested and supported.
+Follow the selected versioned profile in `profiles/` and `references/report-profiles.md` for required analytical content, and `references/html-rendering-contract.md` for HTML structure and presentation. Resolve the effective theme from `themes/` and validated client overrides. Record the effective standard, profile, theme and configuration versions in report metadata. Branding overrides may change only presentation and authorized identity fields; they must not alter formulas, data provenance, required sections, entity keys, comparability rules or quality gates. HTML is primary; also return a concise structured summary and optional JSON. Generate other formats only when requested and supported.
 
 ### 6. Quality control and acceptance
+Apply every blocking gate in `standards/quality-gates.yaml`. A report conformance declaration must separately report structure, identity, cutoff/period, provenance, metric integrity, comparability, placeholder resolution, HTML integrity, reconciliation and visual-inspection status. Never imply visual inspection if no browser/rendering capability was used.
+
 - Confirm resolved fund identifiers and applicable participation classes.
 - Confirm cutoff and period are explicit and supported.
 - Align compared periods and metric definitions.
 - Preserve source units and distinguish reported EA return from NAV-derived return.
 - Flag missing, stale, inconsistent or extreme observations.
-- Check required report sections, title, language, brand mark, responsive CSS, print CSS, tables, charts, sources and disclaimers.
+- Check required report sections, title, language, effective theme and authorized brand mark or text fallback, responsive CSS, print CSS, tables, charts, sources and disclaimers.
 - Resolve all placeholders; confirm HTML opens and is non-empty.
 - Reconcile visible report values with structured output.
 - Disclose what was retrieved, calculated or inferred.
@@ -122,6 +142,10 @@ Return a JSON object or equivalent host-native structure with:
 - `service_id`: `fic-funds-intelligence`
 - `service_version`, `operation`, `status`
 - `report_profile`, `title`, `cutoff_date`, `period_start`, `period_end`
+- `standard`: standard ID/version, profile version, effective theme ID/version
+- `branding`: configured brand name, logo status and applied overrides
+- `conformance`: independent status for each required quality dimension
+- `execution_profiles`: capability-based profiles used by the host
 - `funds`: identifiers, names, manager, subtype, participation class and category when available
 - `summary`, `metrics`, `category_snapshot`
 - `artifacts`: name, media type, URI/path, SHA-256 when available, provenance
@@ -132,6 +156,10 @@ Generated reports use provenance `frontera_skaas_generated`; user-provided artif
 ## Quality control and acceptance
 
 A report is acceptable only when entity resolution, cutoff, common-period comparability, metric definitions, required sections, source attribution, placeholder resolution, artifact integrity and disclosed limitations have been checked. A missing required chart or analytical section must remain visible as unavailable with its reason; it must not be silently omitted. Structural validation does not establish visual fidelity, investment suitability or completeness of risk assessment.
+
+## Model and host compatibility
+
+Select execution profiles by observed host capabilities, not by model vendor or model name. Use `compatibility/capability-requirements.yaml` to determine required capabilities and `compatibility/execution-profiles.yaml` to compose orchestration, analytical, computational, document and visual-QA roles. A single model may cover several roles; a host may also delegate work to multiple models or deterministic runtimes. Record the profiles used, available capabilities, fallbacks and validation status. A model identity alone does not establish compatibility, and cross-model equivalence must not be claimed without empirical testing.
 
 ## Runtime and security
 

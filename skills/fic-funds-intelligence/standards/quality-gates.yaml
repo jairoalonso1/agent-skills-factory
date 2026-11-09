@@ -1,0 +1,42 @@
+quality_gates:
+  id: frontera-fic-report-quality
+  version: 1.0.0
+  gates:
+    - id: entity_resolution
+      severity: blocking
+      checks: [fund_key_resolved, manager_and_subtype_source_verified, participation_class_granularity_identified]
+    - id: freshness_and_period
+      severity: blocking
+      checks: [latest_source_cutoff_captured_when_available, selected_cutoff_supported, period_explicit]
+    - id: provenance
+      severity: blocking
+      checks: [source_ledger_present, reported_calculated_and_interpreted_values_distinguished, client_attribution_matches_actual_sources]
+    - id: metric_integrity
+      severity: blocking
+      checks: [metric_formula_and_unit_known, prerequisites_met, annualization_disclosed, no_unsupported_sharpe_sortino_var_or_cvar]
+    - id: comparability
+      severity: blocking_for_comparative
+      checks: [common_cutoff, common_period, comparable_observation_frequency, comparable_class_or_disclosed_exception, missing_dates_not_silently_interpolated]
+    - id: report_structure
+      severity: blocking
+      checks: [correct_profile_template, all_required_sections_present, unavailable_sections_explain_reason, title_and_metadata_present]
+    - id: branding_and_configuration
+      severity: blocking
+      checks: [resolved_theme_tokens, authorized_brand_assets_only, readable_contrast, logo_fallback_warning_when_needed]
+    - id: html_integrity
+      severity: blocking
+      checks: [no_unresolved_placeholders, escaped_untrusted_text, no_untrusted_html_injection, portable_css_and_svg, responsive_css, print_css, nonempty_html]
+    - id: reconciliation
+      severity: blocking
+      checks: [visible_values_match_structured_output, artifact_hash_recorded_when_available]
+    - id: visual_inspection
+      severity: disclosure
+      checks: [browser_render_or_explicit_not_performed]
+    - id: cross_model_validation
+      severity: disclosure
+      checks: [model_host_and_execution_profile_recorded, cross_model_status_not_overstated]
+  status_policy:
+    passed: all_blocking_gates_passed
+    partial: artifact_generated_with_disclosed_nonblocking_or_data_limitations
+    blocked: a_blocking_gate_prevents_reliable_artifact
+    never_claim: [certified_investment_quality, investment_suitability, regulatory_approval]

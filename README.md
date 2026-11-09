@@ -28,7 +28,7 @@ Read:
 | Skill | Purpose | Version | Status |
 |---|---|---:|---|
 | [finanzas-valoracion-accion](skills/finanzas-valoracion-accion/SKILL.md) | Executable institutional equity research: deterministic financial analysis, valuation and standardized reports | 0.3.0 | Candidate for review; runtime validation pending |
-| [fic-funds-intelligence](skills/fic-funds-intelligence/SKILL.md) | Frontera Funds SKaaS: institutional FIC factsheets and peer-comparison reports for Colombian collective investment funds | 0.2.0 | Candidate for review; 12 local tests passed; cross-model validation pending |
+| [fic-funds-intelligence](skills/fic-funds-intelligence/SKILL.md) | Configurable institutional FIC factsheets and comparative reports for Colombia, with versioned report standards and capability-based execution | 0.3.0 | Candidate for review; 17 package tests passed; cross-model validation pending |
 
 Machine-readable catalogue: [registry/skills.json](registry/skills.json).
 
