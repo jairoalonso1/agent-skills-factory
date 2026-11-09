@@ -1,8 +1,8 @@
 {
   "id": "fic-funds-intelligence",
   "name": "Frontera Funds SKaaS — FIC Funds Intelligence",
-  "version": "0.1.0",
-  "description": "Frontera Funds-branded institutional analysis and HTML reporting service for Colombian FICs, with standardized factsheets, peer comparisons, optional SFC data, MCP analytics and categorization snapshots.",
+  "version": "0.2.0",
+  "description": "Portable Frontera Funds-branded institutional analysis and HTML reporting Skill for Colombian FICs, using host-provided authorized data capabilities and optional dated categorization snapshots.",
   "license": "MIT",
   "author": "Jairo Alonso González",
   "entrypoint": "SKILL.md",
@@ -32,7 +32,7 @@
   },
   "service_profile": {
     "service_type": "specialized-agent-service",
-    "maturity_level": 0,
+    "maturity_level": 1,
     "service_outcome": "Produce an evidence-led, standardized Spanish-language HTML factsheet or peer-comparison report for Colombian collective investment funds, supported by structured findings and source provenance.",
     "target_users": [
       "investment analysts",
@@ -78,13 +78,13 @@
     "integration_requirements": {
       "mcp_required": false,
       "supported_patterns": [
-        "public SFC open data",
+        "host-provided authorized data capabilities",
+        "public regulatory data",
         "user-supplied files",
-        "authorized MCP servers",
         "licensed financial-data providers",
         "corporate data connectors"
       ],
-      "access_policy": "The host must verify source access, licensing, entitlements and permissions for each invocation. Frontera Funds is the product brand; the private SaaS implementation is not a runtime dependency."
+      "access_policy": "The host verifies source access, licensing, entitlements and permissions for each invocation. The Skill declares data capabilities; the host maps available integrations to those requirements. No specific MCP, connector, API vendor or private SaaS implementation is bundled or required."
     },
     "output_contract": {
       "schema_ref": "schemas/fic-report.schema.json",
@@ -103,16 +103,14 @@
       "cross_model_status": "not-tested"
     },
     "commercialization": {
-      "available": false,
-      "future_options": [
-        "per-invocation",
-        "department-or-user-subscription",
-        "usage-based",
-        "managed-runtime",
-        "licensed-data",
-        "enterprise-contract"
+      "commercially_licensable": true,
+      "components": [
+        "portable_skill_license",
+        "independent_data_access_service",
+        "managed_service_combining_skill_and_data_access"
       ],
-      "note": "Portable package does not include hosted execution, licensed data, service support, pricing or SLA."
+      "separation_policy": "The Skill, data access and managed service are independently packageable and commercial components. The portable Skill does not include hosted data access, execution infrastructure, support, pricing or SLA unless separately contracted.",
+      "pricing_and_terms": "Defined separately by the product owner; not specified in this manifest."
     }
   },
   "runtime_requirements": {
@@ -136,8 +134,7 @@
     "institutional-fund-factsheet",
     "peer-group-comparison",
     "html-report-generation",
-    "sfc-data-integration-optional",
-    "mcp-analytics-integration-optional",
+    "host-provided-authorized-data-capabilities",
     "volatility-category-context-optional",
     "source-provenance-and-quality-checks",
     "standardized-report-contract",
@@ -153,47 +150,6 @@
     "factsheet",
     "comparative"
   ],
-  "reference_products": {
-    "categorization_project": {
-      "role": "optional-external-classification-provider",
-      "repository": "jairoalonso1/categorizacion-fic-colombia",
-      "runtime_dependency": false,
-      "snapshot_paths": [
-        "outputs/latest/fondos_clasificados.csv",
-        "outputs/latest/resumen_clasificacion.json",
-        "outputs/latest/clasificacion_fic.xlsx"
-      ]
-    },
-    "sfc_mcp": {
-      "role": "optional-live-data-and-analytics-provider",
-      "endpoint": "https://mcp-sfc-fics-colombia.vercel.app/api/mcp",
-      "runtime_dependency": false,
-      "repository": "jairoalonso1/mcp-sfc-fics-colombia",
-      "tools": [
-        "obtener_estado_dataset",
-        "listar_entidades_administradoras",
-        "buscar_fondos_fic",
-        "radiografia_fondo",
-        "ranking_rentabilidades_fics",
-        "cuota_mercado_aum_entidades",
-        "flujos_netos_captacion",
-        "radar_corridas_y_alertas_liquidez",
-        "serie_historica_nav_y_tasas",
-        "metricas_riesgo_cuantitativo",
-        "comparar_peer_group_fics",
-        "ejecutar_soql_avanzado"
-      ]
-    },
-    "frontera_funds_saas": {
-      "role": "parent-product-and-brand",
-      "runtime_dependency": false,
-      "source_code_dependency": false,
-      "api_dependency": false,
-      "infrastructure_dependency": false,
-      "approved_brand_assets": "Supplied separately through an authorized brand package",
-      "report_quality_standard": "Institutional report quality and visual identity parity"
-    }
-  },
   "branding": {
     "product_family": "Frontera Funds",
     "product_line": "Frontera Funds SKaaS",
@@ -235,18 +191,17 @@
     "last_run": "2026-11-09",
     "environment": "Python runtime",
     "metrics": {
-      "unit_tests_passed": 4,
+      "unit_tests_passed": 12,
       "unit_tests_failed": 0,
       "schema_valid": true,
-      "registry_entry_valid": true
+      "registry_entry_valid": null
     },
-    "report_ref": "4 HTML validator tests passed locally; Draft 2020-12 output schema validated against a factsheet fixture. Full factory CI and cross-model tests not yet run.",
+    "report_ref": "Local validation after revision: 12 tests passed; factsheet and comparative example payloads validated against the domain schema.",
     "limitations": [
-      "No production connector or browser export has been tested from this Skill.",
       "Domain analysis quality and investment suitability are not certified.",
       "Cross-model compatibility remains untested."
     ],
-    "scope": "Local unit tests for the lightweight HTML validator and schema validation only."
+    "scope": "12 local package tests passed; both example payloads validate against the Draft 2020-12 report schema. Full factory CI, registry schema validation, live data integration and cross-model runtime validation remain pending."
   },
   "runtime_compatibility": [
     {
@@ -255,16 +210,14 @@
       "status": "declared"
     },
     {
-      "host": "Python",
-      "surface": "Standard-library HTML artifact validator and tests",
-      "status": "tested",
-      "tested_at": "2026-11-09",
-      "evidence_ref": "4 unit tests passed; Draft 2020-12 domain output schema validated"
-    },
-    {
       "host": "ChatGPT / Claude / Gemini / Grok",
       "surface": "Native Skill discovery and optional tool integration",
       "status": "not-tested"
+    },
+    {
+      "host": "Python",
+      "surface": "Standard-library HTML artifact validator and package tests",
+      "status": "pending-revalidation"
     }
   ]
 }

@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 from html.parser import HTMLParser
 
@@ -50,6 +51,8 @@ def validate(path: Path) -> dict:
         errors.append('Missing <body> element')
     if 'title' not in parser.tags or not ''.join(parser.title_parts).strip():
         errors.append('Missing non-empty <title>')
+    if re.search(r'\{\{[A-Z0-9_]+\}\}', text):
+        errors.append('Unresolved template placeholder(s) remain')
     if parser.lang and parser.lang.lower() not in {'es', 'es-co'}:
         errors.append(f'Unexpected language declaration: {parser.lang}')
     result = {

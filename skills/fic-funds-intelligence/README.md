@@ -1,31 +1,35 @@
 # Frontera Funds SKaaS — FIC Funds Intelligence
 
-FIC Funds Intelligence is a specialist SKaaS product in the Frontera Funds ecosystem. It delivers institutional analysis and branded HTML reporting for Colombian FICs.
+FIC Funds Intelligence is a portable specialist Skill in the Frontera Funds product family. It standardizes institutional analysis and branded HTML reporting for Colombian collective investment funds (FICs).
 
 ## Primary deliverables
 
 - Fund factsheet HTML (`factsheet` profile).
-- Fund peer-comparison HTML (`comparative` profile).
-- Structured result with fund IDs, cutoff, metrics, category snapshot, evidence, warnings and artifact provenance.
+- Peer-comparison HTML (`comparative` profile).
+- Structured result with fund identifiers, cutoff, metrics, category snapshot, evidence, warnings and artifact provenance.
 
-Frontera Funds is the product brand and quality standard. Generated reports are Frontera Funds SKaaS deliverables and must follow the canonical light institutional design system and templates. The bundled mark is extracted from the user-supplied factsheet HTML reference (`user_supplied_reference`); it is not independently trademark-verified. The service is implementation-independent from the private Frontera SaaS: it does not import its code, APIs, infrastructure, credentials or runtime.
+## Independent product components
+
+Frontera Funds may be offered through three separately packageable components:
+
+1. **Skill:** portable methodology, analytical workflow, report contract, templates, brand rules and quality checks.
+2. **Data access:** separately authorized access to regulatory and other permitted data through capabilities exposed by the host environment.
+3. **Managed service:** an integrated service combining the Skill, data access and managed execution/support under separate commercial terms.
+
+The Skill does not bundle, install or require a particular MCP, connector, API vendor, endpoint, private SaaS codebase or infrastructure. The host agent/runtime supplies authorized data and artifact capabilities.
 
 ## Package
 
 - `SKILL.md`: service specification, workflow and quality gates.
-- `manifest.json`: machine-readable service metadata, integrations and portability.
-- `references/report-profiles.md`: required contents and layout standards for both HTML profiles.
-- `references/brand-identity.md`: Frontera Funds SKaaS identity, reference-mark provenance and visual-quality requirements.
-- `references/design-tokens.json`: machine-readable light institutional palette, typography and layout tokens.
+- `manifest.json`: machine-readable service metadata, portability and commercial component model.
+- `references/report-profiles.md`: required analytical contents and chart standards.
+- `references/brand-identity.md`: brand identity and reference-mark provenance.
+- `references/design-tokens.json`: light institutional palette, typography and layout tokens.
 - `references/html-rendering-contract.md`: mandatory HTML template, portability and preflight contract.
-- `templates/factsheet.html` and `templates/comparative.html`: canonical report templates.
-- `references/source-and-methodology.md`: SFC, MCP, category snapshot and interpretation policy.
-- `schemas/fic-report.schema.json`: domain report payload.
+- `templates/`: canonical factsheet and comparative report templates.
+- `references/source-and-methodology.md`: regulatory source, data-access contract, category snapshot and interpretation policy.
+- `schemas/fic-report.schema.json`: structured report payload.
 - `scripts/validate_html_report.py`: lightweight HTML artifact validation (Python standard library only).
-- `examples/`: factsheet and comparative result fixtures.
-- `tests/`: deterministic validation tests.
+- `examples/` and `tests/`: illustrative payloads and deterministic checks.
 
-The package does not copy or depend on the private Frontera SaaS implementation, the FIC classifier or the MCP implementation. The reference mark extracted from the user-supplied factsheet HTML is included at `assets/frontera-funds-mark.svg`; do not redraw or infer a replacement. A newer mark should be supplied and approved by the brand owner.
-
-
-Brand asset notice: the Frontera Funds name, mark and visual identity are brand assets and are not relicensed under MIT. Use them only for authorized Frontera Funds product distribution. See references/brand-identity.md.
+The bundled Frontera Funds reference mark was extracted from a user-supplied factsheet HTML reference (`user_supplied_reference`); it is not independently trademark-verified. The mark and brand identity are excluded from the package's MIT code license and may be used only for authorized Frontera Funds distribution.

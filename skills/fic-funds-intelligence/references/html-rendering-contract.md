@@ -1,7 +1,7 @@
 # HTML Rendering Contract
 
 ## Purpose and precedence
-This contract is normative for every generated HTML artifact. It operationalizes the user-supplied SaaS factsheet reference. If a model's default output style conflicts with this contract, this contract wins. Analytical content remains governed by `report-profiles.md`.
+This contract is normative for every generated HTML artifact. It operationalizes the user-supplied SaaS factsheet reference. If a model default conflicts with this contract, this contract wins. Analytical content remains governed by `report-profiles.md`.
 
 ## Mandatory template use
 1. Select `templates/factsheet.html` for one fund and `templates/comparative.html` for two or more funds.
@@ -15,8 +15,9 @@ This contract is normative for every generated HTML artifact. It operationalizes
 - Meaningful document title and one primary `h1`.
 - Header metadata: generation date, cutoff and analysis period.
 - Brand lockup: reference mark plus “Frontera Funds”; if the host cannot package the asset, use text-only fallback and report a warning.
-- All required profile sections. If a section cannot be populated, retain it and show “No disponible con la información consultada” plus the reason.
-- Footer: sources, methodology, limitations, Frontera Funds SKaaS identity and provenance.
+- All required profile sections, including historical drawdown and rolling volatility (30 valid observations) diagnostics. If a section cannot be populated, retain it and show “No disponible con la información consultada” plus the reason.
+- Footer: source attribution, methodology, limitations, Frontera Funds SKaaS identity and provenance. For SFC-sourced FIC data, the source-attribution slot must read exactly “Fuente: SFC. Procesado por Frontera Funds.” Do not claim SFC as a source when the report uses other data.
+- Do not expose provider-specific tool names, endpoint URLs, credentials, internal query strings or implementation details in client-facing HTML. Keep technical traceability in internal execution metadata.
 - Accessible table headers and chart descriptions; color is never the only carrier of meaning.
 
 ## Template data slots

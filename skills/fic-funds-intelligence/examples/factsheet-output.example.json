@@ -1,6 +1,6 @@
 {
   "service_id": "fic-funds-intelligence",
-  "service_version": "0.1.0",
+  "service_version": "0.2.0",
   "operation": "fund_factsheet",
   "status": "partial",
   "report_profile": "factsheet",

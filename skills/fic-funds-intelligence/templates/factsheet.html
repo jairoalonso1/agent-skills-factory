@@ -20,8 +20,10 @@ section{margin-top:28px}h2{font-size:17px;margin:0 0 14px;padding-bottom:8px;bor
 <section><h2>Indicadores principales</h2><div class="kpis"><div class="kpi"><div class="kpi-label">Rentabilidad EA diaria</div><div class="kpi-value">{{RETURN_DAILY}}</div></div><div class="kpi"><div class="kpi-label">Rentabilidad EA 30 días</div><div class="kpi-value">{{RETURN_30D}}</div></div><div class="kpi"><div class="kpi-label">Rentabilidad EA 180 días</div><div class="kpi-value">{{RETURN_180D}}</div></div><div class="kpi"><div class="kpi-label">Rentabilidad EA 365 días</div><div class="kpi-value">{{RETURN_365D}}</div></div></div></section>
 <section><h2>Riesgo y comportamiento</h2><div class="grid"><div class="panel">Volatilidad: {{VOLATILITY}}<br>Máximo drawdown: {{MAX_DRAWDOWN}}<br>Duración/recuperación: {{DRAWDOWN_RECOVERY}}</div><div class="panel">Sharpe: {{SHARPE}}<br>Sortino: {{SORTINO}}<br>Supuestos: {{RATIO_ASSUMPTIONS}}</div></div></section>
 <section><h2>Historia y distribución</h2><div class="chart">{{NAV_OR_RETURN_CHART_SVG}}</div><div class="panel">{{MONTHLY_RETURNS_TABLE_OR_HEATMAP}}</div></section>
+<section><h2>Historial de drawdown</h2><div class="chart">{{DRAWDOWN_CHART_SVG}}</div></section>
+<section><h2>Volatilidad anualizada móvil (30 observaciones)</h2><div class="chart">{{ROLLING_VOLATILITY_30D_CHART_SVG}}</div></section>
 <section><h2>Categoría y contexto</h2><p>{{CATEGORY_AND_PEER_CONTEXT}}</p></section>
 <section><h2>Diagnósticos y calidad de datos</h2><p>{{DATA_DIAGNOSTICS}}</p></section>
 <section><h2>Fuentes y metodología</h2><p>{{EVIDENCE_AND_METHODOLOGY}}</p></section>
-<footer class="footer"><strong>Frontera Funds SKaaS</strong> · FIC Funds Intelligence<br>Fuentes: {{SOURCES}} · Proveniencia: frontera_skaas_generated<br>{{LIMITATIONS_AND_DISCLAIMER}}</footer>
+<footer class="footer"><strong>Frontera Funds SKaaS</strong> · FIC Funds Intelligence<br>{{SOURCE_ATTRIBUTION}} · Proveniencia: frontera_skaas_generated<br>{{LIMITATIONS_AND_DISCLAIMER}}</footer>
 </main></body></html>

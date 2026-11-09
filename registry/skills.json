@@ -78,8 +78,8 @@
     {
       "id": "fic-funds-intelligence",
       "name": "Frontera Funds SKaaS — FIC Funds Intelligence",
-      "description": "Frontera Funds-branded SKaaS for institutional analysis and HTML reporting of Colombian FICs, with optional SFC data, MCP analytics and categorization snapshots.",
-      "version": "0.1.0",
+      "description": "Portable Frontera Funds-branded institutional analysis and HTML reporting Skill for Colombian FICs, using host-provided authorized data capabilities and optional dated categorization snapshots.",
+      "version": "0.2.0",
       "path": "skills/fic-funds-intelligence",
       "manifest": "skills/fic-funds-intelligence/manifest.json",
       "skill_file": "skills/fic-funds-intelligence/SKILL.md",
@@ -100,11 +100,11 @@
         "branded-reporting"
       ],
       "requires": {
-        "mcp": false,
         "python": "optional-for-html-artifact-validation",
         "network": "required-only-for-live-external-data",
         "packages": [],
-        "optional_packages": []
+        "optional_packages": [],
+        "host_data_access": "optional; supplied and authorized by the host environment"
       },
       "execution_modes": [
         "native-sandbox",
@@ -118,29 +118,28 @@
         "institutional-fund-factsheet",
         "peer-group-comparison",
         "html-report-generation",
-        "sfc-data-integration-optional",
-        "mcp-analytics-integration-optional",
+        "host-provided-authorized-data-capabilities",
         "volatility-category-context-optional",
         "source-provenance-and-quality-checks",
         "standardized-report-contract"
       ],
       "evaluation": {
-        "status": "partial",
-        "scope": "4 HTML validator unit tests passed locally and Draft 2020-12 output schema validated; full factory CI, live data integration and cross-model runtime validation remain pending."
+        "status": "pending-revalidation",
+        "scope": "Revised package tests, factory validation, live data integration and cross-model runtime validation are pending."
       },
       "data_dependencies": [
         {
           "name": "SFC FIC open-data dataset qhpu-8ixx",
-          "access_mode": "public-or-authorized-MCP",
+          "access_mode": "public-regulatory-data-or-host-authorized-provider",
           "license_status": "verify-current-terms-per-source",
           "freshness": "Capture latest cutoff and retrieval time on every live-data invocation",
           "provenance_required": true
         },
         {
           "name": "FIC categorization snapshot",
-          "access_mode": "optional-project-artifact",
-          "license_status": "verify-repository-and-output-access",
-          "freshness": "Use snapshot's own cutoff and version; verify latest snapshot before use",
+          "access_mode": "optional-host-provided-or-user-supplied-snapshot",
+          "license_status": "verify-access-and-terms-for-the-supplied-artifact",
+          "freshness": "Use snapshot own cutoff and version; verify freshness before use",
           "provenance_required": true
         }
       ]

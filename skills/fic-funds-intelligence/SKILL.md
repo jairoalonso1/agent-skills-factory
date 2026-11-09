@@ -1,6 +1,6 @@
 ---
 name: fic-funds-intelligence
-description: Delivers Frontera Funds-branded institutional analysis and HTML reports for Colombian collective investment funds (FICs) as a portable SKaaS service. Supports factsheets, peer comparisons, fund discovery and industry analysis using authorized SFC data, optional MCP tools and optional categorization snapshots.
+description: Delivers Frontera Funds-branded institutional analysis and HTML reports for Colombian collective investment funds (FICs) as a portable SKaaS service. Supports factsheets, peer comparisons, fund discovery and industry analysis using authorized data capabilities and optional categorization snapshots.
 ---
 
 # FIC Funds Intelligence
@@ -68,16 +68,23 @@ Infer the operation from the user's request; do not ask them to select it when i
 
 Frontera Funds is the product brand, not a required data source. The private SaaS is not an execution dependency.
 
-### Optional SFC MCP integration
-When an authorized MCP connection is available, use its tools only after verifying the connection and permissions. Relevant operations may include dataset freshness, fund search, fund snapshot, peer comparison, historical NAV/returns, quantitative risk metrics, rankings, market share, flows and liquidity alerts. Never invent tool results or claim a request was performed if it was not.
+### Host-provided data capabilities
+The Skill does not bundle, install, configure or require a specific MCP server, connector, API, vendor or data endpoint. The host agent/runtime is responsible for connecting authorized data services, authenticating access, enforcing entitlements and mapping available tools to the capability contract below.
+
+When live data access is available, discover and use the host-provided capabilities needed for the requested operation. Capability names below are conceptual requirements, not tool names or a prescribed protocol:
+- dataset freshness and latest available cutoff;
+- fund/entity discovery and identifier resolution;
+- fund snapshot by business code and participation class;
+- historical NAV, unit values and reported returns;
+- quantitative risk metrics or raw observations sufficient to reproduce them;
+- peer comparison and rankings;
+- AUM, investor counts, flows and liquidity indicators;
+- retrieval of a dated categorization snapshot when available.
+
+Use only capabilities actually exposed and authorized by the host. If a capability is unavailable, use another permitted source or user-provided data, disclose the limitation and return `partial` or `blocked` when it prevents a reliable deliverable. Never invent tool results or claim a request was performed if it was not. Keep provider-specific tool names, endpoints, credentials and implementation details out of client-facing reports.
 
 ### Optional categorization integration
-The repository `jairoalonso1/categorizacion-fic-colombia` is an external provider. Its documented outputs are:
-- `outputs/latest/fondos_clasificados.csv`
-- `outputs/latest/resumen_clasificacion.json`
-- `outputs/latest/clasificacion_fic.xlsx`
-
-Read the snapshot metadata, cutoff, source and version. Join on `codigo_negocio`, not fund name. If unavailable, disclose that and continue without it. Follow the methodology version accompanying the actual snapshot. Volatility categories are descriptive groupings, not a comprehensive risk rating.
+The categorization output is an optional, independently versioned data artifact supplied through an authorized host capability or user-provided file. Inspect its actual schema and metadata, cutoff, source and version. Join on `codigo_negocio`, not fund name. If unavailable, disclose that and continue without it. Follow the methodology version accompanying the actual snapshot. Volatility categories are descriptive groupings, not a comprehensive risk rating. Do not assume a repository path, storage location or provider implementation.
 
 ## Workflow and methodology
 
@@ -85,7 +92,7 @@ Read the snapshot metadata, cutoff, source and version. Join on `codigo_negocio`
 Resolve operation, funds, managers, business codes, participation classes, cutoff and requested output. Distinguish fund (`codigo_negocio`) from participation class (`tipo_participacion`). State whether metrics are class-specific, fund aggregates or representative-class measures.
 
 ### 2. Verify freshness and scope
-Record source dataset, latest available date, selected cutoff, date range, retrieval time and tool identifiers when available. Do not silently substitute a different date for a requested historical cutoff.
+Record source dataset, latest available date, selected cutoff, date range, retrieval time and technical retrieval identifiers in internal execution metadata when available; do not expose provider-specific tool names or endpoints in client-facing reports. Do not silently substitute a different date for a requested historical cutoff.
 
 ### 3. Collect evidence
 For a factsheet, collect identity, manager, subtype, category (if available), AUM, investors, unit value, EA returns, historical series, risk metrics, monthly returns and drawdown information when available. For comparisons, align cutoff, horizons, units, participation classes and definitions. Disclose missing/stale values.
@@ -96,7 +103,7 @@ Separate source facts, deterministic calculations and qualitative interpretation
 ### 5. Generate the report
 Follow `references/report-profiles.md` for required analytical content and `references/html-rendering-contract.md` for HTML structure and presentation. HTML is primary; also return a concise structured summary and optional JSON. Generate other formats only when requested and supported.
 
-### 6. Quality control
+### 6. Quality control and acceptance
 - Confirm resolved fund identifiers and applicable participation classes.
 - Confirm cutoff and period are explicit and supported.
 - Align compared periods and metric definitions.
@@ -122,9 +129,13 @@ Return a JSON object or equivalent host-native structure with:
 
 Generated reports use provenance `frontera_skaas_generated`; user-provided artifacts use `user_supplied`. Follow the Factory's Universal Skill Invocation Contract 1.0.0; domain fields belong inside `outputs`.
 
+## Quality control and acceptance
+
+A report is acceptable only when entity resolution, cutoff, common-period comparability, metric definitions, required sections, source attribution, placeholder resolution, artifact integrity and disclosed limitations have been checked. A missing required chart or analytical section must remain visible as unavailable with its reason; it must not be silently omitted. Structural validation does not establish visual fidelity, investment suitability or completeness of risk assessment.
+
 ## Runtime and security
 
-The portable core works as instructions alone. Discover approved tools, MCP, Python, browser and artifact capabilities at invocation time. Do not embed secrets, assume private repository access, execute untrusted code/HTML, or transmit confidential data to unapproved services. Ask for approval when required for external connections, data transfer, package installation or external writes.
+The portable core works as instructions alone. Discover approved data, Python, browser and artifact capabilities exposed by the host at invocation time. Do not embed secrets, assume private repository access, execute untrusted code/HTML, or transmit confidential data to unapproved services. Ask for approval when required for external connections, data transfer, package installation or external writes.
 
 ## Execution and completion
 
