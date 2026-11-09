@@ -45,4 +45,4 @@ Prefer regulator-reported data for official fund observations. Use classificatio
 
 Capture internally where available: source name and owner; dataset/API/tool locator; retrieval timestamp; cutoff and period; record/observation count; source version or snapshot identifier; metric definition, units and transformation; limitations, stale status and warnings. Keep technical identifiers in execution metadata, not in the client-facing report.
 
-For standard client-facing reports sourced from SFC data, use the concise attribution: **“Fuente: SFC. Procesado por Frontera Funds.”** Add another source only when it materially contributes to a displayed result.
+For SFC-sourced reports under the default Frontera theme, use the exact attribution: **“Fuente: SFC. Procesado por Frontera Funds.”** For another authorized brand, preserve the source name and use the configured processor identity. Add another source only when it materially contributes to a displayed result.

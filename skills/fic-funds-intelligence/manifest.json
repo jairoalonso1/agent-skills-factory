@@ -1,8 +1,8 @@
 {
   "id": "fic-funds-intelligence",
   "name": "Frontera Funds SKaaS — FIC Funds Intelligence",
-  "version": "0.2.0",
-  "description": "Portable Frontera Funds-branded institutional analysis and HTML reporting Skill for Colombian FICs, using host-provided authorized data capabilities and optional dated categorization snapshots.",
+  "version": "0.3.0",
+  "description": "Portable, configurable institutional HTML factsheet and comparative reporting standard for Colombian FICs, with host-independent execution profiles and authorized data capabilities.",
   "license": "MIT",
   "author": "Jairo Alonso González",
   "entrypoint": "SKILL.md",
@@ -18,7 +18,7 @@
       "warnings",
       "human-review",
       "standardized-html-artifacts",
-      "frontera-funds-brand-identity",
+      "configurable-report-branding",
       "frontera-funds-report-quality-parity"
     ],
     "does_not_own": [
@@ -33,7 +33,7 @@
   "service_profile": {
     "service_type": "specialized-agent-service",
     "maturity_level": 1,
-    "service_outcome": "Produce an evidence-led, standardized Spanish-language HTML factsheet or peer-comparison report for Colombian collective investment funds, supported by structured findings and source provenance.",
+    "service_outcome": "Produce evidence-led, standardized Spanish-language HTML factsheets or comparative reports for Colombian collective investment funds, with configurable branding, structured findings and source provenance.",
     "target_users": [
       "investment analysts",
       "portfolio managers",
@@ -51,6 +51,12 @@
     ],
     "workflow_ref": "SKILL.md#workflow-and-methodology",
     "methodology_refs": [
+      "standards/report-standard.yaml",
+      "standards/metric-definitions.yaml",
+      "standards/data-contract.yaml",
+      "standards/quality-gates.yaml",
+      "profiles/factsheet.yaml",
+      "profiles/comparative.yaml",
       "references/report-profiles.md",
       "references/html-rendering-contract.md",
       "references/design-tokens.json"
@@ -88,18 +94,18 @@
     },
     "output_contract": {
       "schema_ref": "schemas/fic-report.schema.json",
-      "report_standard_ref": "references/report-profiles.md",
+      "report_standard_ref": "standards/report-standard.yaml",
       "formats": [
         "HTML",
         "JSON"
       ],
       "primary_format": "HTML",
-      "consistency_policy": "Required report profile sections, metric definitions, cutoff, provenance, category treatment, disclosures and validation remain stable across compatible models. Narrative analysis may differ but must follow evidence and uncertainty rules."
+      "consistency_policy": "Factsheet and comparative report structures, metric definitions, cutoff, provenance, theme metadata and quality gates remain stable across compatible hosts. Branding may be overridden with authorized assets; narrative analysis may differ but must follow evidence and uncertainty rules."
     },
-    "quality_gates_ref": "SKILL.md#quality-control-and-acceptance",
+    "quality_gates_ref": "standards/quality-gates.yaml",
     "model_portability": {
       "target": "Compatible Agent Skills hosts and models",
-      "guarantee": "Standardized service contract, report structures and validation expectations; not identical model reasoning or prose.",
+      "guarantee": "Capability-based execution profiles are specified in compatibility/execution-profiles.yaml and requirements in compatibility/capability-requirements.yaml. Stable report structures, metric definitions, provenance and validation contract; not identical model reasoning or prose.",
       "cross_model_status": "not-tested"
     },
     "commercialization": {
@@ -139,8 +145,11 @@
     "source-provenance-and-quality-checks",
     "standardized-report-contract",
     "frontera-funds-skaas-product",
-    "frontera-funds-brand-identity",
-    "branded-institutional-reporting"
+    "configurable-report-branding",
+    "versioned-report-standard",
+    "metric-definition-contract",
+    "capability-based-model-execution-profiles",
+    "report-conformance-declaration"
   ],
   "outputs": [
     "HTML",
@@ -152,34 +161,35 @@
   ],
   "branding": {
     "product_family": "Frontera Funds",
-    "product_line": "Frontera Funds SKaaS",
-    "product_type": "specialized-agent-service",
-    "identity_standard": "Frontera Funds factsheet reference identity and canonical light institutional report design system",
-    "logo_policy": "Use the bundled reference mark extracted from the user-supplied factsheet HTML at skills/fic-funds-intelligence/assets/frontera-funds-mark.svg paired with the Frontera Funds text wordmark. This is a user-supplied reference asset, not independently trademark-verified.",
-    "implementation_boundary": "Brand and report-quality consistency do not imply code, API, infrastructure, credential or runtime dependency on the private Frontera Funds SaaS.",
-    "logo_asset_path": "assets/frontera-funds-mark.svg",
-    "logo_asset_type": "user-supplied Frontera Funds factsheet reference SVG mark",
-    "logo_lockup": "Pair the official mark with the Frontera Funds text wordmark; do not invent a combined graphic.",
-    "asset_license": "Frontera Funds brand asset; excluded from the package's MIT code license. Use only for authorized Frontera Funds product distribution.",
-    "trademark_notice": "Frontera Funds name, logo and brand identity remain the property of their owner.",
-    "asset_provenance": "user_supplied_reference",
-    "renderer_contract": "references/html-rendering-contract.md",
-    "design_tokens": "references/design-tokens.json"
+    "default_theme": "frontera-funds",
+    "configurable": true,
+    "available_themes": [
+      "frontera-funds",
+      "neutral-institutional",
+      "custom"
+    ],
+    "theme_refs": [
+      "themes/frontera-funds.yaml",
+      "themes/neutral-institutional.yaml"
+    ],
+    "client_override_schema": "configuration/client-overrides.schema.json",
+    "asset_policy": "Use only authorized brand assets. The bundled Frontera reference mark is user-supplied and excluded from the MIT code license.",
+    "implementation_boundary": "No dependency on private Frontera SaaS code, services, APIs, infrastructure or runtime."
   },
   "status": "candidate",
   "release_status": "candidate",
   "data_dependencies": [
     {
       "name": "SFC FIC open-data dataset qhpu-8ixx",
-      "access_mode": "public-or-authorized-MCP",
-      "license_status": "verify-current-terms-per-source",
+      "access_mode": "public",
+      "license_status": "user-responsibility",
       "freshness": "Capture latest cutoff and retrieval time on every live-data invocation",
       "provenance_required": true
     },
     {
       "name": "FIC categorization snapshot",
-      "access_mode": "optional-project-artifact",
-      "license_status": "verify-repository-and-output-access",
+      "access_mode": "user-supplied",
+      "license_status": "user-responsibility",
       "freshness": "Use snapshot's own cutoff and version; never assume latest is current without verification",
       "provenance_required": true
     }
@@ -187,21 +197,23 @@
   "evaluation": {
     "status": "partial",
     "suite_ref": "skills/fic-funds-intelligence/tests",
-    "suite_version": "0.1.0",
+    "suite_version": "0.2.0",
     "last_run": "2026-11-09",
-    "environment": "Python runtime",
+    "environment": "Python 3.13; package-local test environment with PyYAML and jsonschema available",
     "metrics": {
-      "unit_tests_passed": 12,
+      "unit_tests_passed": 17,
       "unit_tests_failed": 0,
       "schema_valid": true,
-      "registry_entry_valid": null
+      "registry_entry_valid": true
     },
-    "report_ref": "Local validation after revision: 12 tests passed; factsheet and comparative example payloads validated against the domain schema.",
+    "report_ref": "Package-local regression suite: 17 tests passed; 13 subtests passed; YAML contracts parsed; factsheet and comparative examples validated against Draft 2020-12 output schema.",
     "limitations": [
       "Domain analysis quality and investment suitability are not certified.",
-      "Cross-model compatibility remains untested."
+      "Cross-model compatibility remains untested.",
+      "Standard 1.0.0 and configurable themes require regression validation.",
+      "Cross-model execution profiles are specified but not empirically benchmarked."
     ],
-    "scope": "12 local package tests passed; both example payloads validate against the Draft 2020-12 report schema. Full factory CI, registry schema validation, live data integration and cross-model runtime validation remain pending."
+    "scope": "17 package-local tests and 13 subtests passed. Standard/profile/theme YAML parsed successfully; output examples validate against the updated Draft 2020-12 schema. Factory-wide CI, live MCP integration regression, browser visual QA and cross-model execution remain pending."
   },
   "runtime_compatibility": [
     {
@@ -217,7 +229,9 @@
     {
       "host": "Python",
       "surface": "Standard-library HTML artifact validator and package tests",
-      "status": "pending-revalidation"
+      "status": "tested",
+      "tested_at": "2026-11-09T18:00:00Z",
+      "evidence_ref": "17 package-local tests passed; 13 subtests passed; both report templates structurally validated."
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "source": "User-supplied Frontera Funds SaaS factsheet HTML reference",
   "source_provenance": "user_supplied_reference",
-  "theme": "light-institutional",
+  "theme": "frontera-funds",
   "colors": {
     "page": "#FFFFFF",
     "surface": "#F9FAFB",
@@ -45,5 +45,8 @@
     "emoji charts",
     "invented or redrawn logo",
     "unlabeled metrics"
-  ]
+  ],
+  "role": "default_theme_reference",
+  "configurable": true,
+  "policy": "Presentation tokens may be overridden by an authorized theme; analytical methodology and report requirements may not."
 }

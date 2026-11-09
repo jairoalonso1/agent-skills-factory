@@ -1,0 +1,47 @@
+standard:
+  id: frontera-fic-reporting
+  version: 1.0.0
+  status: initial
+  language_default: es-CO
+  currency_default: COP
+  scope:
+    report_profiles: [factsheet, comparative]
+    excluded_profiles: [industry_snapshot, category_report, custom_dashboard]
+    report_format_primary: HTML
+    structured_companion: JSON
+  principles:
+    - evidence_before_interpretation
+    - deterministic_metric_definitions
+    - explicit_fund_and_participation_class_identity
+    - comparable_periods_and_observation_frequency
+    - visible_missing_data_and_assumptions
+    - portable_accessible_print_ready_html
+    - configurable_branding_without_methodology_changes
+    - host_and_model_independence
+  product_boundaries:
+    skill_owns: [report_contract, analytical_methodology, profiles, quality_gates, theme_configuration]
+    data_service_owns: [source_access, authentication, source_queries, source_entitlements]
+    host_owns: [model_selection, tool_mapping, workflow_orchestration, runtime_capabilities, user_approval]
+    saas_dependency: false
+  conformance:
+    required_dimensions:
+      - structure
+      - entity_identity
+      - cutoff_and_period
+      - data_provenance
+      - metric_definitions
+      - comparability
+      - placeholder_resolution
+      - html_integrity
+    separately_reported_dimensions:
+      - visual_inspection
+      - cross_model_execution
+      - domain_review
+    statuses: [passed, failed, partial, not_applicable, not_performed]
+  versioning:
+    standard_version: independent_of_skill_version
+    profile_version: independent_of_standard_version
+    theme_version: independent_of_standard_version
+    breaking_change: increment_major
+    backward_compatible_change: increment_minor
+    clarification_or_fix: increment_patch

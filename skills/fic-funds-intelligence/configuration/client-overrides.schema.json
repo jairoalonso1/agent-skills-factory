@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jairoalonso1/agent-skills-factory/blob/main/skills/fic-funds-intelligence/configuration/client-overrides.schema.json",
+  "title": "FIC Funds Intelligence Client Overrides",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "theme": {
+      "type": "string",
+      "enum": [
+        "frontera-funds",
+        "neutral-institutional",
+        "custom"
+      ]
+    },
+    "brand_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "logo_override": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Authorized image data URI or host-managed asset reference; never an arbitrary remote URL unless explicitly trusted by the host."
+    },
+    "colors": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "page": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "outer_canvas": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "surface": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "text_primary": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "text_secondary": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "border": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "accent": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "positive": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "negative": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "neutral": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "base_px": {
+          "type": "integer",
+          "minimum": 11,
+          "maximum": 20
+        },
+        "line_height": {
+          "type": "number",
+          "minimum": 1.2,
+          "maximum": 2.0
+        }
+      }
+    },
+    "report_title": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 180
+    },
+    "contact_information": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 1000
+    },
+    "disclaimer": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 3000
+    },
+    "selected_metrics": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "show_optional_sections": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "description": "Branding and presentation overrides only. Overrides cannot change metric formulas, required sections, source provenance, entity keys, comparability rules or quality gates."
+}

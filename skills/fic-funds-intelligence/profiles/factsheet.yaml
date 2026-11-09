@@ -1,0 +1,20 @@
+profile:
+  id: factsheet
+  version: 1.0.0
+  title: Ficha técnica del fondo
+  cardinality: {minimum_funds: 1, maximum_funds: 1}
+  page: A4-portrait
+  required_sections:
+    - {id: identification, title: Identificación del fondo, data: [fund_name, business_code, manager, regulator_subtype, participation_class, cutoff_date]}
+    - {id: executive_overview, title: Resumen ejecutivo, data: [evidence_led_summary], constraints: [no_investment_recommendation]}
+    - {id: scale, title: Escala del fondo, data: [aum, investor_count, average_investor_ticket, unit_value]}
+    - {id: performance, title: Desempeño, data: [sfc_ea_daily, sfc_ea_30d, sfc_ea_180d, sfc_ea_365d, cumulative_return, cagr]}
+    - {id: risk, title: Riesgo y comportamiento, data: [annualized_volatility, maximum_drawdown, drawdown_duration, recovery, sharpe_if_supported, sortino_if_supported, var_if_supported, cvar_if_supported]}
+    - {id: history, title: Historia y distribución, data: [nav_or_return_series, monthly_returns]}
+    - {id: drawdown, title: Historial de drawdown, chart: [historical_drawdown]}
+    - {id: rolling_volatility, title: Volatilidad anualizada móvil (30 observaciones), chart: [rolling_volatility_30]}
+    - {id: category_context, title: Categoría y contexto, data: [category_if_available, category_snapshot_metadata]}
+    - {id: diagnostics, title: Diagnósticos y calidad de datos, data: [coverage, missing_values, outliers, granularity_caveats, relevant_liquidity_flags]}
+    - {id: methodology, title: Fuentes y metodología, data: [source_ledger, metric_definitions, assumptions, limitations, disclaimer]}
+  optional_sections: [peer_percentile, manager_context, category_distribution, model_narrative]
+  unavailable_policy: retain_section_and_state_reason

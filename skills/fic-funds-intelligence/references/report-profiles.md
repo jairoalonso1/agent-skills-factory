@@ -13,7 +13,7 @@ These profiles define the two standard outputs for Frontera Funds SKaaS — FIC 
 - Evidence: source name and date of data cutoff. Keep technical locators, queries and retrieval identifiers in internal execution metadata, not in the client-facing report.
 - Interpretation: distinguish source data, calculations and model interpretation.
 - Gaps: visibly mark N/A, missing observations, stale records and assumptions; do not silently impute.
-- Footer: methodology, limitations, report provenance and informational-use disclosure. Populate the source-attribution slot from the actual sources used; for SFC-sourced FIC data the exact line is “Fuente: SFC. Procesado por Frontera Funds.”
+- Footer: methodology, limitations, report provenance and informational-use disclosure. Populate the source-attribution slot from the actual sources used; for SFC-sourced FIC data under the default Frontera theme, the exact line is “Fuente: SFC. Procesado por Frontera Funds.” Under another authorized brand, use the configured processor identity without changing the source attribution.
 
 ## Profile A — Fund factsheet (`factsheet`)
 
@@ -61,12 +61,12 @@ Use for at least two funds. Required sections:
 - For peer comparisons, use the same cutoff and comparable participation class. If the MCP selects the largest-AUM class by default, disclose that selection.
 - No metric should appear without value, unit, period, source/definition and status when applicable.
 
-## Frontera Funds brand and quality standard
+## Brand and presentation standard
 
-All reports generated from these profiles are official **Frontera Funds SKaaS** deliverables. Apply the approved identity and logo rules in `brand-identity.md`.
+The initial report profiles are brand-independent. Apply the effective theme selected by the host, using `themes/frontera-funds.yaml` by default. Authorized clients may select the neutral theme or provide validated brand overrides. Theme changes affect presentation and authorized identity only; metric definitions, data provenance, required sections, comparability rules and quality gates remain invariant.
 
-The report experience must meet the same institutional quality bar as Frontera Funds SaaS: coherent typography, restrained use of color, consistent spacing, clear KPI hierarchy, readable data tables, meaningful chart annotations, responsive layouts and print-ready output. The SKaaS implementation may use a different renderer and codebase; visual and analytical consistency is the requirement, not shared application components.
+The report experience must meet an institutional quality bar: coherent typography, restrained use of color, consistent spacing, clear KPI hierarchy, readable data tables, meaningful chart annotations, responsive layouts and print-ready output. The Frontera SaaS is the reference for the default theme, not a code or runtime dependency.
 
-Use the bundled reference mark at `assets/frontera-funds-mark.svg`, extracted from the user-supplied factsheet HTML, paired with the Frontera Funds text wordmark. Its provenance is `user_supplied_reference`; it is not independently trademark-verified. Do not redraw, reconstruct or guess a logo. If it cannot be loaded, use the text wordmark fallback and emit a warning. The canonical HTML structure and appearance are mandatory as specified in `html-rendering-contract.md` and `design-tokens.json`.
+The bundled Frontera mark is a user-supplied reference asset (`user_supplied_reference`), not independently trademark-verified. It is excluded from the package MIT code license and may be used only for authorized Frontera Funds distribution. Do not redraw, reconstruct or guess a logo. If no authorized mark is available, use the configured text wordmark and emit `brand_mark_unavailable`.
 
-Generated HTML must carry the Frontera Funds SKaaS identity and use provenance `frontera_skaas_generated`. User-provided files retain `user_supplied` provenance. Never label a newly generated report as a SaaS export.
+Generated HTML uses artifact provenance `frontera_skaas_generated`, independent of selected visual theme. User-provided files retain `user_supplied` provenance. Never label a newly generated report as a SaaS export.

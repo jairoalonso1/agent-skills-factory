@@ -1,0 +1,27 @@
+configuration:
+  version: 1.0.0
+  defaults:
+    language: es-CO
+    currency: COP
+    theme: frontera-funds
+    report_title: null
+    logo_override: null
+    contact_information: null
+    disclaimer: Este informe tiene fines informativos y no constituye asesoramiento de inversión. El rendimiento pasado no garantiza resultados futuros.
+    factsheet:
+      page: A4-portrait
+      show_optional_sections: []
+      selected_metrics: [sfc_ea_daily, sfc_ea_30d, sfc_ea_180d, sfc_ea_365d, cumulative_return, annualized_volatility, maximum_drawdown]
+    comparative:
+      page: A4-landscape
+      show_optional_sections: []
+      selected_metrics: [sfc_ea_30d, sfc_ea_180d, sfc_ea_365d, annualized_volatility, maximum_drawdown, average_investor_ticket]
+  override_policy:
+    branding_only: true
+    allowed: [theme, brand_name, logo_override, colors, typography, report_title, contact_information, disclaimer, selected_metrics, show_optional_sections]
+    forbidden: [metric_formula, metric_prerequisites, source_provenance, fund_identity_keys, comparability_rules, required_sections, quality_gates]
+    selected_metrics_scope: supplementary_kpi_display_only
+    required_profile_metrics_cannot_be_hidden: true
+    require_authorized_brand_assets: true
+    validate_color_contrast: true
+    record_effective_configuration_in_report_metadata: true

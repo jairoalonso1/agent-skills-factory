@@ -78,8 +78,8 @@
     {
       "id": "fic-funds-intelligence",
       "name": "Frontera Funds SKaaS — FIC Funds Intelligence",
-      "description": "Portable Frontera Funds-branded institutional analysis and HTML reporting Skill for Colombian FICs, using host-provided authorized data capabilities and optional dated categorization snapshots.",
-      "version": "0.2.0",
+      "description": "Configurable institutional FIC factsheets and comparative HTML reports for Colombia, with a versioned reporting standard and capability-based execution profiles.",
+      "version": "0.3.0",
       "path": "skills/fic-funds-intelligence",
       "manifest": "skills/fic-funds-intelligence/manifest.json",
       "skill_file": "skills/fic-funds-intelligence/SKILL.md",
@@ -97,7 +97,9 @@
         "sfc",
         "frontera-funds",
         "skaas",
-        "branded-reporting"
+        "configurable-branding",
+        "report-standard",
+        "execution-profiles"
       ],
       "requires": {
         "python": "optional-for-html-artifact-validation",
@@ -121,11 +123,16 @@
         "host-provided-authorized-data-capabilities",
         "volatility-category-context-optional",
         "source-provenance-and-quality-checks",
-        "standardized-report-contract"
+        "standardized-report-contract",
+        "configurable-report-branding",
+        "versioned-report-standard",
+        "metric-definition-contract",
+        "capability-based-model-execution-profiles",
+        "report-conformance-declaration"
       ],
       "evaluation": {
-        "status": "pending-revalidation",
-        "scope": "Revised package tests, factory validation, live data integration and cross-model runtime validation are pending."
+        "status": "partial",
+        "scope": "17 package-local tests passed; 13 subtests passed; YAML contracts and JSON examples validated. Factory CI, live MCP integration, browser visual QA and cross-model execution remain pending."
       },
       "data_dependencies": [
         {

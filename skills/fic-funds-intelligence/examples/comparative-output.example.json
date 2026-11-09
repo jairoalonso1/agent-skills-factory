@@ -1,6 +1,6 @@
 {
   "service_id": "fic-funds-intelligence",
-  "service_version": "0.2.0",
+  "service_version": "0.3.0",
   "operation": "peer_comparison",
   "status": "needs_input",
   "report_profile": "comparative",
@@ -28,5 +28,35 @@
   },
   "next_actions": [
     "Resolver al menos dos fondos y comprobar un corte común."
+  ],
+  "standard": {
+    "id": "frontera-fic-reporting",
+    "version": "1.0.0",
+    "profile_version": "1.0.0",
+    "theme_id": "frontera-funds",
+    "theme_version": "1.0.0"
+  },
+  "branding": {
+    "brand_name": "Frontera Funds",
+    "logo_status": "embedded",
+    "overrides_applied": []
+  },
+  "conformance": {
+    "structure": "partial",
+    "entity_identity": "partial",
+    "cutoff_and_period": "partial",
+    "data_provenance": "partial",
+    "metric_definitions": "partial",
+    "comparability": "partial",
+    "placeholder_resolution": "partial",
+    "html_integrity": "partial",
+    "reconciliation": "partial",
+    "visual_inspection": "not_performed"
+  },
+  "execution_profiles": [
+    "orchestration",
+    "analytical",
+    "computational",
+    "document"
   ]
 }
