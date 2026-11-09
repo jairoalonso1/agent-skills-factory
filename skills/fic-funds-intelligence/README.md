@@ -17,7 +17,7 @@ Frontera Funds supplies two reference report designs. It is not a dependency. Th
 - `references/report-profiles.md`: required contents and layout standards for both HTML profiles.
 - `references/source-and-methodology.md`: SFC, MCP, category snapshot and interpretation policy.
 - `schemas/fic-report.schema.json`: domain report payload.
-- `scripts/validate_html_report.py`: lightweight HTML artifact validation.
+- `scripts/validate_html_report.py`: lightweight HTML artifact validation (Python standard library only).
 - `examples/`: factsheet and comparative result fixtures.
 - `tests/`: deterministic validation tests.
 

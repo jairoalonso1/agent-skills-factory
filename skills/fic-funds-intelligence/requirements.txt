@@ -1,1 +1,1 @@
-beautifulsoup4==4.12.3
+# No third-party runtime dependencies; the HTML validator uses Python standard library only.
