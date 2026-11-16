@@ -94,7 +94,7 @@
         "JSON"
       ],
       "primary_format": "HTML",
-      "consistency_policy": "Required report profile sections, metric definitions, cutoff, provenance, category treatment, disclosures and validation remain stable across compatible models. Narrative analysis may differ but must follow evidence and uncertainty rules."
+      "consistency_policy": "Executable financial calculations, SVG and report profiles are deterministic; golden references have passing SHA-256 tests; SaaS numerical and pixel-level parity pending."
     },
     "quality_gates_ref": "SKILL.md#quality-control-and-acceptance",
     "model_portability": {
@@ -199,9 +199,10 @@
     "report_ref": "Local validation after revision: 12 tests passed; factsheet and comparative example payloads validated against the domain schema.",
     "limitations": [
       "Domain analysis quality and investment suitability are not certified.",
-      "Cross-model compatibility remains untested."
+      "Cross-model compatibility remains untested.",
+      "Reference HTML SHA-256 integrity does not establish visual parity with SaaS."
     ],
-    "scope": "12 local package tests passed; both example payloads validate against the Draft 2020-12 report schema. Full factory CI, registry schema validation, live data integration and cross-model runtime validation remain pending."
+    "scope": "Python quality checks previously reported 12 local tests. Canonical Node renderer passed 19 tests in source repository and 7 distribution tests in Factory sandbox on 2026-11-16; visual/numeric SaaS parity pending."
   },
   "runtime_compatibility": [
     {
@@ -217,7 +218,22 @@
     {
       "host": "Python",
       "surface": "Standard-library HTML artifact validator and package tests",
-      "status": "pending-revalidation"
+      "status": "not-tested"
     }
-  ]
+  ],
+  "source_distribution": {
+    "source_repository": "jairoalonso1/frontera-funds-intelligence-skills",
+    "source_commit": "bb3a9eac267a1b76ccf45029816093fe2f106d8b",
+    "model": "immutable-copy-of-canonical-renderer",
+    "runtime_entrypoint": "scripts/render-report.ts",
+    "reference_artifacts": [
+      "references/golden-masters/frontera_funds_factsheet.html",
+      "references/golden-masters/frontera_funds_factsheet (1).html"
+    ],
+    "report_profiles": [
+      "analitico_completo",
+      "tabla_ejecutiva"
+    ],
+    "visual_parity": "pending"
+  }
 }

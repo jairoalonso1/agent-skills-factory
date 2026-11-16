@@ -15,9 +15,18 @@ HTML generation is deterministic, not an invitation to improvise a dashboard. Be
 - `references/html-rendering-contract.md`
 - `references/report-profiles.md`
 
-Select and populate the canonical template:
-- One fund: `templates/factsheet.html`
-- Two or more funds: `templates/comparative.html`
+Use the CANONICAL CODE DISTRIBUTION in this Skill, not an independently improvised dashboard:
+- Entrypoint: `scripts/render-report.ts` (Node.js 22+), metrics and SVG generation in `src/`.
+- Ficha individual: JSON `type: fund`, with explicit start/cutoff.
+- Comparativo completo: JSON `type: comparison`, `reportProfile: analitico_completo`.
+- Tabla ejecutiva: JSON `type: comparison`, `reportProfile: tabla_ejecutiva`.
+- Ambos reportes: `reportProfile: ambos`, calculated from THE SAME input snapshot.
+- Original examples (unaltered): `references/golden-masters/frontera_funds_factsheet.html` and `references/golden-masters/frontera_funds_factsheet (1).html`.
+- These are BOTH comparisons, not an individual factsheet and a peer comparison. The `templates/` directory is legacy reference material, not a second implementation or a certification of identical rendering.
+- Run `node --experimental-strip-types scripts/render-report.ts input.json output.html`. To validate reference bytes, run `node --experimental-strip-types --test tests/golden-masters.test.ts`.
+- If the user does not specify the period, ASK for it: never invent a one-year range. `startDate` and `cutoff` are required.
+- Default theme `frontera`; use `sapphire-executive` to approach the supplied designs. Preserve unit classes and source provenance.
+- The output renderer is deterministic but has NOT passed complete visual / numerical SaaS parity. Do not claim exact fidelity until separately certified.
 
 Do not start from a generic dashboard, create a new visual system, or switch to a dark theme. The mandatory default is the light institutional style of the user-supplied Frontera Funds SaaS factsheet: white page, soft gray panels, dark slate text, subtle neutral borders, restrained green accent, Roboto/system sans-serif, centered report header, KPI cards, analytical sections, legible tables and institutional footer.
 
@@ -56,7 +65,7 @@ The Skill provides methodology, orchestration guidance, report specifications, l
 
 ## First interaction and intake
 
-Infer the operation from the user's request; do not ask them to select it when intent is clear. Resolve funds to SFC `codigo_negocio` where possible. For comparisons, resolve each candidate to a unique business code. Use the latest available cutoff by default and disclose it. Ask one focused question only when a material ambiguity blocks a reliable report.
+Infer the operation from the user's request; do not ask them to select it when intent is clear. Resolve funds to SFC `codigo_negocio` where possible. For comparisons, resolve each candidate to a unique business code. Use the latest available data cutoff and disclose it, but DO NOT infer the requested analysis period. If the user has not supplied a period, ask for that period before rendering. Ask one focused question only when a material ambiguity blocks a reliable report.
 
 ## Sources and integration policy
 

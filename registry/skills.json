@@ -121,11 +121,15 @@
         "host-provided-authorized-data-capabilities",
         "volatility-category-context-optional",
         "source-provenance-and-quality-checks",
-        "standardized-report-contract"
+        "standardized-report-contract",
+        "deterministic-comparison-renderer",
+        "analitico-completo-html",
+        "tabla-ejecutiva-html",
+        "golden-master-integrity-tests"
       ],
       "evaluation": {
-        "status": "pending-revalidation",
-        "scope": "Revised package tests, factory validation, live data integration and cross-model runtime validation are pending."
+        "status": "partial",
+        "scope": "Specialized renderer: 19 Node tests passing including golden hashes and report profile selection; Factory distributable copy added; visual and numerical SaaS parity pending."
       },
       "data_dependencies": [
         {
@@ -142,7 +146,9 @@
           "freshness": "Use snapshot own cutoff and version; verify freshness before use",
           "provenance_required": true
         }
-      ]
+      ],
+      "source_repository": "jairoalonso1/frontera-funds-intelligence-skills",
+      "source_commit": "bb3a9eac267a1b76ccf45029816093fe2f106d8b"
     }
   ]
 }
