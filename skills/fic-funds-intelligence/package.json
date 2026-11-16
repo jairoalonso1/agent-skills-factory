@@ -1,0 +1,13 @@
+{
+  "name": "frontera-funds-intelligence-skill",
+  "version": "0.2.0-distribution",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "render": "node --experimental-strip-types scripts/render-report.ts",
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
+  }
+}
