@@ -218,14 +218,14 @@
     {
       "host": "Python",
       "surface": "Standard-library HTML artifact validator and package tests",
-      "status": "not-tested"
+      "status": "declared"
     }
   ],
   "source_distribution": {
     "source_repository": "jairoalonso1/frontera-funds-intelligence-skills",
-    "source_commit": "bb3a9eac267a1b76ccf45029816093fe2f106d8b",
+    "source_commit": "3900d9b335d7738365b42a6507ec0707908ce050",
     "model": "immutable-copy-of-canonical-renderer",
-    "runtime_entrypoint": "scripts/render-report.ts",
+    "runtime_entrypoint": "scripts/render_saas_exact.py",
     "reference_artifacts": [
       "references/golden-masters/frontera_funds_factsheet.html",
       "references/golden-masters/frontera_funds_factsheet (1).html"
@@ -234,6 +234,7 @@
       "analitico_completo",
       "tabla_ejecutiva"
     ],
-    "visual_parity": "pending"
+    "visual_parity": "structure-passed-pixel-parity-pending",
+    "requirements": "requirements-render.txt"
   }
 }
