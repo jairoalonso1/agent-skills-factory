@@ -199,9 +199,10 @@
     "report_ref": "Local validation after revision: 12 tests passed; factsheet and comparative example payloads validated against the domain schema.",
     "limitations": [
       "Domain analysis quality and investment suitability are not certified.",
-      "Cross-model compatibility remains untested."
+      "Cross-model compatibility remains untested.",
+      "Reference HTML SHA-256 integrity does not establish visual parity with SaaS."
     ],
-    "scope": "12 local package tests passed; both example payloads validate against the Draft 2020-12 report schema. Full factory CI, registry schema validation, live data integration and cross-model runtime validation remain pending."
+    "scope": "Python quality checks previously reported 12 local tests. Canonical Node renderer passed 19 tests in source repository and 7 distribution tests in Factory sandbox on 2026-11-16; visual/numeric SaaS parity pending."
   },
   "runtime_compatibility": [
     {
@@ -217,7 +218,7 @@
     {
       "host": "Python",
       "surface": "Standard-library HTML artifact validator and package tests",
-      "status": "pending-revalidation"
+      "status": "not-tested"
     }
   ],
   "source_distribution": {
