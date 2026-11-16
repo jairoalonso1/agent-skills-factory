@@ -125,11 +125,12 @@
         "deterministic-comparison-renderer",
         "analitico-completo-html",
         "tabla-ejecutiva-html",
-        "golden-master-integrity-tests"
+        "golden-master-integrity-tests",
+        "saas-original-html-layout-engine"
       ],
       "evaluation": {
         "status": "partial",
-        "scope": "Specialized renderer: 19 Node tests passing including golden hashes and report profile selection; Factory distributable copy added; visual and numerical SaaS parity pending."
+        "scope": "SaaS DOM-layout Python render engine passed four real Bicentenario YTD tests and GitHub Actions in canonical source repo; Factory distribution tests pending; native SaaS exact pixel and numerical parity not certified."
       },
       "data_dependencies": [
         {
@@ -148,7 +149,7 @@
         }
       ],
       "source_repository": "jairoalonso1/frontera-funds-intelligence-skills",
-      "source_commit": "bb3a9eac267a1b76ccf45029816093fe2f106d8b"
+      "source_commit": "3900d9b335d7738365b42a6507ec0707908ce050"
     }
   ]
 }

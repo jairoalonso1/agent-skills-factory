@@ -7,6 +7,13 @@ description: Delivers Frontera Funds-branded institutional analysis and HTML rep
 
 **Created by Jairo Alonso González**
 
+## Required SaaS-structure renderer for both comparative reports
+
+**This section overrides the older generic comparative template selection rules in this Skill.** For comparisons, invoke `python3 scripts/render_saas_exact.py input.json output_dir` after installing `requirements-render.txt` (Python 3.11+, `beautifulsoup4`). The script uses the two **unchanged original SaaS HTML examples** in `references/golden-masters/` as the canonical DOM and stylesheet, then regenerates 11 tables, 5 key SVG plots, month-by-month heatmaps, worst drawdown periods and the 7-column executive stars table from the authorized data payload. Do not call the old Node comparative renderer when the user requests the two original layouts.
+
+Request analysis period if omitted; resolve both business code and participation class. An authorized Connector/MCP delivers all NAV observations and metrics; the SaaS is **not** needed at execution time. Prefer a single normalized series from the authorized data source and document the actual cutoff.
+
+Status: real Bicentenario YTD 2026 tests and original DOM structure pass. Pixel-perfect Recharts SVG equivalence and exact SaaS metric equality remain **not certified**; do not claim otherwise.
 ## Mandatory HTML rendering contract
 
 HTML generation is deterministic, not an invitation to improvise a dashboard. Before generating any report, read:

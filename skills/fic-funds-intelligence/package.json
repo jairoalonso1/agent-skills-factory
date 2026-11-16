@@ -8,6 +8,7 @@
   },
   "scripts": {
     "render": "node --experimental-strip-types scripts/render-report.ts",
-    "test": "node --experimental-strip-types --test tests/*.test.ts"
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "render:saas": "python3 scripts/render_saas_exact.py"
   }
 }

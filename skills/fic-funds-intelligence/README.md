@@ -43,3 +43,9 @@ This Skill includes the two original Frontera Funds comparative HTML artifacts i
 - Node.js >=22, run `node --experimental-strip-types scripts/render-report.ts input.json output.html`.
 - Original HTML reference tests: `node --experimental-strip-types --test tests/golden-masters.test.ts`.
 - **Current limit:** the renderer produces both profiles deterministically; it is not yet certified visually identical to the original SaaS examples. The `templates/` directory is an older noncanonical representation.
+
+## Primary generation using SaaS-original HTML structure
+
+For the user's two comparative HTML reports, run `python3 -m pip install -r requirements-render.txt` then `python3 scripts/render_saas_exact.py input.json output_dir`. This is the **canonical** report generation path copied from the specialized repository (source commit `3900d9b335d7738365b42a6507ec0707908ce050`). The older Node comparison renderer remains for backwards compatibility only. The SaaS is a visual/methodology reference, not a data/API dependency.
+
+It regenerates 11 tables, five charts and the seven-column executive comparison from the provided values and NAV series. Structured HTML parity tests passed with real funds in the private source repository; full pixel/financial equivalence with a native SaaS run remains pending.
