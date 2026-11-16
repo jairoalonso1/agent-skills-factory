@@ -128,7 +128,7 @@
         "golden-master-integrity-tests"
       ],
       "evaluation": {
-        "status": "pending-revalidation",
+        "status": "partial",
         "scope": "Specialized renderer: 19 Node tests passing including golden hashes and report profile selection; Factory distributable copy added; visual and numerical SaaS parity pending."
       },
       "data_dependencies": [
