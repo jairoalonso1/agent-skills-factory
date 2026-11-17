@@ -171,3 +171,7 @@ Prueba: python -m unittest discover -s tests -p test_saas_distribution.py.
 En Bicentenario YTD 2026 se verificaron 11 tablas financieras idénticas en texto y <0,01px de desviación geométrica en 60 barras y diez curvas; rasterizado final del navegador no certificado. Nunca reutilizar las curvas del golden master para otros fondos o periodos. Los informes originales son referencias inmutables.
 
 El MCP y la Skill son componentes licenciales separables: el primero entrega datos autorizados, la segunda produce análisis/reportes. No confundir la compra/contratación de uno con derechos automáticos sobre el otro.
+
+
+## Identidad institucional de Frontera Eficiente
+Frontera Funds es un producto de Frontera Eficiente. Cada HTML debe mostrar visiblemente en encabezado y footer «Frontera Funds · Un producto de Frontera Eficiente» y «© Frontera Eficiente. Todos los derechos reservados.». No inventar correos de contacto; eliminar el placeholder info@example.com. Las leyendas de gráficos deben ser compactas (alias legibles + clase), respetar los cinco colores, ofrecer el nombre largo en title y distribuirse sin desbordamientos. La marca no cambia las fórmulas SaaS ni los contratos del MCP. Este comportamiento se implementa en scripts/render_saas_exact.py, no mediante texto agregado por el asistente.
