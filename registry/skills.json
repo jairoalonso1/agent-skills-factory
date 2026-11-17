@@ -130,7 +130,7 @@
       ],
       "evaluation": {
         "status": "partial",
-        "scope": "SaaS DOM-layout Python render engine passed four real Bicentenario YTD tests and GitHub Actions in canonical source repo; Factory distribution tests pending; native SaaS exact pixel and numerical parity not certified."
+        "scope": "Source 8 financial/visual tests passed plus 4 standalone Factory distribution tests; 11 SaaS financial tables and native chart geometry agree on 2026 YTD sample; browser raster checks outstanding."
       },
       "data_dependencies": [
         {
@@ -149,7 +149,7 @@
         }
       ],
       "source_repository": "jairoalonso1/frontera-funds-intelligence-skills",
-      "source_commit": "3900d9b335d7738365b42a6507ec0707908ce050"
+      "source_commit": "11f03a1f230f8726c38fc1a3e1acc4ee62c0854d"
     }
   ]
 }

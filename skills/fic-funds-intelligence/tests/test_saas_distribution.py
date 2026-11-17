@@ -10,6 +10,7 @@ def fixture(n=5):
     a=[]
     for i in range(n):
         serie=[{'fecha':(date(2026,1,1)+timedelta(days=d)).isoformat(),'nav':100*(1+.0002*(i+1))**d*(.999 if d==11 else 1)} for d in range(45)]
+        serie[0]['tasa_diaria']=.0002*(i+1)  # real SaaS first-day rate is never assumed zero
         a.append({'id':f'{i+1}-500','codigo_negocio':str(10000+i),'tipo_participacion':'500','nombre':f'FIC SINTÉTICO {i+1} (Clase 500)','stars':5-i if i<5 else 1,'score':i+1,'serie':serie,'metrics':{'retorno_acumulado_pct':i+1,'cagr_ea_pct':i+2,'volatilidad_anualizada_pct':.2+i*.05,'maximum_drawdown_pct':-.1,'sharpe_ratio':1.5+i,'sortino_ratio':2+i}})
     return {'type':'comparison','startDate':'2026-01-01','cutoff':'2026-02-14','generatedAt':'2026-11-16','funds':a}
 
