@@ -464,6 +464,94 @@ def refresh_charts(soup,fs,mets):
                 if j<len(ticks):write_text(ticks[j],label)
 
 
+def apply_report_branding(soup):
+    """Frontera Eficiente rights notice for both Frontera Funds outputs."""
+    header=soup.select_one('header.page-header')
+    if header is not None and not header.select_one('.frontera-eficiente-byline'):
+        byline=soup.new_tag('p')
+        byline['class']=['frontera-eficiente-byline','text-center','text-xs','text-secondary']
+        byline.string='Frontera Funds · Un producto de Frontera Eficiente'
+        header.append(byline)
+    footer=soup.select_one('footer')
+    if footer is None:raise ValueError('Missing original SaaS footer')
+    for p in list(footer.select('p')):
+        if 'info@example.com' in p.get_text(' ',strip=True):
+            p.decompose()  # The demo SaaS contact is a placeholder, not an official address.
+        elif 'Reporte generado con Frontera Funds' in p.get_text(' ',strip=True):
+            write_text(p,'Frontera Funds · Un producto de Frontera Eficiente')
+    rights=soup.new_tag('p')
+    rights['class']=['text-center','text-xs','text-secondary','frontera-rights']
+    rights.string='© Frontera Eficiente. Todos los derechos reservados.'
+    footer.append(rights)
+
+
+def compact_report_chart_labels(soup,fs):
+    """Keep native Recharts SVG but fit legends/ticks within 615px chart cards."""
+    names={
+       (str(x.get('codigo_negocio')),str(x.get('tipo_participacion'))):x
+       for x in fs
+    }
+    def short_name(f):
+        code=str(f.get('codigo_negocio',''))
+        classe=str(f.get('tipo_participacion',''))
+        aliases={
+            '69537':'FIC 600',
+            '11149':'FIC Fiducoldex',
+            '11407':'Alta Liquidez',
+            '124209':'Fiducoldex Objetivo',
+        }
+        source=f.get('nombre','')
+        base=aliases.get(code) or source.split(' (Clase')[0].strip()
+        if len(base)>28:base=base[:27].rstrip()+'…'
+        return base+' · '+classe
+    by_full={f['nombre']:short_name(f) for f in fs}
+    for card in soup.select('.chart-card'):
+        card['data-compact-legends']='true'
+        content=card.select_one('div[class*="h-"]')
+        if content:
+            existing=content.get('style','')
+            content['style']=existing.rstrip(';')+'; height: 432px; min-height: 432px;'
+        wrap=card.select_one('.recharts-legend-wrapper')
+        if wrap:
+            wrap['style']='position: absolute; width: calc(100% - 30px); height: auto; left: 15px; bottom: 0; padding-top: 5px;'
+        ul=card.select_one('.recharts-default-legend')
+        if ul:
+            ul['style']='display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 10px; margin: 0; padding: 0; list-style: none; text-align: left;'
+        for li in card.select('.recharts-legend-item'):
+            li['style']='display: flex; align-items: center; gap: 5px; margin: 0; min-width: 0; white-space: nowrap;'
+            text=li.select_one('.recharts-legend-item-text')
+            if text:
+                full=text.get_text(' ',strip=True)
+                short=by_full.get(full,full if len(full)<=31 else full[:30]+'…')
+                text['title']=full
+                write_text(text,short)
+                col=None
+                if li.select_one('svg path[fill]'):col=li.select_one('svg path[fill]').get('fill')
+                text['style']='font-size: 9px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; '+(f'color: {col};' if col else '')
+            icon=li.select_one('svg.recharts-surface')
+            if icon:
+                icon['style']='flex: 0 0 9px; display: inline-block; vertical-align: middle;'
+                icon['width']='9';icon['height']='9'
+    css="""
+    /* Frontera Eficiente: readable, contained SaaS Recharts charts */
+    .chart-card { min-width: 0; overflow: hidden; }
+    .chart-card svg.recharts-surface text { font-size: 9px !important; }
+    .chart-card .recharts-legend-wrapper { z-index: 2; max-width: calc(100% - 20px); }
+    .chart-card .recharts-legend-item-text { font-size: 9px !important; line-height: 1.25; }
+    .chart-card .recharts-legend-item svg { max-width: 9px; max-height: 9px; }
+    .frontera-eficiente-byline, .frontera-rights { font-size: 10px; letter-spacing: 0.01em; }
+    @media print {
+      .chart-card { break-inside: avoid; page-break-inside: avoid; }
+      .chart-card > div[class*="h-"] { height: 432px !important; min-height: 432px !important; }
+      .chart-card .recharts-legend-item-text { font-size: 8px !important; }
+    }
+    """
+    style=soup.new_tag('style')
+    style.string=css
+    if soup.head:soup.head.append(style)
+    else:soup.append(style)
+
+
 def render(payload,reference_full,reference_short):
     fs,start,end=validated(payload)
     if all(finite(f.get('score')) is not None for f in fs):
@@ -476,7 +564,10 @@ def render(payload,reference_full,reference_short):
     render_monthly(full,fs,mets)
     render_executive(short,fs,mets)
     refresh_charts(full,fs,mets)
-    # Do not alter CSS and institutional footer; provenance records exact source and methodology.
+    compact_report_chart_labels(full,fs)
+    for report in (full,short):
+        apply_report_branding(report)
+    # Original SaaS calculation, DOM and data geometry remain unchanged.
     for soup in (full,short):
         root=soup.select_one('.a4-page-container, .a4-landscape-page-container')
         if root:root['data-report-period']=f"{payload['startDate']}/{payload['cutoff']}"

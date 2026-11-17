@@ -206,7 +206,7 @@
       "Reference HTML SHA-256 integrity does not establish visual parity with SaaS.",
       "Browser raster output and cross-model packaging have not been pixel-certified."
     ],
-    "scope": "Specialized engine 8 tests passed including exact 11-table numeric parity and <0.01px bar/line/scatter geometry with actual Grupo Bicentenario. Factory distribution 4 portable runtime tests passed. Browser raster parity and cross-model runtime tests remain pending."
+    "scope": "Bicentenario SaaS parity 9 tests passed including branded footers and compact legends; original 11 numeric tables and native chart geometry unchanged. Factory standalone checks required."
   },
   "runtime_compatibility": [
     {
@@ -227,7 +227,7 @@
   ],
   "source_distribution": {
     "source_repository": "jairoalonso1/frontera-funds-intelligence-skills",
-    "source_commit": "11f03a1f230f8726c38fc1a3e1acc4ee62c0854d",
+    "source_commit": "158496726bc56600310de84329103a48298c3f2b",
     "model": "immutable-copy-of-canonical-renderer",
     "runtime_entrypoint": "scripts/render_saas_exact.py",
     "reference_artifacts": [
@@ -241,6 +241,8 @@
     "visual_parity": "bicentenario-2026 golden numeric and native SVG geometry subpixel accepted; browser raster pending",
     "requirements": "requirements-render.txt",
     "calculation_model": "SaaS FundAnalysisPage method port including first-day effectiveDailyRate",
-    "source_data_contract": "Each class requires first-day tasa_diaria and chart_history for auxiliary 365d windows"
+    "source_data_contract": "Each class requires first-day tasa_diaria and chart_history for auxiliary 365d windows",
+    "institutional_branding": "Frontera Funds · Un producto de Frontera Eficiente; © Frontera Eficiente. Todos los derechos reservados.",
+    "chart_legend_style": "compact two-column labels preserving full names in title"
   }
 }
