@@ -188,21 +188,25 @@
     "status": "partial",
     "suite_ref": "skills/fic-funds-intelligence/tests",
     "suite_version": "0.1.0",
-    "last_run": "2026-11-09",
+    "last_run": "2026-11-16",
     "environment": "Python runtime",
     "metrics": {
       "unit_tests_passed": 12,
       "unit_tests_failed": 0,
       "schema_valid": true,
-      "registry_entry_valid": null
+      "registry_entry_valid": null,
+      "saas_metric_table_parity": true,
+      "saas_native_svg_subpixel": true,
+      "distribution_tests_passed": 4
     },
-    "report_ref": "Local validation after revision: 12 tests passed; factsheet and comparative example payloads validated against the domain schema.",
+    "report_ref": "Source PR #3 of Frontera Funds Intelligence Skills, GitHub Actions parity success; native connector/SaaS sample YTD 2026.",
     "limitations": [
       "Domain analysis quality and investment suitability are not certified.",
       "Cross-model compatibility remains untested.",
-      "Reference HTML SHA-256 integrity does not establish visual parity with SaaS."
+      "Reference HTML SHA-256 integrity does not establish visual parity with SaaS.",
+      "Browser raster output and cross-model packaging have not been pixel-certified."
     ],
-    "scope": "Python quality checks previously reported 12 local tests. Canonical Node renderer passed 19 tests in source repository and 7 distribution tests in Factory sandbox on 2026-11-16; visual/numeric SaaS parity pending."
+    "scope": "Specialized engine 8 tests passed including exact 11-table numeric parity and <0.01px bar/line/scatter geometry with actual Grupo Bicentenario. Factory distribution 4 portable runtime tests passed. Browser raster parity and cross-model runtime tests remain pending."
   },
   "runtime_compatibility": [
     {
@@ -223,7 +227,7 @@
   ],
   "source_distribution": {
     "source_repository": "jairoalonso1/frontera-funds-intelligence-skills",
-    "source_commit": "3900d9b335d7738365b42a6507ec0707908ce050",
+    "source_commit": "11f03a1f230f8726c38fc1a3e1acc4ee62c0854d",
     "model": "immutable-copy-of-canonical-renderer",
     "runtime_entrypoint": "scripts/render_saas_exact.py",
     "reference_artifacts": [
@@ -234,7 +238,9 @@
       "analitico_completo",
       "tabla_ejecutiva"
     ],
-    "visual_parity": "structure-passed-pixel-parity-pending",
-    "requirements": "requirements-render.txt"
+    "visual_parity": "bicentenario-2026 golden numeric and native SVG geometry subpixel accepted; browser raster pending",
+    "requirements": "requirements-render.txt",
+    "calculation_model": "SaaS FundAnalysisPage method port including first-day effectiveDailyRate",
+    "source_data_contract": "Each class requires first-day tasa_diaria and chart_history for auxiliary 365d windows"
   }
 }

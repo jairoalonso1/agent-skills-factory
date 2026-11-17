@@ -156,3 +156,18 @@ The portable core works as instructions alone. Discover approved data, Python, b
 ## Execution and completion
 
 If no runtime is available, reason over supplied data but return `partial` or `blocked` when a required artifact cannot be generated or validated. Never fabricate a download link. The workflow orchestrator owns multi-step AX progress and approvals; this Skill owns the bounded FIC intelligence service and report quality gates.
+
+
+## Homologación numérica y visual con la SaaS
+
+El ejecutable primario de comparativos es scripts/render_saas_exact.py, copia inalterada del motor fuente de jairoalonso1/frontera-funds-intelligence-skills en el commit indicado en manifest.json. Obtiene datos por las herramientas MCP autorizadas del host, no necesita autenticación ni peticiones a la SaaS.
+
+Para cada clase solicite serie YTD o el periodo elegido, incluyendo tasa_diaria del **primer día**. Para los gráficos auxiliares de 30/60/90/180/365 días solicite además chart_history desde **365 días antes de cutoff**, incluso si el informe principal comienza en enero. La tasa del primer día no puede sustituirse por cero: los ratios SaaS dependen de esa observación. La Skill ejecuta cálculos y gráficos con las fórmulas y el DOM original de la SaaS, no con estimaciones inventadas por el modelo.
+
+Comando: python scripts/render_saas_exact.py input.json output/
+Salida: comparativo-analitico.html y tabla-ejecutiva.html.
+Prueba: python -m unittest discover -s tests -p test_saas_distribution.py.
+
+En Bicentenario YTD 2026 se verificaron 11 tablas financieras idénticas en texto y <0,01px de desviación geométrica en 60 barras y diez curvas; rasterizado final del navegador no certificado. Nunca reutilizar las curvas del golden master para otros fondos o periodos. Los informes originales son referencias inmutables.
+
+El MCP y la Skill son componentes licenciales separables: el primero entrega datos autorizados, la segunda produce análisis/reportes. No confundir la compra/contratación de uno con derechos automáticos sobre el otro.
